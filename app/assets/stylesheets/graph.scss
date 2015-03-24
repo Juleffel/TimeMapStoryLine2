@@ -120,6 +120,18 @@
   width: 100%;
   right: 0;
 }
+.fullscreen .invisible {
+  display: none;
+}
+.fullscreen .center {
+  text-align: center;
+}
+.fullscreen .justify {
+  text-align: justify;
+}
+.fullscreen .right {
+  text-align: right;
+}
 /*.fullscreen .foreground.mainadd.right.up {
   width: 30%;
   height: 40%;
