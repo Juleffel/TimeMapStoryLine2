@@ -1,0 +1,98 @@
+<ol class="breadcrumb">
+    <% if @mod %>
+        <li><%= t('Forum') %></li>
+        <% @category.supcategories.each do |cat| %>
+            <li><%= cat.title %></li>
+        <% end %>
+    <% else %>
+        <li><%= link_to t('Forum'), categories_path %></li>
+        <% first_cat = @category.supcategories.first %>
+        <% if first_cat %>
+        <li><%= first_cat.title %></li>
+        <% end %>
+        <% supcats = @category.supcategories[1..-1] || [] %>
+        <% supcats.each do |cat| %>
+            <li><%= link_to cat.title, category_path(cat) %></li>
+        <% end %>
+    <% end %>
+    <li class="active"><%= @category.title %></li>
+</ol>
+
+<div class="page-header">
+    <div class="row">
+        <div class="col-sm-4 col-md-3">
+            <%= image_tag @category.image_url, class:"thumbnail", style: "width: 100%; max-width: 500px;" %>
+        </div>
+        <div class="col-sm-8 col-md-9">
+            <h1><%= @category.title %><br>
+            <small><%= @category.description %></small></h1>
+        </div>
+    </div>
+</div>
+
+<% unless @mod %>
+<%= render :partial => 'mosaic', locals: {categories: @categories} %>
+<% end %>
+
+<% if @mod %>
+
+    <div class="list-group">
+    <% @category.categories.each do |subcategory| %>
+        <%= link_to subcategory.title, category_path(subcategory, mod: true), class: "list-group-item" %>
+    <% end %>
+        <%= link_to "Nouvelle sous-catégorie",
+                new_category_path(category_id: @category.id),
+                :class => 'list-group-item list-group-item-info' %>
+    </div>
+
+    <%= link_to t('.back', :default => t("helpers.links.back")),
+                categories_path(mod: true), :class => 'btn btn-default'  %>
+    
+    <% if can? :update, @category %>
+    <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                  edit_category_path(@category), :class => 'btn btn-default' %>
+    <% end %>
+    <% if can? :destroy, @category %>
+    <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                  category_path(@category),
+                  :method => 'delete',
+                  :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                  :class => 'btn btn-danger' %>
+    <% end %>
+<% else %>
+    <div class="page-header">
+      <h1><%= Topic.model_name.human.pluralize.titleize %></h1>
+    </div>
+    <% @topics.each do |topic| %>
+    <% if topic.image_url.match(/\Ahttps?:\/\//) %>
+    <div class="category-topic"
+        style="background: url('<%= url_for topic.image_url %>') no-repeat fixed center center / cover transparent"
+    >
+    <% else %><div class="category-topic"><% end %>
+        <div class="wrapper">
+            <div class="bg-overlay"></div>
+            <div class="content">
+                <h1 class="surline"><span><%= topic.title %></span></h1>
+                <h2 class="surline"><span><%= topic.subtitle %></span></h2>
+                <p class="surline"><span><%= topic.summary %></span></p>
+                <p class="surline"><span>
+                    <%=t('last_answer')%>: 
+                    <%=l topic.last_answered_at %>
+                    <% if la = topic.last_answer %>
+                        <% if c = la.character %>
+                            <%=t 'by'%>
+                            <span style="color: <%= c.faction.color %>"><%= c.name %></span>
+                        <% end %>
+                    <% else %>
+                        <%=t 'by'%> <%= topic.user.pseudo %>
+                    <% end %>
+                </span></p>
+                <p><%= link_to t('read_topic'), topic_url(topic), class: "btn btn-primary btn-lg" %></p>
+            </div>
+        </div>
+    </div>
+    <% end %>
+    <%= link_to t('new_topic'),
+            new_topic_path(category_id: @category),
+            :class => 'btn btn-primary' %>
+<% end %>

@@ -1,0 +1,46 @@
+<%= form_for @answer, :html => { :class => "form-horizontal answer" } do |f| %>
+
+    <% if @answer.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= pluralize(@answer.errors.count, "error") %> prohibited this answer from being saved:</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+        <% @answer.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <%= f.hidden_field :topic_id %>
+  <div class="control-group">
+    <%= f.label :character_id, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.collection_select :character_id, current_user.characters, :id, :name, :class => 'form-control' %>
+    </div>
+    <%= error_span(@answer[:character_id]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :title, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :title, :class => 'form-control' %>
+    </div>
+    <%= error_span(@answer[:title]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :content, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_area :content, :class => 'form-control' %>
+    </div>
+    <%= error_span(@answer[:content]) %>
+  </div>
+
+
+  <%= f.submit nil, :class => 'btn btn-primary' %>
+  <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+            answer_back_url(@answer), :class => 'btn btn-default' %>
+
+<% end %>

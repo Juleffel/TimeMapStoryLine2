@@ -1,0 +1,41 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 
+  first_name: MyString
+  last_name: MyString
+  birth_date: 2015-03-07
+  birth_place: MyString
+  sex: false
+  avatar_url: MyText
+  avatar_name: MyString
+  copyright: MyString
+  topic_id: 
+  story: MyText
+  resume: MyText
+  anecdote: MyText
+  test_rp: MyText
+  psychology: MyText
+  appearance: MyText
+  faction_id: 
+  group_id: 
+
+two:
+  user_id: 
+  first_name: MyString
+  last_name: MyString
+  birth_date: 2015-03-07
+  birth_place: MyString
+  sex: false
+  avatar_url: MyText
+  avatar_name: MyString
+  copyright: MyString
+  topic_id: 
+  story: MyText
+  resume: MyText
+  anecdote: MyText
+  test_rp: MyText
+  psychology: MyText
+  appearance: MyText
+  faction_id: 
+  group_id: 

@@ -1,0 +1,29 @@
+// Place all the styles related to the categories controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.category-topic {
+    position: relative;
+    margin: 15px -15px;
+    color: white;
+}
+.category-topic .wrapper {
+    position: relative;
+    padding: 60px 30px;
+}
+.category-topic .content {
+    position: relative;
+    z-index: 1;
+}
+.category-topic .surline {
+    background-color: rgba(0,0,0, .5);
+    padding: 5px 10px;
+}
+.bg-overlay {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background-image: image-url("grid.png");
+}

@@ -1,0 +1,4 @@
+<% categories.each do |category| %>
+  <%= render :partial => 'row', locals: {category: category, level: level} %>
+  <%= render :partial => 'rows', locals: {categories: category.categories, level: level+1} %>
+<% end %>

@@ -1,0 +1,150 @@
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t 'hello'
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t('hello') %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# To learn more, please read the Rails Internationalization guide
+# available at http://guides.rubyonrails.org/i18n.html.
+
+fr:
+  hello: "Salut tout le monde"
+  members: "Membres"
+  characters: "Mes personnages"
+  groups: "Statuts de personnages"
+  factions: "Factions"
+  link_natures: "Types de liens"
+  categories: "Sous-forums"
+  links: "Liens de personnages"
+  forum: "Forum"
+  by: "par"
+  known_as: "dit"
+  learn_more: "En savoir plus..."
+  
+  editing: "Édition"
+  recommended_size: "Taille recommandée"
+  screen_size: "Taille d'écran"
+  last_answer: "Dernière réponse"
+  num_helper: "Le numéro est utilisé pour afficher les catégories dans l'ordre de num croissant."
+  special_helper: "Vous ne devez avoir qu'une seule catégorie spéciale de chaque type. Elles sont utilisées pour y ranger les fiches de personnages."
+  
+  stop_layout: "Stop Layout"
+  impossible_create_link: "Désolé, vous ne pouvez créer un lien que depuis l'un de vos personnages."
+  impossible_update_link: "Vous ne pouvez pas modifier ce lien."
+  search: "Recherche"
+  his_links: "Ses liens"
+  his_other_links: "Ils l'ont dans leurs liens"
+  
+  new_topic: "Créer un topic"
+  new_answer_topic: "Répondre à ce topic"
+  read_topic: "Lire le topic"
+  
+  topics:
+    show:
+      answer: "Répondre"
+      edit: "Éditer le topic"
+      destroy: "Supprimer le topic"
+      edit_answer: "Éditer"
+      destroy_answer: "Supprimer"
+      deleted_character: "Personnage supprimé."
+      confirm_topic: "Êtes-vous sûr de vouloir supprimer le TOPIC et TOUS ses messages ?"
+      confirm_answer: "Êtes-vous sûr ? (Cela supprimera uniquement cette réponse)"
+  
+  activerecord:
+    models:
+      user/gender:
+        female: utilisateur
+        male: utilisatrice
+      character: personnage
+      member: membre
+      faction: faction
+      group: statut
+      link_nature:
+        one: type de lien
+        other: types de liens
+      link: lien
+      presence: présence
+      spacetime_position:
+        one: position spaciotemporelle
+        other: positions paciotemporelles
+      topic: topic
+      answer: réponse
+      category: sous-forum
+    attributes:
+      user:
+        role: Rôle
+        login: Login
+        pseudo: Pseudo
+        email: E-mail
+      character:
+        first_name: Prénom
+        middle_name: Seconds prénoms
+        last_name: Nom
+        nickname: Surnom
+        birth_date: Date de naissance
+        sex: Homme
+        avatar_url: Url de l'avatar
+        copyright: Copyright de l'avatar
+        story: Histoire
+        resume: Résumé
+        summary: Résumé
+        anectdote: Anecdote
+        test_rp: Test RP
+        psychology: Psychologie
+        appearance: Apparence
+        faction_id: Faction
+        group_id: Statut
+        npc: PV
+        image_url: Image Principale (URL)
+        quote: Citation favorite
+      nature_link:
+        name: Nom
+        description: Description
+      group:
+        name: Nom
+        description: Description
+        color: Couleur
+      faction:
+        name: Nom
+        description: Description
+        color: Couleur
+      category:
+        title: Titre
+        num: Num
+        description: Description
+        image_url: Url de l'image
+        permission_level: Niveau de permission
+        category: Sous-forum racine
+        special: Catégorie spéciales
+      link:
+        from_character_id: Personnage source
+        to_character_id: Personnage cible
+        title: Titre
+        description: Description
+        force: Force
+        link_nature_id: Type de lien
+      topic:
+        user_id: Créateur
+        spacetime_position_id: Position spatio-temporelle
+        category: Sous-forum
+        image_url: Url de l'image
+        title: Titre
+        subtitle: Sous-titre
+        summary: Résumé
+        weather: Météo
+      answer:
+        title: Titre
+        content: Contenu
+        character_id: Personnage

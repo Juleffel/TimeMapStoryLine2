@@ -1,0 +1,20 @@
+<%- model_class = Category -%>
+<% if @mod %>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %>
+  (<%= t 'editing' %>)
+  </h1>
+</div>
+<% end %>
+
+<% if @mod %>
+<%= render :partial => 'browse_mod' %>
+<% else %>
+<%= render :partial => 'browse_index' %>
+<% end %>
+
+<% if @mod and can? :create, Category %>
+<%= link_to t('.new', :default => t("helpers.links.new")),
+            new_category_path,
+            :class => 'btn btn-primary' %>
+<% end %>

@@ -1,0 +1,63 @@
+<%= form_for @topic, :html => { :class => "form-horizontal topic" } do |f| %>
+
+    <% if @topic.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= pluralize(@topic.errors.count, "error") %> prohibited this topic from being saved:</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+        <% @topic.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <%= f.hidden_field :user_id %>
+  <%= f.hidden_field :spacetime_position_id %>
+  <%= f.hidden_field :category_id %>
+  <div class="control-group">
+    <%= f.label :title, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :title, :class => 'form-control' %>
+    </div>
+    <%= error_span(@topic[:title]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :subtitle, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :subtitle, :class => 'form-control' %>
+    </div>
+    <%= error_span(@topic[:subtitle]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :summary, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_area :summary, :class => 'form-control' %>
+    </div>
+    <%= error_span(@topic[:summary]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :weather, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :weather, :class => 'form-control' %>
+    </div>
+    <%= error_span(@topic[:weather]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :image_url, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :image_url, :class => 'form-control' %>
+    </div>
+    <p class="help-block"><%= t(:recommended_size) %>: <%= t(:screen_size) %></p>
+    <%= error_span(@topic[:image_url]) %>
+  </div>
+
+
+  <%= f.submit nil, :class => 'btn btn-primary' %>
+  <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+            topic_back_url(@topic), :class => 'btn btn-default' %>
+
+<% end %>

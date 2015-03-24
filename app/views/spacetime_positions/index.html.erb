@@ -1,0 +1,52 @@
+<%- model_class = SpacetimePosition -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:id) %></th>
+      <th><%= model_class.human_attribute_name(:longitude) %></th>
+      <th><%= model_class.human_attribute_name(:latitude) %></th>
+      <th><%= model_class.human_attribute_name(:title) %></th>
+      <th><%= model_class.human_attribute_name(:subtitle) %></th>
+      <th><%= model_class.human_attribute_name(:resume) %></th>
+      <th><%= model_class.human_attribute_name(:weather) %></th>
+      <th><%= model_class.human_attribute_name(:begin_at) %></th>
+      <th><%= model_class.human_attribute_name(:end_at) %></th>
+      <th><%= model_class.human_attribute_name(:topic_id) %></th>
+      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @spacetime_positions.each do |spacetime_position| %>
+      <tr>
+        <td><%= link_to spacetime_position.id, spacetime_position_path(spacetime_position) %></td>
+        <td><%= spacetime_position.longitude %></td>
+        <td><%= spacetime_position.latitude %></td>
+        <td><%= spacetime_position.title %></td>
+        <td><%= spacetime_position.subtitle %></td>
+        <td><%= spacetime_position.resume %></td>
+        <td><%= spacetime_position.weather %></td>
+        <td><%= spacetime_position.begin_at %></td>
+        <td><%= spacetime_position.end_at %></td>
+        <td><%= spacetime_position.topic_id %></td>
+        <td><%=l spacetime_position.created_at %></td>
+        <td>
+          <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                      edit_spacetime_position_path(spacetime_position), :class => 'btn btn-default btn-xs' %>
+          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                      spacetime_position_path(spacetime_position),
+                      :method => :delete,
+                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                      :class => 'btn btn-xs btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to t('.new', :default => t("helpers.links.new")),
+            new_spacetime_position_path,
+            :class => 'btn btn-primary' %>

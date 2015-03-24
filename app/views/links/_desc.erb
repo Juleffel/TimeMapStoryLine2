@@ -1,0 +1,9 @@
+<h1><%= @link.title %></h1>
+<p><%= @link.description %></p>
+
+<!-- TODO: Make a proper display of a non-modifiable link between two characters here -->
+
+<small><%=t 'impossible_update_link' %></small>
+
+
+<%= link_to t('.back', :default => t("helpers.links.back")), '#', class:"btn btn-default js-close" %>

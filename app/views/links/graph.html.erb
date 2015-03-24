@@ -1,0 +1,93 @@
+<div class="hidden-smallphone">
+  <div class="fullscreen">
+    <div class="background">
+      <%= content_tag :div, "", id: "js-graph", 
+            max_node_size: 6,
+            data: {
+              nodes_by_id: @characters_by_id,
+              links_by_id: @links_by_id,
+              type_nodes_by_id: @factions_by_id,
+              type_links_by_id: @link_natures_by_id,
+              modifiable_node_ids: @modifiable_character_ids
+            } %>
+    </div>
+    <div class="foreground smalladd center down">
+      <!--<button class="btn" id="circular">Circular layout</button>-->
+      <button class="btn btn-mini btn-success" id="forceAtlas"><%= t('stop_layout') %></button>
+      <!--<button class="btn" id="fishEye">Put Fish Eye ON</button-->
+    </div>
+    <div class="foreground smalladd right up" id="type_node_filters">
+      <span class="tiny-title"><%= Faction.model_name.human.pluralize.titleize %> :</span><br>
+      <% @factions.each do |e| %>
+        <% color = e.color || '#FFF' %>
+        <%= content_tag :span, e.name, class: 'tiny-button type_node_'+e.id.to_s, 
+              value: e.id, href: "#", style: "color: "+color %><br>
+      <% end %>
+    </div>
+    <div class="foreground smalladd right down" id="type_link_filters">
+      <span class="tiny-title"><%= LinkNature.model_name.human(count: 2).titleize %> :</span><br>
+      <% @link_natures.each do |e| %>
+        <% color = e.color || '#FFF' %>
+        <%= content_tag :span, e.name, class: 'tiny-button type_link_'+e.id.to_s, 
+              value: e.id, href: "#", style: "color: "+color %><br>
+      <% end %>
+    </div>
+    <div class="foreground smalladd left up">
+      <div id="searchForm" class="ui-widget">
+        <div class="input-prepend btn-transp">
+          <span class="add-on"><span class="icon-search"></span></span>
+          <input type="search" id="searchNode" placeholder="<%=t 'search' %>..." class="span2" />
+        </div>
+      </div>
+    </div>
+    <div class="foreground smalladd left down" style="bottom: -2px">
+      <small>By <%= mail_to "juleffel@openaliasbox.org", "Juleffel" %> & <%= mail_to "pidupuis@openaliasbox.org", "Pidupuis" %>, using <a href=http://sigmajs.org/ target=_blank>sigmajs</a>.</small>
+    </div>
+    <% @characters.each do |character| %>
+      <% @character = character %>
+      <div class="foreground mainadd left up nodeinfo n<%=character.id%> js-scrollbar">
+        <%= render "characters/description" %>
+      </div>
+      <div class="foreground mainadd right up nodeinfo n<%=character.id%> js-scrollbar" node="n<%=character.id%>">
+        <%= render "characters/links_graph" %>
+      </div>
+    <% end %>
+    <% @not_from_to = true
+    @form_cerebro = true %>
+    <% [@links, Link.new].flatten.each do |link| %>
+      <% @link = link %>
+      <div class="foreground well popup linkpopup 
+          <%= if link.new_record? then "popup-new" else "popup-edit" end %> 
+          fn<%=link.from_character_id%> tn<%=link.to_character_id%>">
+        <% if link.new_record? or can? :update, link %>
+        <%= render 'links/form' %>
+        <% else %>
+        <%= render 'links/desc' %>
+        <% end %>
+      </div>
+    <% end %>
+      <div class="foreground well popup linkpopup popup-no-create">
+        <%= t('impossible_create_link') %>
+        <%= link_to t('.back', :default => t("helpers.links.back")), '#', class:"btn btn-default js-close" %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="visible-smallphone">
+  <div class="container">
+    <h2 class="center"><%= Character.model_name.human.pluralize.titleize %></h2>
+    <% @characters.each do |character| %>
+    <% @character = character %>
+    <div class="well" id="mobile_node_desc_<%= character.id %>">
+      <div>
+        <%= render "characters/description" %>
+      </div>
+      <div>
+        <%= render "characters/links_mobile" %>
+      </div>
+    </div>
+    <% end %>
+  </div>
+</div>
+

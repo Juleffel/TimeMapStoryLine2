@@ -1,0 +1,15 @@
+<%- model_class = Category -%>
+<% @categories.each do |category| %>
+  <div class="page-header">
+    <div class="row">
+      <div class="col-sm-4 col-md-3">
+        <%= image_tag category.image_url, class:"thumbnail", style: "width: 100%; max-width: 500px;" %>
+      </div>
+      <div class="col-sm-8 col-md-9">
+        <h1><%= category.title %><br>
+        <small><%= category.description %></small></h1>
+      </div>
+    </div>
+  </div>
+  <%= render :partial => 'mosaic', locals: {categories: category.categories} %>
+<% end %>

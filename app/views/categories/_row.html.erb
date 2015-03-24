@@ -1,0 +1,17 @@
+<tr>
+    <!--td><%= if category.category then category.category.title end %></td-->
+    <td><%= "|"*level %> <%= category.num %></td>
+    <td><%= link_to category.title, category_path(category, mod: true) %></td>
+    <td><%= category.description %></td>
+    <td><%= unless category.image_url.blank? then image_tag category.image_url, width: 100 end %></td>
+    <td><%= category.permission_level %></td>
+    <td>
+      <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                  edit_category_path(category), :class => 'btn btn-default btn-xs' %>
+      <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                  category_path(category),
+                  :method => :delete,
+                  :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                  :class => 'btn btn-xs btn-danger' %>
+    </td>
+</tr>

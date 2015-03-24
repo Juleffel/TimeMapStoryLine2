@@ -1,0 +1,168 @@
+
+<%= form_for [@user, @character].compact, :html => { :class => "form-horizontal character" } do |f| %>
+
+    <% if @character.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= pluralize(@character.errors.count, "error") %> prohibited this character from being saved:</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+        <% @character.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <%= f.hidden_field :user_id %>
+  <div class="control-group">
+    <%= f.label :first_name, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :first_name, :class => 'form-control' %>
+    </div>
+    <%= error_span(@character[:first_name]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :middle_name, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :middle_name, :class => 'form-control' %>
+    </div>
+    <%= error_span(@character[:middle_name]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :last_name, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :last_name, :class => 'form-control' %>
+    </div>
+    <%= error_span(@character[:last_name]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :nickname, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :nickname, :class => 'form-control' %>
+    </div>
+    <%= error_span(@character[:nickname]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :birth_date, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.date_field :birth_date, value: (@character.birth_date.to_s(:datepicker) if @character.birth_date), :class => 'form-control datepicker' %>
+    </div>
+    <%= error_span(@character[:birth_date]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :birth_place, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :birth_place, :class => 'form-control' %>
+    </div>
+    <%= error_span(@character[:birth_place]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :sex, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.check_box :sex, :class => 'form-control' %>
+    </div>
+    <%= error_span(@character[:sex]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :quote, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :quote, :class => 'form-control' %>
+    </div>
+    <%= error_span(@character[:quote]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :avatar_url, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :avatar_url, :class => 'form-control' %>
+    </div>
+    <p class="help-block"><%= t(:recommended_size) %>: 200x320</p>
+    <%= error_span(@character[:avatar_url]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :avatar_name, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :avatar_name, :class => 'form-control' %>
+    </div>
+    <%= error_span(@character[:avatar_name]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :copyright, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :copyright, :class => 'form-control' %>
+    </div>
+    <%= error_span(@character[:copyright]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :image_url, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :image_url, :class => 'form-control' %>
+    </div>
+    <p class="help-block"><%= t(:recommended_size) %>: <%= t(:screen_size) %></p>
+    <%= error_span(@character[:image_url]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :story, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_area :story, :class => 'form-control' %>
+    </div>
+    <%= error_span(@character[:story]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :summary, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_area :summary, :class => 'form-control' %>
+    </div>
+    <%= error_span(@character[:summary]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :anecdote, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_area :anecdote, :class => 'form-control' %>
+    </div>
+    <%= error_span(@character[:anecdote]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :test_rp, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_area :test_rp, :class => 'form-control' %>
+    </div>
+    <%= error_span(@character[:test_rp]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :psychology, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_area :psychology, :class => 'form-control' %>
+    </div>
+    <%= error_span(@character[:psychology]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :appearance, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_area :appearance, :class => 'form-control' %>
+    </div>
+    <%= error_span(@character[:appearance]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :faction_id, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.collection_select(:faction_id, Faction.all, :id, :name, :class => 'form-control') %>
+    </div>
+    <%= error_span(@character[:faction_id]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :group_id, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.collection_select(:group_id, Group.all, :id, :name, :class => 'form-control') %>
+    </div>
+    <%= error_span(@character[:group_id]) %>
+  </div>
+
+
+  <%= f.submit nil, :class => 'btn btn-primary' %>
+  <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+            ucharacters_path, :class => 'btn btn-default' %>
+
+<% end %>

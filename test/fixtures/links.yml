@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  from_character_id: 
+  to_character_id: 
+  title: MyString
+  description: MyText
+  force: 1
+
+two:
+  from_character_id: 
+  to_character_id: 
+  title: MyString
+  description: MyText
+  force: 1

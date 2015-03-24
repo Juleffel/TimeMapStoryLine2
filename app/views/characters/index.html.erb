@@ -1,0 +1,76 @@
+<%- model_class = Character -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:id) %></th>
+      <th><%= model_class.human_attribute_name(:user_id) %></th>
+      <th><%= model_class.human_attribute_name(:first_name) %></th>
+      <th><%= model_class.human_attribute_name(:last_name) %></th>
+      <th><%= model_class.human_attribute_name(:birth_date) %></th>
+      <th><%= model_class.human_attribute_name(:birth_place) %></th>
+      <th><%= model_class.human_attribute_name(:sex) %></th>
+      <th><%= model_class.human_attribute_name(:avatar_url) %></th>
+      <th><%= model_class.human_attribute_name(:avatar_name) %></th>
+      <th><%= model_class.human_attribute_name(:copyright) %></th>
+      <th><%= model_class.human_attribute_name(:topic_id) %></th>
+      <th><%= model_class.human_attribute_name(:story) %></th>
+      <th><%= model_class.human_attribute_name(:summary) %></th>
+      <th><%= model_class.human_attribute_name(:anecdote) %></th>
+      <th><%= model_class.human_attribute_name(:test_rp) %></th>
+      <th><%= model_class.human_attribute_name(:psychology) %></th>
+      <th><%= model_class.human_attribute_name(:appearance) %></th>
+      <th><%= model_class.human_attribute_name(:faction_id) %></th>
+      <th><%= model_class.human_attribute_name(:group_id) %></th>
+      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @characters.each do |character| %>
+      <tr>
+        <td><%= link_to character.id, ucharacter_path(character) %></td>
+        <td><%= character.user_id %></td>
+        <td><%= character.first_name %></td>
+        <td><%= character.last_name %></td>
+        <td><%= character.birth_date %></td>
+        <td><%= character.birth_place %></td>
+        <td><%= character.sex %></td>
+        <td><%= character.avatar_url %></td>
+        <td><%= character.avatar_name %></td>
+        <td><%= character.copyright %></td>
+        <td><%= character.topic_id %></td>
+        <td><%= character.story %></td>
+        <td><%= character.summary %></td>
+        <td><%= character.anecdote %></td>
+        <td><%= character.test_rp %></td>
+        <td><%= character.psychology %></td>
+        <td><%= character.appearance %></td>
+        <td><%= character.faction_id %></td>
+        <td><%= character.group_id %></td>
+        <td><%=l character.created_at %></td>
+        <td>
+          <% if can? :update, character %>
+            <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                        edit_ucharacter_path(character), :class => 'btn btn-default btn-xs' %>
+          <% end %>
+          <% if can? :destroy, character %>
+            <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                        ucharacter_path(character),
+                        :method => :delete,
+                        :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                        :class => 'btn btn-xs btn-danger' %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<% if can? :create, Character %>
+<%= link_to t('.new', :default => t("helpers.links.new")),
+            new_character_path(user_id: @user),
+            :class => 'btn btn-primary' %>
+<% end %>

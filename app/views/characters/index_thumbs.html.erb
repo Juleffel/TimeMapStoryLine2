@@ -1,0 +1,53 @@
+<%- model_class = Character -%>
+  <div class="page-header">
+    <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+  </div>
+<div class="clearfix mosaicflow" data-min-item-width="350">
+  <% @characters.each do |character| %>
+    <div class="mosaicflow__item">
+      <div class="item">
+        <div class="thumbnail">
+          <%= image_tag character.avatar_url, alt: character.avatar_name, title: "by " + character.copyright %>
+          <div class="caption">
+            <h3>
+              <%= link_to character.name, ucharacter_path(character) %>
+              -
+              <span 
+                style="color: <%= character.faction.color %>"
+                title="<%= character.faction.description %>">
+                <%= character.faction.name %>
+              </span>
+            </h3>
+            <h4><i>by <%= character.user.pseudo %></i></h4>
+            <p><%= truncate(character.summary, length: 500, separator: ' ', omission: ' [...]') %></p>
+            <p><%= link_to t(:learn_more), ucharacter_path(character) %></p>
+            <% if character.group.name != "Validé" %>
+            <br />
+            <h2 style="color: <%= character.group.color %>"><%= character.group.name %></h2>
+            <p><%= character.group.description %></p>
+            <% end %>
+            <p>
+              <% if can? :update, character %>
+                <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                            edit_ucharacter_path(character), :class => 'btn btn-default' %>
+              <% end %>
+              <% if can? :destroy, character %>
+                <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                            ucharacter_path(character),
+                            :method => :delete,
+                            :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                            :class => 'btn btn-danger' %>
+              <% end %>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<% if user_signed_in? %>
+<%= link_to t('.new', :default => t("helpers.links.new")),
+            new_ucharacter_path,
+            :class => 'btn btn-primary' %>
+<% end %>

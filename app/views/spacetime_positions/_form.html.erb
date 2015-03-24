@@ -1,0 +1,87 @@
+<%= form_for @spacetime_position, :html => { :class => "form-horizontal spacetime_position" } do |f| %>
+
+    <% if @spacetime_position.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= pluralize(@spacetime_position.errors.count, "error") %> prohibited this spacetime_position from being saved:</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+        <% @spacetime_position.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="control-group">
+    <%= f.label :longitude, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :longitude, :class => 'form-control' %>
+    </div>
+    <%= error_span(@spacetime_position[:longitude]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :latitude, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :latitude, :class => 'form-control' %>
+    </div>
+    <%= error_span(@spacetime_position[:latitude]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :title, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :title, :class => 'form-control' %>
+    </div>
+    <%= error_span(@spacetime_position[:title]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :subtitle, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :subtitle, :class => 'form-control' %>
+    </div>
+    <%= error_span(@spacetime_position[:subtitle]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :resume, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :resume, :class => 'form-control' %>
+    </div>
+    <%= error_span(@spacetime_position[:resume]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :weather, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :weather, :class => 'form-control' %>
+    </div>
+    <%= error_span(@spacetime_position[:weather]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :begin_at, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :begin_at, :class => 'form-control' %>
+    </div>
+    <%= error_span(@spacetime_position[:begin_at]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :end_at, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :end_at, :class => 'form-control' %>
+    </div>
+    <%= error_span(@spacetime_position[:end_at]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :topic_id, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :topic_id, :class => 'form-control' %>
+    </div>
+    <%= error_span(@spacetime_position[:topic_id]) %>
+  </div>
+
+
+  <%= f.submit nil, :class => 'btn btn-primary' %>
+  <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+            spacetime_positions_path, :class => 'btn btn-default' %>
+
+<% end %>

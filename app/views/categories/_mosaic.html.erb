@@ -1,0 +1,27 @@
+<%- model_class = Category -%>
+<div class="clearfix mosaicflow" data-min-item-width="350">
+  <% categories.each do |category| %>
+    <div class="mosaicflow__item">
+      <div class="item">
+        <div class="thumbnail">
+            <% unless category.image_url.blank? %>
+                <%= image_tag category.image_url %>
+            <% end %>
+          <div class="caption">
+            <h3>
+                <%= link_to category.title, category_path(category) %>
+            </h3>
+            <p><%= category.description %></p>
+            <% if category.categories.length %>
+            <div class="list-group">
+            <% category.categories.each do |subcategory| %>
+                <%= link_to subcategory.title, category_path(subcategory), class: "list-group-item" %>
+            <% end %>
+            </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

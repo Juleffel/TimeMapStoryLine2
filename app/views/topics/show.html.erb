@@ -1,0 +1,88 @@
+<%- model_class = Topic -%>
+<div id="container-topic" class="container-topic intro-effect-fadeout">
+
+    <!--div class="codrops-top clearfix">
+    	<a class="codrops-icon codrops-icon-prev" href="http://tympanus.net/Tutorials/SamsungGrid/"><span>Previous Demo</span></a>
+    	<span class="right"><a class="codrops-icon codrops-icon-drop" href="http://tympanus.net/codrops/?p=19119"><span>Back to the Codrops Article</span></a></span>
+    </div-->
+    <header class="header">
+    	<div class="bg-img"><%= image_tag @topic.image_url %></div>
+    	<div class="title">
+    		<!--nav class="codrops-demos">
+    			<a href="index.html">Push</a>
+    			<a class="current-demo" href="index2.html">Fade Out</a>
+    		</nav-->
+    		<h1><%= @topic.title %><br><small><%= @topic.subtitle %></small></h1>
+    		<p class="subline"><%= @topic.summary %></p>
+    		<% unless @topic.weather.blank? %>
+    		<p><%= model_class.human_attribute_name(:weather) %> : <%= @topic.weather %></p>
+    		<% end %>
+    	</div>
+    </header>
+    <button class="trigger" data-info="Voir les posts"><span>Posts</span></button>
+    <article class="content">
+        <div>
+    		<% @answers.each do |answer| %>
+    		    <div class="row">
+    		        <div class="col-md-6">
+    		            <%=l answer.created_at %>
+                    </div>
+                    <div class="col-md-6" style="text-align: right">
+                        <% if can? :manage, answer %>
+                        <%= link_to t('.edit_answer', :default => t("helpers.links.edit")),
+                                      edit_answer_path(answer), :class => 'btn btn-default btn-xs' %>
+                        <%= link_to t('.destroy_answer', :default => t("helpers.links.destroy")),
+                                      answer_path(answer),
+                                      :method => 'delete',
+                                      :data => { :confirm => t('.confirm_answer', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                                      :class => 'btn btn-danger btn-xs' %>
+                        <% end %>
+                    </div>
+    		    </div>
+    		    <div class="row">
+    		        <div class="col-md-3">
+    		            <div class="thumbnail">
+    		                <% if answer.character %>
+        		            <%= image_tag(answer.character.avatar_url) if answer.character.avatar_url %>
+        		            <div class="caption">
+        		                <h3 style="color: <%= answer.character.faction.color %>"><%= answer.character %></h3>
+        		            </div>
+        		            <% else %>
+        		            <div class="caption">
+        		                <h3 style="color: grey"><%=t t('.deleted_character') %></h3>
+        		            </div>
+        		            <% end %>
+    		            </div>
+    		        </div>
+    		        <div class="col-md-9">
+    		            <h1><%= answer.title %></h1>
+    		            <% unless answer.content.blank? %>
+    		            <p style="text-align: justify">
+    		                <%= sanitize answer.content.gsub(/\n/,"<br/>"), 
+    		                :tags => %w(table tr td br b i span p blockquote img div) %>
+                        </p>
+                        <% end %>
+    		        </div>
+    		    </div>
+    		    <hr />
+    		<% end %>
+    	</div>
+    </article>
+    <section class="related">
+        <%= link_to t('.back', :default => t("helpers.links.back")),
+                      topic_back_url(@topic), :class => 'btn btn-default'  %>
+        <% if can? :create, @topic.answers.new %>
+        <%= link_to t('.answer'),
+                      new_answer_path(topic_id: @topic), :class => 'btn btn-default' %>
+        <% end %>
+        <% if can? :manage, @topic %>
+        <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                      edit_topic_path(@topic), :class => 'btn btn-default' %>
+        <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                      topic_path(@topic),
+                      :method => 'delete',
+                      :data => { :confirm => t('.confirm_topic', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                      :class => 'btn btn-danger' %>
+        <% end %>
+    </section>
+</div>

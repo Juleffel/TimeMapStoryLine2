@@ -1,0 +1,150 @@
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t 'hello'
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t('hello') %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# To learn more, please read the Rails Internationalization guide
+# available at http://guides.rubyonrails.org/i18n.html.
+
+fr:
+  hello: "Hello world!"
+  members: "Members"
+  characters: "My characters"
+  groups: "Character status"
+  factions: "Factions"
+  link_natures: "Link natures"
+  categories: "Sub-forums"
+  links: "Character links"
+  forum: "Forum"
+  by: "by"
+  known_as: "known as"
+  learn_more: "Read more..."
+  
+  editing: "Editing"
+  recommended_size: "Recommended size"
+  screen_size: "Screen size"
+  last_answer: "Last answer"
+  num_helper: "The num is used to display categories in ascendant order of num."
+  special_helper: "You can have only one category of each special type. They are used to fold the characters sheets."
+  
+  stop_layout: "Stop Layout"
+  impossible_create_link: "Sorry, you can create a link only from one of your characters."
+  impossible_update_link: "You can't update this link."
+  search: "Search"
+  his_links: "His links"
+  his_other_links: "They have a link with him"
+  
+  new_topic: "Create topic"
+  new_answer_topic: "Answer topic"
+  read_topic: "Read topic"
+  
+  topics:
+    show:
+      answer: "Answer"
+      edit: "Edit topic"
+      destroy: "Delete topic"
+      edit_answer: "Edit"
+      destroy_answer: "Delete"
+      deleted_character: "Removed character."
+      confirm_topic: "Are you sure you want remove this TOPIC and ALL its answers?"
+      confirm_answer: "Are you sure? (This will remove only this answer)"
+  
+  activerecord:
+    models:
+      user/gender:
+        female: user
+        male: user
+      character: character
+      member: member
+      faction: faction
+      group: status
+      link_nature:
+        one: link nature
+        other: link nature
+      link: link
+      presence: presence
+      spacetime_position:
+        one: spacetime position
+        other: spacetime positions
+      topic: topic
+      answer: answer
+      category: sub-forum
+    attributes:
+      user:
+        role: Role
+        login: Login
+        pseudo: Pseudo
+        email: E-mail
+      character:
+        first_name: First name
+        last_name: Last name
+        birth_date: Birthdate
+        nickname: Nickname
+        sex: Male
+        avatar_url: Avatar URL
+        copyright: Avatar Copyright
+        story: Story
+        resume: Summary
+        summary: Summary
+        anectdote: Anecdote
+        test_rp: Test RP
+        psychology: Psychology
+        appearance: Appearance
+        faction_id: Faction
+        group_id: Status
+        npc: NPC
+        image_url: Primary Picture (URL)
+        quote: Favorite quote
+        middle_name: Midlle names
+      nature_link:
+        name: Name
+        description: Description
+      group:
+        name: Name
+        description: Description
+        color: Color
+      faction:
+        name: Name
+        description: Description
+        color: Color
+      category:
+        title: Title
+        num: Num
+        description: Description
+        image_url: Image URL
+        permission_level: Permission Level
+        category: Sub-forum root
+        special: Special category
+      link:
+        from_character_id: From character
+        to_character_id: To character
+        title: Title
+        description: Description
+        force: Force
+        link_nature_id: Link nature
+      topic:
+        user_id: Creator
+        spacetime_position_id: Spacetime position
+        category: Sub-forum
+        image_url: Image URL
+        title: Title
+        subtitle: Subtitle
+        summary: Summary
+        weather: Weather
+      answer:
+        title: Title
+        content: Content
+        character_id: Character

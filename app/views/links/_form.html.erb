@@ -1,0 +1,108 @@
+<%= form_for @link, :html => { :class => "form-horizontal link" } do |f| %>
+
+    <% if @link.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= pluralize(@link.errors.count, "error") %> prohibited this link from being saved:</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+        <% @link.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+
+  <% if @not_from_to %>
+  
+    <%= f.hidden_field :from_character_id, class: "js-from-node" %>
+    <%= f.hidden_field :to_character_id, class: "js-to-node" %>
+    <%= hidden_field_tag :from_cerebro, true %>
+    
+  <% else %>
+  
+    <% if @link.from_character_id and !@link.new_record? %>
+      <%= f.hidden_field :from_character_id %>
+    <% else %>
+      <div class="control-group">
+        <%= f.label :from_character_id, :class => 'control-label' %>
+        <div class="controls">
+          <%= f.collection_select(:from_character_id, current_user.characters, :id, :name, :class => 'form-control') %>
+        </div>
+        <%= error_span(@link[:from_character_id]) %>
+      </div>
+    <% end %>
+    
+    <% if @link.to_character_id and !@link.new_record? %>
+      <%= f.hidden_field :to_character_id %>
+    <% else %>
+      <div class="control-group">
+        <%= f.label :to_character_id, :class => 'control-label' %>
+        <div class="controls">
+          <%= f.collection_select(:to_character_id, Character.all, :id, :name, :class => 'form-control') %>
+        </div>
+        <%= error_span(@link[:to_character_id]) %>
+      </div>
+    <% end %>
+    
+  <% end %>
+  <div class="control-group">
+    <%= f.label :title, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :title, :class => 'form-control' %>
+    </div>
+    <%= error_span(@link[:title]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :description, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_area :description, :class => 'form-control' %>
+    </div>
+    <%= error_span(@link[:description]) %>
+  </div>
+  <div class="container-fluid">
+    <table border=0 style="width:100%">
+      <tr>
+        <td>
+          <div class="control-group">
+            <%= f.label :force, :class => 'control-label' %>
+            <div class="controls">
+              <%= f.text_field :force, value: @link.force || 50, class: 'link_force', data: 
+                {'slider-id' => "link_force_slider", 'slider-min' => 0, 'slider-max' => 100, 'slider-step' => 1} %>
+            </div>
+            <%= error_span(@link[:force]) %>
+          </div>
+        </td>
+        <td class="right">
+          <div class="control-group">
+            <%= f.label :link_nature_id, :class => 'control-label' %>
+            <div class="controls">
+              <%= f.collection_select(:link_nature_id, LinkNature.all, :id, :name, :class => 'form-control') %>
+            </div>
+            <%= error_span(@link[:link_nature_id]) %>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+    
+
+  <%= f.submit nil, :class => 'btn btn-primary' %>
+  <% unless f.object.new_record? %>
+    <%= link_to t('.destroy', :default => t("helpers.links.destroy")), 
+              link_path(f.object, :from_cerebro => "true"), 
+              method: :delete, 
+              data: { confirm: t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, 
+              class:"btn btn-danger" %>
+  <% end %>
+  <% if @form_cerebro %>
+    <%= link_to t('.back', :default => t("helpers.links.back")), '#', class:"btn btn-default js-close" %>
+  <% else %>
+    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+            links_path, :class => 'btn btn-default' %>
+  <% end %>
+
+<% end %>

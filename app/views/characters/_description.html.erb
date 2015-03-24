@@ -1,0 +1,15 @@
+<%= image_tag @character.avatar_url, style: "float:left; border: 2px solid black; margin: 5px;" %>
+<h1 style="color: <%= @character.faction.color %>">
+  <%= @character.name %>
+</h1>
+<h2>Résumé</h2>
+<p><%= @character.summary %></p>
+<!--
+<h2>Histoire</h2>
+<p><%= @character.story %></p>
+<h2>Psychologie</h2>
+<p><%= @character.psychology %></p>
+<h2>Apparence</h2>
+<p><%= @character.appearance %></p>
+<h2>Test RP</h2>
+<p><%= @character.test_rp %></p>-->

@@ -1,0 +1,45 @@
+<%= form_for @faction, :html => { :class => "form-horizontal faction" } do |f| %>
+
+    <% if @faction.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= pluralize(@faction.errors.count, "error") %> prohibited this faction from being saved:</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+        <% @faction.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="control-group">
+    <%= f.label :name, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :name, :class => 'form-control' %>
+    </div>
+    <%= error_span(@faction[:name]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :description, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_area :description, :class => 'form-control' %>
+    </div>
+    <%= error_span(@faction[:description]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :color, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.color_field :color, :class => 'form-control' %>
+    </div>
+    <%= error_span(@faction[:color]) %>
+  </div>
+
+
+  <%= f.submit nil, :class => 'btn btn-primary' %>
+  <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+            factions_path, :class => 'btn btn-default' %>
+
+<% end %>

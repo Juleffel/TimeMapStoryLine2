@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  longitude: 1.5
+  latitude: 1.5
+  title: MyText
+  subtitle: MyText
+  resume: MyText
+  weather: MyText
+  begin_at: 2015-03-10 22:23:30
+  end_at: 2015-03-10 22:23:30
+  topic_id: 
+
+two:
+  longitude: 1.5
+  latitude: 1.5
+  title: MyText
+  subtitle: MyText
+  resume: MyText
+  weather: MyText
+  begin_at: 2015-03-10 22:23:30
+  end_at: 2015-03-10 22:23:30
+  topic_id: 

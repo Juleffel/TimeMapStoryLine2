@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<html lang="en" class="no-js" <%= 'style="height=100%"' if @without_container %>>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TMSL</title>
+    <meta name="description" content="A free HTML5/CSS3 template made exclusively for Codrops by Peter Finlan" />
+    <meta name="keywords" content="html5 template, css3, one page, animations, agency, portfolio, web design" />
+    <meta name="author" content="Peter Finlan" />
+    <!-- Bootstrap -->
+    <%= javascript_include_tag 'modernizr.custom', 'data-turbolinks-track' => true %>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Nunito:400,300,700' rel='stylesheet' type='text/css'>
+    <!-- Facebook and Twitter integration -->
+    <meta property="og:title" content=""/>
+    <meta property="og:image" content=""/>
+    <meta property="og:url" content=""/>
+    <meta property="og:site_name" content=""/>
+    <meta property="og:description" content=""/>
+    <meta name="twitter:title" content="" />
+    <meta name="twitter:image" content="" />
+    <meta name="twitter:url" content="" />
+    <meta name="twitter:card" content="" />
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body class="<%= "without-container" if @without_container %>">
+    <!--[if lt IE 7]>
+    <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+    <!-- open/close -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <%= link_to "TimeMapStoryLine", root_url, class: "navbar-brand" %>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><%= link_to t('members'), characters_path %></li>
+            <% if user_signed_in? %>
+            <li><%= link_to t('characters'), user_characters_path(current_user) %></li>
+            <% end %>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Admin <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><%= link_to t('groups'), groups_path %></li>
+                <li><%= link_to t('factions'), factions_path %></li>
+                <li><%= link_to t('link_natures'), link_natures_path %></li>
+                <li><%= link_to t('categories'), categories_path(mod: true) %></li>
+              </ul>
+              <!--li><%= link_to t('links'), links_path %></li-->
+              <li><%= link_to t('links'), graph_links_path %></li>
+              <li><%= link_to t('forum'), categories_path %></li>
+            </li>
+          </ul>
+          
+          
+          <% if not user_signed_in? %>
+            <%= form_for(:user, url: session_path(:user), html: { class: "navbar-form navbar-right" }) do |f| %>
+              <div class="form-group">
+                <%= f.email_field :email, placeholder: "Email", class: "form-control" %>
+              </div>
+              <div class="form-group">
+                <%= f.password_field :password, placeholder: "Password", autocomplete: "off", class: "form-control" %>
+              </div>
+              
+              <div class="checkbox">
+                <%= f.check_box :remember_me %><% f.label :remember_me %>
+              </div>
+              
+              <%= f.submit "Sign in", class: "btn btn-success" %>
+              <%= link_to 'Sign up', new_user_registration_path, class: "btn btn-info navbar-btn" %>
+            <% end %>
+          <% else %>
+            <%= link_to 'Sign out', destroy_user_session_path, method: :delete, class: "btn btn-info navbar-btn navbar-right" %>
+          <% end %>
+        </div><!--/.navbar-collapse -->
+      </div>
+    </nav>
+
+    <% if @without_container %>
+      <%= yield %>
+    <% else %>
+    <div class="container-fluid">
+      <p class="notice"><%= notice %></p>
+      <p class="alert"><%= alert %></p>
+      <%= render partial: "shared/flash_messages", flash: flash %> 
+      <%= yield %>
+
+      <hr>
+
+      <footer>
+        <p>&copy; TimeMapStoryLine 2015</p>
+      </footer>
+    </div> <!-- /container -->
+    <% end %>
+        
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+    <script>
+    (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+    function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+    e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+    e.src='//www.google-analytics.com/analytics.js';
+    r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+    ga('create','UA-XXXXX-X');ga('send','pageview');
+    </script>
+  </body>
+</html>

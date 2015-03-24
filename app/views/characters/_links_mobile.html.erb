@@ -1,0 +1,14 @@
+<% if false %>
+<div>
+  <h3>Liens</h3>
+  <% @character.links.order(:strengh).each do |l| %>
+    <% other = if l.node_to_id == @node.id then l.node_from else l.node_to end %>
+    <% if other.type_of_node != 'theme' %>
+      <h4><%= link_to other.name, "#", class: "select-node", node: "n"+other.id.to_s %> <small><%= l.type_link.name if l.type_link %></small></h4>
+      <% if !l.comment.blank? %>
+        <%= render_attr l.comment, :text %>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>
+<% end %>

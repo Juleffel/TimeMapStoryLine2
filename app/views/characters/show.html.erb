@@ -1,0 +1,57 @@
+<%- model_class = Character -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.titleize %></h1>
+</div>
+
+<dl class="dl-horizontal">
+  <dt><strong><%= model_class.human_attribute_name(:user_id) %>:</strong></dt>
+  <dd><%= @character.user_id %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:first_name) %>:</strong></dt>
+  <dd><%= @character.first_name %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:last_name) %>:</strong></dt>
+  <dd><%= @character.last_name %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:birth_date) %>:</strong></dt>
+  <dd><%= @character.birth_date %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:birth_place) %>:</strong></dt>
+  <dd><%= @character.birth_place %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:sex) %>:</strong></dt>
+  <dd><%= @character.sex %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:avatar_url) %>:</strong></dt>
+  <dd><%= @character.avatar_url %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:avatar_name) %>:</strong></dt>
+  <dd><%= @character.avatar_name %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:copyright) %>:</strong></dt>
+  <dd><%= @character.copyright %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:topic_id) %>:</strong></dt>
+  <dd><%= @character.topic_id %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:story) %>:</strong></dt>
+  <dd><%= @character.story %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:summary) %>:</strong></dt>
+  <dd><%= @character.summary %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:anecdote) %>:</strong></dt>
+  <dd><%= @character.anecdote %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:test_rp) %>:</strong></dt>
+  <dd><%= @character.test_rp %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:psychology) %>:</strong></dt>
+  <dd><%= @character.psychology %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:appearance) %>:</strong></dt>
+  <dd><%= @character.appearance %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:faction_id) %>:</strong></dt>
+  <dd><%= @character.faction_id %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:group_id) %>:</strong></dt>
+  <dd><%= @character.group_id %></dd>
+</dl>
+
+<%= link_to t('.back', :default => t("helpers.links.back")),
+              ucharacters_path, :class => 'btn btn-default'  %>
+<% if can? :update, @character %>
+<%= link_to t('.edit', :default => t("helpers.links.edit")),
+              edit_ucharacter_path(@character), :class => 'btn btn-default' %>
+<% end %>
+<% if can? :destroy, @character %>
+<%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+              ucharacter_path(@character),
+              :method => 'delete',
+              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+              :class => 'btn btn-danger' %>
+<% end %>
