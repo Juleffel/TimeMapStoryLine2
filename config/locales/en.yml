@@ -113,6 +113,8 @@ fr:
         image_url: Primary Picture (URL)
         quote: Favorite quote
         middle_name: Midlle names
+        shortline1: "Shortline 1"
+        shortline2: "Shortline 2"
       nature_link:
         name: Name
         description: Description

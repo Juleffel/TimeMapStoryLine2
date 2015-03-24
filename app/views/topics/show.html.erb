@@ -14,15 +14,16 @@
         			<a class="current-demo" href="index2.html">Fade Out</a>
         		</nav-->
         		<h1>
-        		    <%= @character.name %>
-        		    <br>
-        		    <small><%= @character.quote %></small>
+        		    <%= @character.complete_name %>
+        		    <% if @character.nickname %><br>
+        		    <small><%t 'known_as'%> <%= @character.nickname %></small>
+        		    <% end %>
         		</h1>
-        		<% unless @character.summary.blank? %>
-        		<p class="subline"><%= @character.summary %></p>
+        		<% unless @character.shortline1.blank? or @character.shortline1.length > 200 %>
+        		<p class="subline"><%= @character.shortline1 %></p>
         		<% end %>
-        		<% unless @character.anecdote.blank? %>
-        		<p><%= model_class.human_attribute_name(:anecdote) %> : <%= @character.anecdote %></p>
+        		<% unless @character.quote.blank? or @character.quote.length > 800 %>
+        		<p><%= @character.quote %></p>
         		<% end %>
         	</div>
         <% else %>
@@ -69,25 +70,32 @@
     		            </div>
     		        </div>
     		        <div class="col-md-9">
-    		            <% unless @character.story.blank? %>
+    		            <% unless @character.summary.blank? %>
+    		            <h1><%= Character.human_attribute_name(:summary) %></h1>
+    		            <p style="text-align: justify">
+    		                <%= sanitize @character.summary.gsub(/\n/,"<br/>"), 
+    		                :tags => %w(table tr td br b i span p blockquote img div h1 h2 h3 h4 h5 h6) %>
+                        </p>
+                        <% end %>
+    		            <% unless @character.summary.blank? %>
     		            <h1><%= Character.human_attribute_name(:story) %></h1>
     		            <p style="text-align: justify">
     		                <%= sanitize @character.story.gsub(/\n/,"<br/>"), 
-    		                :tags => %w(table tr td br b i span p blockquote img div) %>
+    		                :tags => %w(table tr td br b i span p blockquote img div h1 h2 h3 h4 h5 h6) %>
                         </p>
                         <% end %>
     		            <% unless @character.appearance.blank? %>
     		            <h1><%= Character.human_attribute_name(:appearance) %></h1>
     		            <p style="text-align: justify">
     		                <%= sanitize @character.appearance.gsub(/\n/,"<br/>"), 
-    		                :tags => %w(table tr td br b i span p blockquote img div) %>
+    		                :tags => %w(table tr td br b i span p blockquote img div h1 h2 h3 h4 h5 h6) %>
                         </p>
                         <% end %>
     		            <% unless @character.psychology.blank? %>
     		            <h1><%= Character.human_attribute_name(:psychology) %></h1>
     		            <p style="text-align: justify">
     		                <%= sanitize @character.psychology.gsub(/\n/,"<br/>"), 
-    		                :tags => %w(table tr td br b i span p blockquote img div) %>
+    		                :tags => %w(table tr td br b i span p blockquote img div h1 h2 h3 h4 h5 h6) %>
                         </p>
                         <% end %>
     		        </div>

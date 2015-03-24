@@ -114,6 +114,8 @@ fr:
         image_url: Image Principale (URL)
         small_image_url: Mini-Image (URL)
         quote: Citation favorite
+        shortline1: "Courte phrase 1"
+        shortline2: "Courte phrase 2"
       nature_link:
         name: Nom
         description: Description

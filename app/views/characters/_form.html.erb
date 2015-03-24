@@ -46,6 +46,20 @@
     <%= error_span(@character[:nickname]) %>
   </div>
   <div class="control-group">
+    <%= f.label :shortline1, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :shortline1, :class => 'form-control' %>
+    </div>
+    <%= error_span(@character[:shortline1]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :shortline2, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :shortline2, :class => 'form-control' %>
+    </div>
+    <%= error_span(@character[:shortline2]) %>
+  </div>
+  <div class="control-group">
     <%= f.label :birth_date, :class => 'control-label' %>
     <div class="controls">
       <%= f.date_field :birth_date, value: (@character.birth_date.to_s(:datepicker) if @character.birth_date), :class => 'form-control datepicker' %>

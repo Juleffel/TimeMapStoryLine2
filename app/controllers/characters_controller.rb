@@ -62,6 +62,7 @@ class CharactersController < ApplicationController
         :user_id, :first_name, :middle_name, :last_name, :nickname, :birth_date, :birth_place, :sex, 
         :avatar_url, :avatar_name, :copyright, :story, :summary, 
         :anecdote, :test_rp, :psychology, :appearance, :faction_id, :group_id,
-        :image_url, :npc, :quote, :small_image_url)
+        :image_url, :npc, :quote, :small_image_url,
+        :shortline1, :shorline2)
     end
 end
