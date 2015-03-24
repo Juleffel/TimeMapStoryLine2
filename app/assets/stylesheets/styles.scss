@@ -1166,6 +1166,7 @@ Sliders
     padding: 1px; 
     border: 2px solid black; 
     margin: 5px;
+    width: 200px;
 }
 .graph-avatar-link {
     float: left;
@@ -1185,4 +1186,13 @@ Sliders
 }
 .graph-links table h4 {
     margin-top: 0;
+}
+.graph-link img {
+    width: 100px;
+}
+.category-topic img.thumbnail {
+    max-width: 200px;
+}
+.container-topic .thumbnail img {
+    width: 200px;
 }
