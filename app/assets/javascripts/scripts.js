@@ -69,19 +69,6 @@ $(document).ready(function() {
 	    language: "fr",
 	    autoclose: true
 	});
-	/*
-	$('.datepicker').each(function(i, d) {
-		var $d = $(d), v = d.value;
-		$d.datepicker({
-			format: "mm/dd/yyyy",
-		    startDate: "01/01/1900",
-		    defaultViewDate: {year: 1980},
-		    startView: 2,
-		    language: "fr",
-		    autoclose: true
-		});
-		$d.datepicker('update', v);
-	});*/
 	
 	// With JQuery
 	var change_slider_color = function (slide, $slider) {

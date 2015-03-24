@@ -1,5 +1,5 @@
 module HashBy
-  def self.hash_by(key)
+  def hash_by(key)
     hash = {}
     self.all.each do |obj|
       hash[obj.send(key)] = obj.json_attributes

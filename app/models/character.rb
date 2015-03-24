@@ -1,4 +1,6 @@
 class Character < ActiveRecord::Base
+  extend HashBy
+    
   belongs_to :user, inverse_of: :characters
   belongs_to :topic, inverse_of: :character, dependent: :destroy
   belongs_to :group, inverse_of: :characters
@@ -57,7 +59,6 @@ class Character < ActiveRecord::Base
   end
   
   def json_attributes
-    p spacetime_positions
     attributes.merge({
       node_ids: spacetime_positions.order(:begin_at).map(&:id), 
       nodes_updated_at: nodes_updated_at, 
@@ -66,13 +67,5 @@ class Character < ActiveRecord::Base
       importance: 1,
       depth: 0,
     })
-  end
-  
-  def self.hash_by(key)
-    hash = {}
-    self.all.each do |obj|
-      hash[obj.send(key)] = obj.json_attributes
-    end
-    hash
   end
 end
