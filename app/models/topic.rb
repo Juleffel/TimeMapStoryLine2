@@ -5,7 +5,7 @@ class Topic < ActiveRecord::Base
     belongs_to :user, inverse_of: :topics
     belongs_to :category, inverse_of: :topics
     
-    validates :image_url, format: { with: /\Ahttps?:\/\//,
+    validates :image_url, format: { with: /\A(https?:\/\/.*|)\z/,
         message: "Must be like 'http://...'" }
     
     after_save -> { spacetime_position.touch if spacetime_position }
@@ -23,20 +23,23 @@ class Topic < ActiveRecord::Base
         topics.sort { |x,y| x.last_answered_at <=> y.last_answered_at }.reverse
     end
     
+    # Category extended by special categories
+    # Make the link between character group and category special
+    def special_category
+        @special_category = @special_category || if character and character.group
+            group_special = character.group.special
+            if group_special.blank?
+                nil
+            else
+                Category.specials(group_special)
+            end
+        end
+    end
     def _category
         @_category = @_category || if category
             category
-        elsif character and character.group
-            group_name = character.group.name
-            if group_name == "Non-validé"
-                Category.special_non_valid
-            elsif group_name == "Abandonné" or group_name == "Décédé"
-                Category.special_dead
-            elsif character.pv
-                Category.special_pv
-            else
-                Category.special_valid
-            end
+        elsif @special_category
+            @special_category
         else
             nil
         end

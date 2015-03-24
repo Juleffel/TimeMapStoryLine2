@@ -18,6 +18,8 @@ class CategoriesController < ApplicationController
     end
     @categories = @category.categories.includes(:categories)
     @topics = Topic.order(@category.topics.includes(:user, {answers: {character: :faction}}))
+    @special_topics = Topic.order(@category.special_topics)
+    @special_topics = 
     respond_with(@category)
   end
 

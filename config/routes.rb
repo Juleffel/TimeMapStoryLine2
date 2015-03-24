@@ -15,9 +15,9 @@ Rails.application.routes.draw do
     
     resources :link_natures
   
-    resources :characters, only: [:index, :show]
+    resources :characters, only: [:index]
     resources :users, only: [] do
-      resources :characters
+      resources :characters, except: [:show]
     end
   
     resources :groups

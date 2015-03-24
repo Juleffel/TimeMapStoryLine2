@@ -38,7 +38,8 @@ fr:
   screen_size: "Screen size"
   last_answer: "Last answer"
   num_helper: "The num is used to display categories in ascendant order of num."
-  special_helper: "You can have only one category of each special type. They are used to fold the characters sheets."
+  special_helper_cat: "You can have only one category of each special type. They are used to fold the characters sheets."
+  special_helper_group: "In wich special category will be folded the character sheets of this group?"
   
   stop_layout: "Stop Layout"
   impossible_create_link: "Sorry, you can create a link only from one of your characters."
@@ -57,10 +58,13 @@ fr:
       edit: "Edit topic"
       destroy: "Delete topic"
       edit_answer: "Edit"
+      edit_character: "Edit"
       destroy_answer: "Delete"
+      destroy_character: "Delete Character"
       deleted_character: "Removed character."
       confirm_topic: "Are you sure you want remove this TOPIC and ALL its answers?"
       confirm_answer: "Are you sure? (This will remove only this answer)"
+      confirm_character: "!!! WARNING !!! Are you sur you want remove the CHARACTER behind this topic ?"
   
   activerecord:
     models:

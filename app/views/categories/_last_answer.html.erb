@@ -1,0 +1,10 @@
+<%=t('last_answer')%>: 
+<%=l topic.last_answered_at %>
+<% if la = topic.last_answer %>
+    <% if c = la.character %>
+        <%=t 'by'%>
+        <span style="color: <%= c.faction.color %>"><%= c.name %></span>
+    <% end %>
+<% else %>
+    <%=t 'by'%> <%= topic.user.pseudo %>
+<% end %>

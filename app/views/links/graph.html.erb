@@ -45,11 +45,11 @@
     </div>
     <% @characters.each do |character| %>
       <% @character = character %>
-      <div class="foreground mainadd left up nodeinfo n<%=character.id%> js-scrollbar">
-        <%= render "characters/description" %>
+      <div class="foreground mainadd left all nodeinfo n<%=character.id%> js-scrollbar">
+        <%= render "characters/links_graph" %>
       </div>
       <div class="foreground mainadd right up nodeinfo n<%=character.id%> js-scrollbar" node="n<%=character.id%>">
-        <%= render "characters/links_graph" %>
+        <%= render "characters/description" %>
       </div>
     <% end %>
     <% @not_from_to = true

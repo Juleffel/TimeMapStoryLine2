@@ -6,14 +6,20 @@ class Ability
     #
     user ||= User.new # guest user (not logged in)
     if user.admin?
-      can :manage, :all
+      can [:read, :update], :all
+      can :manage, [Character, Answer, Category, Faction, Group, Link, LinkNature, Presence, SpacetimePosition, User]
+      can :manage, Topic do |topic|
+        not topic.character
+      end
     elsif !user.new_record?
       can :manage, Character, user_id: user.id
       can :read, :all
       can :graph, Link
       can :manage, Link, from_character: {user_id: user.id}
       can :create, Topic
-      can :manage, Topic, user_id: user.id
+      can :manage, Topic do |topic|
+        topic.user_id == user.id and not topic.character
+      end
       can :create, Answer
       can :manage, Answer, character: {user_id: user.id} 
     else

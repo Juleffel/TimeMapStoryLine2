@@ -11,6 +11,8 @@ class TopicsController < ApplicationController
 
   def show
     @answers = @topic.answers.includes({character: [:user, :faction, :group]})
+    @character_topic = @topic.character != nil
+    @character = @topic.character
     @without_container = true
     respond_with(@topic)
   end

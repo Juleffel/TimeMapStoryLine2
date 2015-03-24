@@ -70,6 +70,8 @@ $(document).ready(function() {
 	    autoclose: true
 	});
 	
+	$(".js-scrollbar").mCustomScrollbar();
+	
 	// With JQuery
 	var change_slider_color = function (slide, $slider) {
 		var bgr = 50;

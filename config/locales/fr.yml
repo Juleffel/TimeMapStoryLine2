@@ -38,7 +38,8 @@ fr:
   screen_size: "Taille d'écran"
   last_answer: "Dernière réponse"
   num_helper: "Le numéro est utilisé pour afficher les catégories dans l'ordre de num croissant."
-  special_helper: "Vous ne devez avoir qu'une seule catégorie spéciale de chaque type. Elles sont utilisées pour y ranger les fiches de personnages."
+  special_helper_cat: "Vous ne devez avoir qu'une seule catégorie spéciale de chaque type. Elles sont utilisées pour y ranger les fiches de personnages."
+  special_helper_group: "Dans quelle catégorie spéciale seront rangés les fiches de personnages de ce groupe ?"
   
   stop_layout: "Stop Layout"
   impossible_create_link: "Désolé, vous ne pouvez créer un lien que depuis l'un de vos personnages."
@@ -57,10 +58,13 @@ fr:
       edit: "Éditer le topic"
       destroy: "Supprimer le topic"
       edit_answer: "Éditer"
+      edit_character: "Éditer"
       destroy_answer: "Supprimer"
+      destroy_character: "Supprimer le personnage"
       deleted_character: "Personnage supprimé."
       confirm_topic: "Êtes-vous sûr de vouloir supprimer le TOPIC et TOUS ses messages ?"
       confirm_answer: "Êtes-vous sûr ? (Cela supprimera uniquement cette réponse)"
+      confirm_character: "!!! ATTENTION !!! Êtes-vous sûr de vouloir supprimer le PERSONNAGE derrière cette fiche ?"
   
   activerecord:
     models:
@@ -108,6 +112,7 @@ fr:
         group_id: Statut
         npc: PV
         image_url: Image Principale (URL)
+        small_image_url: Mini-Image (URL)
         quote: Citation favorite
       nature_link:
         name: Nom
@@ -116,6 +121,7 @@ fr:
         name: Nom
         description: Description
         color: Couleur
+        special: Catégorie
       faction:
         name: Nom
         description: Description

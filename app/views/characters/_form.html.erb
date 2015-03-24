@@ -104,6 +104,14 @@
     <%= error_span(@character[:image_url]) %>
   </div>
   <div class="control-group">
+    <%= f.label :small_image_url, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :small_image_url, :class => 'form-control' %>
+    </div>
+    <p class="help-block"><%= t(:recommended_size) %>: 100x100</p>
+    <%= error_span(@character[:small_image_url]) %>
+  </div>
+  <div class="control-group">
     <%= f.label :story, :class => 'control-label' %>
     <div class="controls">
       <%= f.text_area :story, :class => 'form-control' %>

@@ -34,6 +34,8 @@
 //= require lib/sigma.utils
 //= require lib/sigma.forceatlas
 
+//= require lib/jquery.mCustomScrollbar.concat.min
+
 //= require graph/sigmajs.loadData
 //= require graph/sigmajs.searchNode
 //= require graph/sigmajs.fisheye

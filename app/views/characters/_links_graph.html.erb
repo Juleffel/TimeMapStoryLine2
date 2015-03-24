@@ -1,32 +1,6 @@
-<div>
+<div class="graph-links">
   <h1><%=t "his_links" %></h1>
-  <% @character.to_links.order('force DESC').each do |l| %> <!--# Sorted by force, desc-->
-    <% other = if l.to_character_id == @character.id then l.from_character else l.to_character end %>
-    <h4>
-      <small style="color: <%= other.faction.color %>"><%= other.faction.name %></small>
-      <%= link_to other.name, "#", class: "select-node", node: "n"+other.id.to_s %>
-      <small style="color: <%= l.link_nature.color %>"><%= l.link_nature.name %></small>
-    </h4>
-    <% if !l.title.blank? %>
-      <h3><%= l.title %></h3>
-    <% end %>
-    <% if !l.description.blank? %>
-      <p><%= l.description %></p>
-    <% end %>
-  <% end %>
+  <%= render partial: 'characters/links_table', locals: {links: @character.to_links} %>
   <h1><%=t "his_other_links" %></h1>
-  <% @character.from_links.order('force DESC').each do |l| %> <!--# Sorted by force, desc-->
-    <% other = if l.to_character_id == @character.id then l.from_character else l.to_character end %>
-    <h4>
-      <small style="color: <%= other.faction.color %>"><%= other.faction.name %></small>
-      <%= link_to other.name, "#", class: "select-node", node: "n"+other.id.to_s %>
-      <small style="color: <%= l.link_nature.color %>"><%= l.link_nature.name %></small>
-    </h4>
-    <% if !l.title.blank? %>
-      <h3><%= l.title %></h3>
-    <% end %>
-    <% if !l.description.blank? %>
-      <p><%= l.description %></p>
-    <% end %>
-  <% end %>
+  <%= render partial: 'characters/links_table', locals: {links: @character.from_links} %>
 </div>

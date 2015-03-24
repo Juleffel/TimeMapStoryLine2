@@ -36,6 +36,14 @@
     </div>
     <%= error_span(@group[:color]) %>
   </div>
+  <div class="control-group">
+    <%= f.label :special, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.select(:special, Category::SPECIALS, {include_blank: true}, :class => 'form-control') %>
+    </div>
+    <p class="help-block"><%= t('special_helper_group') %></p>
+    <%= error_span(@group[:special]) %>
+  </div>
 
 
   <%= f.submit nil, :class => 'btn btn-primary' %>

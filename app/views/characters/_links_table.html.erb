@@ -1,0 +1,26 @@
+<table>
+  <% links.order('force DESC').each do |l| %> <!--# Sorted by force, desc-->
+    <% other = if l.to_character_id == @character.id then l.from_character else l.to_character end %>
+    <tr>
+      <td>
+        <%= image_tag other.small_image_url, class: "graph-avatar-link" %>
+      </td>
+      <td>
+        <div class="text-center">
+          <h4>
+            <%= link_to other.name, "#", class: "select-node", node: "n"+other.id.to_s, style: "color: " + other.faction.color %>
+            <br />
+            <small style="color: <%= l.link_nature.color %>"><%= l.link_nature.name %></small>
+          </h4>
+        </div>
+        
+        <% if !l.title.blank? %>
+          <h3><%= l.title %></h3>
+        <% end %>
+        <% if !l.description.blank? %>
+          <p><%= l.description %></p>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+</table>

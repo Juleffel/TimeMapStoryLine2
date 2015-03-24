@@ -5,6 +5,7 @@
     <td><%= category.description %></td>
     <td><%= unless category.image_url.blank? then image_tag category.image_url, width: 100 end %></td>
     <td><%= category.permission_level %></td>
+    <td><%= category.special_txt %></td>
     <td>
       <%= link_to t('.edit', :default => t("helpers.links.edit")),
                   edit_category_path(category), :class => 'btn btn-default btn-xs' %>

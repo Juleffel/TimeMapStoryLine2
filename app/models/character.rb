@@ -15,9 +15,11 @@ class Character < ActiveRecord::Base
   has_many :spacetime_positions, through: :presences
   has_many :answers, inverse_of: :character
   
-  validates :avatar_url, format: { with: /\Ahttps?:\/\//,
+  validates :avatar_url, format: { with: /\A(https?:\/\/.*|)\z/,
       message: "must be like 'http://...'" }
-  validates :image_url, format: { with: /\Ahttps?:\/\//,
+  validates :image_url, format: { with: /\A(https?:\/\/.*|)\z/,
+      message: "must be like 'http://...'" }
+  validates :small_image_url, format: { with: /\A(https?:\/\/.*|)\z/,
       message: "must be like 'http://...'" }
   
   #validates_inclusion_of :sex, :in => %w( m f )
@@ -50,8 +52,13 @@ class Character < ActiveRecord::Base
   end
   
   def create_own_topic
-    self.topic = Topic.create(user_id: self.user_id)
-    self.save
+    unless self.topic
+      Topic.skip_callback(:create)
+      self.topic = Topic.new(user_id: self.user_id, image_url: self.image_url, title: self.name, subtitle: self.quote, summary: self.summary)
+      self.topic.save(:validate => false)
+      Topic.set_callback(:create)
+      self.save
+    end
   end
   
   def nodes_updated_at

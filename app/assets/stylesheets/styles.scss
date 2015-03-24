@@ -516,13 +516,13 @@ Buttons
 .invisible {
   display: none;
 }
-.center {
+.text-center {
   text-align: center;
 }
-.justify {
+.text-justify {
   text-align: justify;
 }
-.right {
+.text-right {
   text-align: right;
 }
 @media (max-width: 400px) {
@@ -1154,3 +1154,35 @@ Sliders
 #link_force_slider .slider-track-high {
 	background: red;
 }*/
+
+
+/* Graph */
+
+.graph-character {
+    text-align: right;
+}
+.graph-avatar-character {
+    float: right;
+    padding: 1px; 
+    border: 2px solid black; 
+    margin: 5px;
+}
+.graph-avatar-link {
+    float: left;
+    padding: 1px; 
+    border: 2px solid black; 
+    margin: 5px;
+}
+.graph-links table {
+    width: 100%;
+}
+.graph-links td:first-child {
+    width: 126px;
+}
+.graph-links td {
+    vertical-align: top;
+    padding: 0 5px;
+}
+.graph-links table h4 {
+    margin-top: 0;
+}

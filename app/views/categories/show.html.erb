@@ -75,19 +75,36 @@
                 <h1 class="surline"><span><%= topic.title %></span></h1>
                 <h2 class="surline"><span><%= topic.subtitle %></span></h2>
                 <p class="surline"><span><%= topic.summary %></span></p>
-                <p class="surline"><span>
-                    <%=t('last_answer')%>: 
-                    <%=l topic.last_answered_at %>
-                    <% if la = topic.last_answer %>
-                        <% if c = la.character %>
-                            <%=t 'by'%>
-                            <span style="color: <%= c.faction.color %>"><%= c.name %></span>
-                        <% end %>
-                    <% else %>
-                        <%=t 'by'%> <%= topic.user.pseudo %>
-                    <% end %>
-                </span></p>
+                <p class="surline"><span><%= render partial: 'last_answer', locals: {topic: topic} %></span></p>
                 <p><%= link_to t('read_topic'), topic_url(topic), class: "btn btn-primary btn-lg" %></p>
+            </div>
+        </div>
+    </div>
+    <% end %>
+    <% @special_topics.each do |topic| %>
+    <% if topic.character.image_url.match(/\Ahttps?:\/\//) %>
+    <div class="category-topic"
+        style="background: url('<%= url_for topic.character.image_url %>') no-repeat fixed center center / cover transparent"
+    >
+    <% else %><div class="category-topic"><% end %>
+        <div class="wrapper">
+            <div class="bg-overlay"></div>
+            <div class="content">
+                <div class="row">
+                    <div class="col-md-2">
+                        <%= image_tag topic.character.avatar_url, class: 'thumbnail', style: "opacity: 0.8" %>
+                    </div>
+                    <div class="col-md-10">
+                        <span class="bottom-right" style="background-color: <%= topic.character.group.color %>">
+                            <%= topic.character.group.name %>
+                        </span>
+                        <h1 class="surline"><span><%= topic.character.name %></span></h1>
+                        <h2 class="surline"><span><%= topic.character.quote %></span></h2>
+                        <p class="surline"><span><%= topic.character.summary %></span></p>
+                        <p class="surline"><span><%= render partial: 'last_answer', locals: {topic: topic} %></span></p>
+                        <p><%= link_to t('read_topic'), topic_url(topic), class: "btn btn-primary btn-lg" %></p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

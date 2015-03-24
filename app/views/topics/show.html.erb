@@ -6,22 +6,94 @@
     	<span class="right"><a class="codrops-icon codrops-icon-drop" href="http://tympanus.net/codrops/?p=19119"><span>Back to the Codrops Article</span></a></span>
     </div-->
     <header class="header">
-    	<div class="bg-img"><%= image_tag @topic.image_url %></div>
-    	<div class="title">
-    		<!--nav class="codrops-demos">
-    			<a href="index.html">Push</a>
-    			<a class="current-demo" href="index2.html">Fade Out</a>
-    		</nav-->
-    		<h1><%= @topic.title %><br><small><%= @topic.subtitle %></small></h1>
-    		<p class="subline"><%= @topic.summary %></p>
-    		<% unless @topic.weather.blank? %>
-    		<p><%= model_class.human_attribute_name(:weather) %> : <%= @topic.weather %></p>
-    		<% end %>
-    	</div>
+        <% if @character_topic %>
+        	<div class="bg-img"><%= image_tag @character.image_url %></div>
+        	<div class="title">
+        		<!--nav class="codrops-demos">
+        			<a href="index.html">Push</a>
+        			<a class="current-demo" href="index2.html">Fade Out</a>
+        		</nav-->
+        		<h1>
+        		    <%= @character.name %>
+        		    <br>
+        		    <small><%= @character.quote %></small>
+        		</h1>
+        		<% unless @character.summary.blank? %>
+        		<p class="subline"><%= @character.summary %></p>
+        		<% end %>
+        		<% unless @character.anecdote.blank? %>
+        		<p><%= model_class.human_attribute_name(:anecdote) %> : <%= @character.anecdote %></p>
+        		<% end %>
+        	</div>
+        <% else %>
+        	<div class="bg-img"><%= image_tag @topic.image_url %></div>
+        	<div class="title">
+        		<!--nav class="codrops-demos">
+        			<a href="index.html">Push</a>
+        			<a class="current-demo" href="index2.html">Fade Out</a>
+        		</nav-->
+        		<h1><%= @topic.title %><br><small><%= @topic.subtitle %></small></h1>
+        		<p class="subline"><%= @topic.summary %></p>
+        		<% unless @topic.weather.blank? %>
+        		<p><%= model_class.human_attribute_name(:weather) %> : <%= @topic.weather %></p>
+        		<% end %>
+        	</div>
+    	<% end %>
     </header>
     <button class="trigger" data-info="Voir les posts"><span>Posts</span></button>
     <article class="content">
         <div>
+            <% if @character_topic %>
+                <div class="row">
+    		        <div class="col-md-6">
+    		            <%=l @character.created_at %>
+                    </div><div class="col-md-6" style="text-align: right">
+                        <% if can? :manage, @character %>
+                        <%= link_to t('.edit_character', :default => t("helpers.links.edit")),
+                                      edit_user_character_path(@character, user_id: current_user), :class => 'btn btn-default btn-xs' %> 
+                        <% link_to t('.destroy_character', :default => t("helpers.links.destroy")),
+                                      user_character_path(@character, user_id: current_user),
+                                      :method => 'delete',
+                                      :data => { :confirm => t('.confirm_character', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                                      :class => 'btn btn-danger btn-xs' %> 
+                        <% end %>
+                    </div>
+    		    </div>
+    		    <div class="row">
+    		        <div class="col-md-3">
+    		            <div class="thumbnail">
+        		            <%= image_tag(@character.avatar_url) if @character.avatar_url %>
+        		            <div class="caption">
+        		                <h3 style="color: <%= @character.faction.color %>"><%= @character.name %></h3>
+        		            </div>
+    		            </div>
+    		        </div>
+    		        <div class="col-md-9">
+    		            <% unless @character.story.blank? %>
+    		            <h1><%= Character.human_attribute_name(:story) %></h1>
+    		            <p style="text-align: justify">
+    		                <%= sanitize @character.story.gsub(/\n/,"<br/>"), 
+    		                :tags => %w(table tr td br b i span p blockquote img div) %>
+                        </p>
+                        <% end %>
+    		            <% unless @character.appearance.blank? %>
+    		            <h1><%= Character.human_attribute_name(:appearance) %></h1>
+    		            <p style="text-align: justify">
+    		                <%= sanitize @character.appearance.gsub(/\n/,"<br/>"), 
+    		                :tags => %w(table tr td br b i span p blockquote img div) %>
+                        </p>
+                        <% end %>
+    		            <% unless @character.psychology.blank? %>
+    		            <h1><%= Character.human_attribute_name(:psychology) %></h1>
+    		            <p style="text-align: justify">
+    		                <%= sanitize @character.psychology.gsub(/\n/,"<br/>"), 
+    		                :tags => %w(table tr td br b i span p blockquote img div) %>
+                        </p>
+                        <% end %>
+    		        </div>
+    		    </div>
+    		    <hr />
+            <% end %>
     		<% @answers.each do |answer| %>
     		    <div class="row">
     		        <div class="col-md-6">
@@ -55,12 +127,14 @@
     		            </div>
     		        </div>
     		        <div class="col-md-9">
+    		            <% unless answer.title.blank? %>
     		            <h1><%= answer.title %></h1>
+    		            <% end %>
     		            <% unless answer.content.blank? %>
-    		            <p style="text-align: justify">
+    		            <span style="text-align: justify">
     		                <%= sanitize answer.content.gsub(/\n/,"<br/>"), 
     		                :tags => %w(table tr td br b i span p blockquote img div) %>
-                        </p>
+                        </span>
                         <% end %>
     		        </div>
     		    </div>
@@ -71,6 +145,13 @@
     <section class="related">
         <%= link_to t('.back', :default => t("helpers.links.back")),
                       topic_back_url(@topic), :class => 'btn btn-default'  %>
+        <% if @topic.character and @topic.character.user == current_user %>
+        <%= link_to t('characters'),
+                      user_characters_path(current_user), :class => 'btn btn-default'  %>
+        <% else %>
+        <%= link_to t('members'),
+                      characters_path, :class => 'btn btn-default'  %>
+        <% end %>
         <% if can? :create, @topic.answers.new %>
         <%= link_to t('.answer'),
                       new_answer_path(topic_id: @topic), :class => 'btn btn-default' %>
