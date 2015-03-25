@@ -57,12 +57,7 @@
 				</div>
 				<div class="row">
 					<div class="col-md-3">
-						<div class="thumbnail">
-							<%= image_tag(@character.avatar_url) if @character.avatar_url %>
-							<div class="caption">
-								<h3 style="color: <%= @character.faction.color %>"><%= @character.name %></h3>
-							</div>
-						</div>
+						<%= render partial: 'profile', locals: {character: @character} %>
 					</div>
 					<div class="col-md-9">
 					<% unless @character.summary.blank? %>
@@ -109,12 +104,7 @@
 				</div>
 				<div class="row">
 					<div class="col-md-3">
-						<div class="thumbnail">
-							<%= image_tag(@character.avatar_url) if @character.avatar_url %>
-							<div class="caption">
-								<h3 style="color: <%= @character.faction.color %>"><%= @character.name %></h3>
-							</div>
-						</div>
+						<%= render partial: 'profile', locals: {character: @character} %>
 					</div>
 					<div class="col-md-9">
 						<table class="character-links">
@@ -154,12 +144,7 @@
 				</div>
 				<div class="row">
 					<div class="col-md-3">
-						<div class="thumbnail">
-							<%= image_tag(@character.avatar_url) if @character.avatar_url %>
-							<div class="caption">
-								<h3 style="color: <%= @character.faction.color %>"><%= @character.name %></h3>
-							</div>
-						</div>
+						<%= render partial: 'profile', locals: {character: @character} %>
 					</div>
 					<div class="col-md-9">
 						<h1><%=t '.his_rps', character: @character %></h1>
@@ -199,18 +184,7 @@
 				</div>
 				<div class="row">
 					<div class="col-md-3">
-						<div class="thumbnail">
-							<% if answer.character %>
-							<%= image_tag(answer.character.avatar_url) if answer.character.avatar_url %>
-							<div class="caption">
-								<h3 style="color: <%= answer.character.faction.color %>"><%= answer.character %></h3>
-							</div>
-							<% else %>
-							<div class="caption">
-								<h3 style="color: grey"><%=t t('.deleted_character') %></h3>
-							</div>
-							<% end %>
-						</div>
+						<%= render partial: 'profile', locals: {character: answer.character} %>
 					</div>
 					<div class="col-md-9">
 						<% unless answer.title.blank? %>

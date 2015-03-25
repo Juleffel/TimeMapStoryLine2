@@ -33,6 +33,9 @@ class Character < ActiveRecord::Base
   def links
     from_links.order(:force) + to_links.order(:force)
   end
+  def number_of_messages
+    @number_of_messages = @number_of_messages || Character.all.joins(:answers).select(:id, 'COUNT(answers.id) AS c').group('characters.id').where(id: self.id).first.c
+  end
   
   def rp_topics
     if @rp_topics
