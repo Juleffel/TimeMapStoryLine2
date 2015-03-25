@@ -11,13 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150325145447) do
+ActiveRecord::Schema.define(version: 20150325165236) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "answers", force: true do |t|
-    t.string   "title"
+    t.text     "title"
     t.text     "content"
     t.integer  "character_id"
     t.integer  "topic_id"
@@ -32,12 +32,12 @@ ActiveRecord::Schema.define(version: 20150325145447) do
     t.integer  "category_id"
     t.text     "title"
     t.text     "description"
-    t.string   "image_url"
+    t.text     "image_url"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "permission_level"
+    t.text     "permission_level"
     t.integer  "num"
-    t.string   "special"
+    t.text     "special"
     t.boolean  "is_rpg"
     t.boolean  "is_flood"
   end
@@ -48,11 +48,11 @@ ActiveRecord::Schema.define(version: 20150325145447) do
   create_table "characters", force: true do |t|
     t.integer  "user_id"
     t.date     "birth_date"
-    t.string   "birth_place"
+    t.text     "birth_place"
     t.boolean  "sex"
     t.text     "avatar_url"
-    t.string   "avatar_name"
-    t.string   "copyright"
+    t.text     "avatar_name"
+    t.text     "copyright"
     t.integer  "topic_id"
     t.text     "story"
     t.text     "anecdote"
@@ -63,8 +63,8 @@ ActiveRecord::Schema.define(version: 20150325145447) do
     t.integer  "group_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "last_name"
-    t.string   "first_name"
+    t.text     "last_name"
+    t.text     "first_name"
     t.text     "image_url"
     t.text     "summary"
     t.text     "quote"
@@ -85,7 +85,7 @@ ActiveRecord::Schema.define(version: 20150325145447) do
   add_index "characters", ["user_id"], name: "index_characters_on_user_id", using: :btree
 
   create_table "factions", force: true do |t|
-    t.string   "name"
+    t.text     "name"
     t.text     "description"
     t.string   "color"
     t.datetime "created_at"
@@ -93,12 +93,12 @@ ActiveRecord::Schema.define(version: 20150325145447) do
   end
 
   create_table "groups", force: true do |t|
-    t.string   "name"
+    t.text     "name"
     t.text     "description"
     t.string   "color"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "special"
+    t.text     "special"
   end
 
   add_index "groups", ["special"], name: "index_groups_on_special", using: :btree
@@ -114,7 +114,7 @@ ActiveRecord::Schema.define(version: 20150325145447) do
   create_table "links", force: true do |t|
     t.integer  "from_character_id"
     t.integer  "to_character_id"
-    t.string   "title"
+    t.text     "title"
     t.text     "description"
     t.integer  "force"
     t.datetime "created_at"
@@ -196,7 +196,7 @@ ActiveRecord::Schema.define(version: 20150325145447) do
     t.inet     "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "pseudo"
+    t.text     "pseudo"
     t.string   "role"
   end
 
