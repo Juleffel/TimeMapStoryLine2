@@ -54,22 +54,22 @@ fr:
   his_links: "Ses liens"
   his_other_links: "Ils l'ont dans leurs liens"
   
-  new_topic: "Créer un topic"
-  new_answer_topic: "Répondre à ce topic"
-  read_topic: "Lire le topic"
+  new_topic: "Créer un sujet"
+  new_answer_topic: "Répondre à ce sujet"
+  read_topic: "Lire le sujet"
   
   topics:
     show:
       answer: "Répondre"
-      edit: "Éditer le topic"
-      destroy: "Supprimer le topic"
+      edit: "Éditer le sujet"
+      destroy: "Supprimer le sujet"
       edit_answer: "Éditer"
       edit_character: "Éditer"
       edit_links: "Éditer mes liens"
       destroy_answer: "Supprimer"
       destroy_character: "Supprimer le personnage"
       deleted_character: "Personnage supprimé."
-      confirm_topic: "Êtes-vous sûr de vouloir supprimer le TOPIC et TOUS ses messages ?"
+      confirm_topic: "Êtes-vous sûr de vouloir supprimer le SUJET et TOUS ses messages ?"
       confirm_answer: "Êtes-vous sûr ? (Cela supprimera uniquement cette réponse)"
       confirm_character: "!!! ATTENTION !!! Êtes-vous sûr de vouloir supprimer le PERSONNAGE derrière cette fiche ?"
       his_rps: "Mes RPs"
@@ -92,7 +92,7 @@ fr:
       spacetime_position:
         one: position spaciotemporelle
         other: positions paciotemporelles
-      topic: topic
+      topic: sujet
       answer: réponse
       category: sous-forum
       rp_status:
