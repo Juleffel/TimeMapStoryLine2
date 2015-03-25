@@ -1,0 +1,18 @@
+<div class="row rp-summary">
+    <div class="col-md-3">
+        <%=image_tag topic.image_url, class: 'thumbnail rp-image' %>
+    </div>
+    <div class="col-md-9">
+        <h1><%= link_to topic.title, topic %><br />
+        <small><%= topic.subtitle %></small></h1>
+        <%= simple_format topic.summary %>
+        <% if (parts = (topic.participants - [character])).length > 0 %>
+        <h2><%=t 'with'%></h2>
+        <div class="participants">
+            <% parts.each do |part| %>
+                <%= image_tag part.small_image_url, class: 'thumbnail mini-avatar participant' %>
+            <% end %>
+        </div>
+        <% end %>
+    </div>
+</div>

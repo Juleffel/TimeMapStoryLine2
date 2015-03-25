@@ -1,0 +1,59 @@
+<%= form_for @rp_status, :html => { :class => "form-horizontal rp_status" } do |f| %>
+
+    <% if @rp_status.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= pluralize(@rp_status.errors.count, "error") %> prohibited this rp_status from being saved:</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+        <% @rp_status.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="control-group">
+    <%= f.label :name, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :name, :class => 'form-control' %>
+    </div>
+    <%= error_span(@rp_status[:name]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :description, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_area :description, :class => 'form-control' %>
+    </div>
+    <%= error_span(@rp_status[:description]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :color, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.color_field :color, :class => 'form-control' %>
+    </div>
+    <%= error_span(@rp_status[:color]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :num, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.number_field :num, :class => 'form-control' %>
+    </div>
+    <%= error_span(@rp_status[:num]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :display_last, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.check_box :display_last, :class => 'form-control' %>
+    </div>
+    <%= error_span(@rp_status[:display_last]) %>
+  </div>
+
+
+  <%= f.submit nil, :class => 'btn btn-primary' %>
+  <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+            rp_statuses_path, :class => 'btn btn-default' %>
+
+<% end %>
