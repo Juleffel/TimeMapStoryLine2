@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150325105602) do
+ActiveRecord::Schema.define(version: 20150325145447) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(version: 20150325105602) do
   end
 
   add_index "categories", ["category_id"], name: "index_categories_on_category_id", using: :btree
+  add_index "categories", ["special"], name: "index_categories_on_special", using: :btree
 
   create_table "characters", force: true do |t|
     t.integer  "user_id"
@@ -100,6 +101,8 @@ ActiveRecord::Schema.define(version: 20150325105602) do
     t.string   "special"
   end
 
+  add_index "groups", ["special"], name: "index_groups_on_special", using: :btree
+
   create_table "link_natures", force: true do |t|
     t.text     "name"
     t.text     "description"
@@ -133,6 +136,16 @@ ActiveRecord::Schema.define(version: 20150325105602) do
   add_index "presences", ["character_id"], name: "index_presences_on_character_id", using: :btree
   add_index "presences", ["spacetime_position_id"], name: "index_presences_on_spacetime_position_id", using: :btree
 
+  create_table "rp_statuses", force: true do |t|
+    t.text     "name"
+    t.text     "description"
+    t.string   "color"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "display_last"
+    t.integer  "num"
+  end
+
   create_table "spacetime_positions", force: true do |t|
     t.float    "longitude"
     t.float    "latitude"
@@ -162,9 +175,11 @@ ActiveRecord::Schema.define(version: 20150325105602) do
     t.text     "subtitle"
     t.text     "summary"
     t.text     "weather"
+    t.integer  "rp_status_id"
   end
 
   add_index "topics", ["category_id"], name: "index_topics_on_category_id", using: :btree
+  add_index "topics", ["rp_status_id"], name: "index_topics_on_rp_status_id", using: :btree
   add_index "topics", ["spacetime_position_id"], name: "index_topics_on_spacetime_position_id", using: :btree
   add_index "topics", ["user_id"], name: "index_topics_on_user_id", using: :btree
 

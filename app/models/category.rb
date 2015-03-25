@@ -25,7 +25,11 @@ class Category < ActiveRecord::Base
     rps: ["rps", "RPs des personnages", :rps],
   }
   SPECIALS_STR = Hash[SPECIALS_HASH.map{|k,v| [v[0],k] } ] # STR -> SYMB
-  SPECIALS_ROLE = Hash[SPECIALS_HASH.map{|k,v| [v[2],k] } ] # ROLE -> SYMB
+  
+  SPECIALS_ROLE = {} # ROLE -> [SYMBS]
+  SPECIALS_HASH.each do |k, v|
+    SPECIALS_ROLE[v[2]] = (SPECIALS_ROLE[v[2]] || []).push(k)
+  end
   SPECIALS = SPECIALS_HASH.map{|k,v| [v[1],v[0]] } # [TXT, STR]
   
   #######
@@ -40,8 +44,12 @@ class Category < ActiveRecord::Base
     end
   end
   # Take ROLE, return SYMB
-  def self.special_role_to_symb(role)
+  def self.special_role_to_symbs(role)
     SPECIALS_ROLE[role]
+  end
+  # Take ROLE, return SYMB
+  def self.special_role_to_symb(role)
+    self.special_role_to_symbs(role).first
   end
   # Take SYMB or STR, return STR
   def self.special_to_str(symb)
@@ -75,8 +83,15 @@ class Category < ActiveRecord::Base
   # Return the category for a particular role (if it exists)
   # The role must be in SPECIALS_HASH and must be unique
   def self.special_role(role) 
-    if symb = self.special_role_to_symb(:links) # ROLE -> SYMB
+    if symb = self.special_role_to_symb(role) # ROLE -> SYMB
       self.specials(symb)
+    end
+  end
+  # Return the categories for a particular role (if it exists)
+  # The role must be in SPECIALS_HASH and can be in multiple lines
+  def self.specials_role(role)
+    if symbs = self.special_role_to_symbs(role) # ROLE -> SYMB
+      symbs.map {|symb| self.specials(symb)}
     end
   end
   
@@ -100,7 +115,7 @@ class Category < ActiveRecord::Base
   # Special Topics
   #######
   # If current category is special, return its topics
-  def special_topics(topics_includes = [:user, {answers: {character: :faction}}])
+  def special_topics(topics_includes)
     @special_topics = @special_topics || if special
       if special_role == :character and Group.specials(special)
         special_groups = Group.specials(special).includes(characters: {topic: topics_includes})

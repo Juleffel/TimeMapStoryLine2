@@ -67,6 +67,22 @@
     <p class="help-block"><%= t('special_helper_cat') %></p>
     <%= error_span(@category[:special]) %>
   </div>
+  <div class="control-group">
+    <%= f.label :is_rpg, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.check_box :is_rpg, :class => 'form-control' %>
+    </div>
+    <p class="help-block"><%= t('is_rpg_helper') %></p>
+    <%= error_span(@category[:is_rpg]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :is_flood, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.check_box :is_flood, :class => 'form-control' %>
+    </div>
+    <p class="help-block"><%= t('is_flood_helper') %></p>
+    <%= error_span(@category[:is_flood]) %>
+  </div>
 
   <%= f.submit nil, :class => 'btn btn-primary' %>
   <%= link_to t('.cancel', :default => t("helpers.links.cancel")),

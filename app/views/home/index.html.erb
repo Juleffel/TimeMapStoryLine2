@@ -1,17 +1,110 @@
+<div class="jumbotron">
+  <h1>Bienvenue sur Time Map Story Line !<br><small>Le Forum RPG nouvelle génération</small></h1>
+  <p>Créez un compte pour tout vos personnages, liez-les facilement aux autres grâce à un graphe interactif,
+      n'ayez plus à vous occuper de la fiche de présentation de votre personnage, de vos liens, ou du topic
+      de résumé de vos RPs, tout est géré automatiquement !
+  </p>
+</div>
 <div class="row">
     <div class="col-md-4">
-        <h2>Heading</h2>
-        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-        <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+        <h2>Inscrivez-vous !</h2>
+        <p>Pour profiter à fond de toutes les fonctionnalités de TMSL, commencer à créer des 
+            personnages bidons, leurs faire des liens et poster quelques RPs, bref essayer !
+            Nul besoin de valider son email, vous pouvez mettre des identifiants bidons. Vous
+            pouvez aussi simplement tester avec le compte "test@test.com", "testtest". Pour toute création,
+            aucun champ n'est obligatoire, alors n'hésitez pas à aller vite sur le remplissage.</p>
+        <p><%= link_to "Login", new_user_registration_path, class: "btn btn-default" %></p>
     </div>
     <div class="col-md-4">
-        <h2>Heading</h2>
-        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-        <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+        <h2>Le Forum</h2>
+        <p>Vous pouvez dès à présent RP normalement dans le forum.
+            Un panneau d'admin permet d'y créer facilement des catégories et des les imbriquer.
+            Les zones de RPs et de Floods sont reconnues pour permettre d'avoir des informations
+            précises sur chaque personnage, construire sa fiche de résumé de ses RPs, et potentiellement
+            bien d'autres choses !</p>
+        <p><%= link_to "Forum", categories_path, class: "btn btn-default" %></p>
     </div>
     <div class="col-md-4">
-        <h2>Heading</h2>
-        <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-        <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+        <h2>Les liens</h2>
+        <p>Vous pouvez lier chacun de vos personnages aux autres personnages présents, cela
+            crée un graphe des personnages du forum. Par qui êtes-vous liés à tel ou tel personnage ?
+            Vous vous êtes déjà posé la question ? Le graphe y réponds.</p>
+        <p><%= link_to "Graph", graph_links_path, class: "btn btn-default" %></p>
+    </div>
+</div>
+<h1>Les catégories spéciales</h1>
+<p>Certaines catégories sont spéciales, elles recueillent les topics générés automatiquement pour vos personnages.
+Présentations, liens ou RPs à suivre ? Ici sont résumées ces catégories.</p>
+<div class="row">
+    <div class="col-md-4">
+        <h2>Les présentations</h2>
+        <p>Marre de casser les codes des fiches de présentations ?
+            De vous battre avec les évolutions de votre personnage ?
+            Tout est géré automatiquement pour vous. Votre fiche est créée
+            avec votre personnage, remplie et mise à jour avec ses informations,
+            déplacée dans les bonnes sections lorsque vous êtes validés, ou que
+            vous décider d'abandonner un personnage.</p>
+        <p>
+            <% Category.specials_role(:character).each do |category| %>
+                <%= link_to category.title, category %><br />
+            <% end %>
+        </p>
+    </div>
+    <div class="col-md-4">
+        <h2>Les liens</h2>
+        <p>Tous les liens que vous créez sur le graphe son résumés dans un topic
+            où vous pouvez les parcourir sereinement, et où les gens peuvent vous
+            parler, vous demander des liens.. Un forum quoi :)</p>
+        <p>
+            <% category = Category.special_role(:links) %>
+            <%= link_to category.title, category %>
+        </p>
+    </div>
+    <div class="col-md-4">
+        <h2>Les RPs</h2>
+        <p>Dès que vous postez dans des sections de RPs, votre résumé RP est
+            mis à jour. Vous pourrez y trouver vos RPs en cours, abandonnés ou
+            terminés, et même savoir où vous attendez une réponse ou où est-ce qu'on
+            vous attends !</p>
+        <p>
+            <% category = Category.special_role(:rps) %>
+            <%= link_to category.title, category %>
+        </p>
+    </div>
+</div>
+<h1>C'est quoi la suite ?</h1>
+<h2>Carte RP</h2>
+<p>Bientôt sera rajoutée une nouvelle fonctionnalité : En plus de pouvoir RP de
+façon classique sur forum, vous pourrez RP directement sur une carte, ou vous
+verrez vos personnages se déplacer et se rencontrer au fil du temps !</p>
+<h2>Chatbox</h2>
+<p>La chatbox arrive, ne vous inquiétez pas ;) Et elle promets d'envoyer du lourd !</p>
+<h1>Interessés ?</h1>
+<p>N'hésitez pas à m'envoyer un mail à juleffel@hotmail.fr ou à me contacter sur PRD (toujours Juleffel).
+    Je vous tiendrais au courant !
+</p>
+<div class="row">
+    <div class="col-md-4">
+        <h2>Pour les joueurs ?</h2>
+        <p>Un vrai forum, dont le thème n'a pas encore été décidé, est en projet.
+            N'hésitez pas à suivre et à participer à la discussion sur PRD.</p>
+        <p>
+            <%= link_to "Lien à venir", "#" %>
+        </p>
+    </div>
+    <div class="col-md-4">
+        <h2>Pour les admins ?</h2>
+        <p>Vous voulez vous aussi profiter de cette plateforme ? Sachez qu'un panneau
+            d'admin permet déjà de créer facilement des sections, des groupes ou de
+            gérer la validation des personnages. Le design est facile à personnaliser, 
+            et TOUT est modifiable.
+            Vous aimeriez créer un forum ? Contactez-moi,
+            on verra ce qu'on peut faire ensemble.</p>
+    </div>
+    <div class="col-md-4">
+        <h2>Pour les codeurs ?</h2>
+        <p>Oui, le code du serveur est open-source \o/ Pour pouvez le trouver dès
+            aujourd'hui sur <%= link_to "GitHub", "https://github.com/Juleffel/TimeMapStoryLine2" %>, 
+            le forker, allumer votre serveur et créer un forum.</p>
     </div>
 </div>

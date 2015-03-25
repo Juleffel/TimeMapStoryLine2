@@ -13,6 +13,6 @@ class User < ActiveRecord::Base
   end
   
   def admin?
-    true
+    false
   end
 end

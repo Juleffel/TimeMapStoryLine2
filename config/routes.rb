@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
 
 
+  resources :rp_statuses
+
   # config/routes.rb
   scope "(:locale)", locale: /fr|en/ do
     devise_for :users

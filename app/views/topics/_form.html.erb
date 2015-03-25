@@ -54,6 +54,13 @@
     <p class="help-block"><%= t(:recommended_size) %>: <%= t(:screen_size) %></p>
     <%= error_span(@topic[:image_url]) %>
   </div>
+  <div class="control-group">
+    <%= f.label :rp_status_id, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.collection_select :rp_status_id, RpStatus.all, :id, :name, :class => 'form-control' %>
+    </div>
+    <%= error_span(@topic[:rp_status_id]) %>
+  </div>
 
 
   <%= f.submit nil, :class => 'btn btn-primary' %>

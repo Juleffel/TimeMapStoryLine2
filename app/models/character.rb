@@ -34,6 +34,35 @@ class Character < ActiveRecord::Base
     from_links.order(:force) + to_links.order(:force)
   end
   
+  def rp_topics
+    if @rp_topics
+      @rp_topics
+    else
+      topic_includes = [:user, {answers: :character}, :category]
+      user_rpg_topics_q = Topic.select(:id).joins(:answers, :category).where(user_id: 1, 'categories.is_rpg' => true)
+      
+      user_rpg_topic_ids = Topic.select(:id).joins(:category).where(user_id: 1, 'categories.is_rpg' => true).map(&:id).uniq
+      user_rpg_topic_with_answers_ids = Topic.select(:id).joins(:answers).where(id: user_rpg_topic_ids).map(&:id).uniq
+      user_rpg_topic_with_character_answers_ids = Topic.select(:id).joins(:answers).where(id: user_rpg_topic_ids, 'answers.character_id' => self.id).map(&:id).uniq
+      user_rpg_topic_without_answers_ids = user_rpg_topic_ids - user_rpg_topic_with_answers_ids
+      
+      @user_rp_topics = Topic.includes(topic_includes).where(id: user_rpg_topic_without_answers_ids)
+      @character_rp_topics = Topic.includes(topic_includes).where(id: user_rpg_topic_with_character_answers_ids)
+    end
+  end
+  def user_rp_topics
+    unless @user_rp_topics
+      rp_topics
+    end
+    @user_rp_topics
+  end
+  def character_rp_topics
+    unless @character_rp_topics
+      rp_topics
+    end
+    @character_rp_topics
+  end
+  
   # "Toto Madrillano Q. sueño" => "T. M. Q. S."
   def contracted_middle_name
     ((middle_name || '').split(' ').map {|s| s[0].capitalize + "."}).join(" ")

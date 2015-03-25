@@ -1194,3 +1194,19 @@ table.character-links img.thumbnail {
 table.character-links .thumbnail img {
     width: 200px;
 }
+img.mini-avatar {
+    width: 100px;
+}
+img.medium-avatar {
+    width: 200px;
+}
+.rp-summary .rp-image {
+    width: 100%;
+}
+
+.rp-summary .participants {
+    clear: both;
+}
+.rp-summary .participant {
+    float: left;
+}

@@ -15,7 +15,8 @@ class TopicsController < ApplicationController
     @category_role = @category.special_role if @category
     @character = @topic.special_character
     @links = (@character.to_links if @category_role == :links)
-    @rps = (@character.topics if @category_role == :rps)
+    @rp_topics = (@character.character_rp_topics if @category_role == :rps)
+    @user_rp_topics = (@character.user_rp_topics if @category_role == :rps)
     @character = @topic.special_character
     @without_container = true
     respond_with(@topic)
@@ -69,6 +70,7 @@ class TopicsController < ApplicationController
     end
 
     def topic_params
-      params.require(:topic).permit(:spacetime_position_id, :category_id, :title, :subtitle, :summary, :weather, :image_url)
+      params.require(:topic).permit(:spacetime_position_id, :category_id, :title, :subtitle, 
+        :summary, :weather, :image_url, :rp_status_id)
     end
 end

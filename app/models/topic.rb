@@ -3,6 +3,7 @@ class Topic < ActiveRecord::Base
     has_many :answers, inverse_of: :topic, :dependent => :destroy
     belongs_to :user, inverse_of: :topics
     belongs_to :category, inverse_of: :topics
+    belongs_to :rp_status, inverse_of: :topics
     # If it's a topic for a character sheet
     has_one :character, inverse_of: :topic 
     # If it's a topic for character links
@@ -26,6 +27,14 @@ class Topic < ActiveRecord::Base
     def self.order(topics)
         topics = topics || []
         topics.sort { |x,y| x.last_answered_at <=> y.last_answered_at }.reverse
+    end
+    def participants
+        @participants = @participants || answers.map(&:character).uniq.compact
+    end
+    def self.filter_status(topics, rp_status)
+        p topics
+        p rp_status
+        topics.to_a.select {|t| t.rp_status_id == rp_status.id}
     end
     
     # Make the link between character group and category special

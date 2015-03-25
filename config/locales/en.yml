@@ -27,9 +27,11 @@ en:
   factions: "Factions"
   link_natures: "Link natures"
   categories: "Sub-forums"
+  rp_statuses: "RP Statuses"
   links: "Character links"
   forum: "Forum"
   by: "by"
+  with: "With:"
   known_as: "known as"
   learn_more: "Read more..."
   
@@ -40,6 +42,8 @@ en:
   num_helper: "The num is used to display categories in ascendant order of num."
   special_helper_cat: "You can have only one category of each special type. They are used to fold the characters sheets."
   special_helper_group: "In wich special category will be folded the character sheets of this group?"
+  is_rpg_helper: "Topics in this category are they RP topics ?"
+  is_flood_helper: "Topics in this category are they Flood topics ?"
   
   stop_layout: "Stop Layout"
   impossible_create_link: "Sorry, you can create a link only from one of your characters."
@@ -66,6 +70,8 @@ en:
       confirm_topic: "Are you sure you want remove this TOPIC and ALL its answers?"
       confirm_answer: "Are you sure? (This will remove only this answer)"
       confirm_character: "!!! WARNING !!! Are you sur you want remove the CHARACTER behind this topic ?"
+      his_rps: "My RPs"
+      opened_rps: "RPs opened by %{user}"
   
   activerecord:
     models:
@@ -87,6 +93,9 @@ en:
       topic: topic
       answer: answer
       category: sub-forum
+      rp_status:
+        one: RP Status
+        other: RP Statuses
     attributes:
       user:
         role: Role
@@ -127,6 +136,12 @@ en:
         name: Name
         description: Description
         color: Color
+      rp_status:
+        name: Name
+        description: Description
+        color: Color
+        display_last: "Display last answer member?"
+        num : Num
       category:
         title: Title
         num: Num
@@ -135,6 +150,8 @@ en:
         permission_level: Permission Level
         category: Sub-forum root
         special: Special category
+        is_rpg: "RPG?"
+        is_flood: "Flood?"
       link:
         from_character_id: From character
         to_character_id: To character
@@ -151,6 +168,7 @@ en:
         subtitle: Subtitle
         summary: Summary
         weather: Weather
+        rp_status: Rp Status
       answer:
         title: Title
         content: Content

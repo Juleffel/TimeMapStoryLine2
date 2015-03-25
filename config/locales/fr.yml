@@ -27,9 +27,11 @@ fr:
   factions: "Factions"
   link_natures: "Types de liens"
   categories: "Sous-forums"
+  rp_statuses: "Statuts de RPs"
   links: "Liens de personnages"
   forum: "Forum"
   by: "par"
+  with: "Avec :"
   known_as: "dit"
   learn_more: "En savoir plus..."
   
@@ -40,6 +42,8 @@ fr:
   num_helper: "Le numéro est utilisé pour afficher les catégories dans l'ordre de num croissant."
   special_helper_cat: "Vous ne devez avoir qu'une seule catégorie spéciale de chaque type. Elles sont utilisées pour y ranger les fiches de personnages."
   special_helper_group: "Dans quelle catégorie spéciale seront rangés les fiches de personnages de ce groupe ?"
+  is_rpg_helper: "Les sujets de cette catégorie sont-ils des RPs ?"
+  is_flood_helper: "Les sujets de cette catégorie sont-ils du flood ?"
   
   stop_layout: "Stop Layout"
   impossible_create_link: "Désolé, vous ne pouvez créer un lien que depuis l'un de vos personnages."
@@ -66,6 +70,8 @@ fr:
       confirm_topic: "Êtes-vous sûr de vouloir supprimer le TOPIC et TOUS ses messages ?"
       confirm_answer: "Êtes-vous sûr ? (Cela supprimera uniquement cette réponse)"
       confirm_character: "!!! ATTENTION !!! Êtes-vous sûr de vouloir supprimer le PERSONNAGE derrière cette fiche ?"
+      his_rps: "Mes RPs"
+      opened_rps: "RPs ouverts par %{user}"
   
   activerecord:
     models:
@@ -87,6 +93,9 @@ fr:
       topic: topic
       answer: réponse
       category: sous-forum
+      rp_status:
+        one: Statut de RP
+        other: Statuts de RPs
     attributes:
       user:
         role: Rôle
@@ -126,6 +135,12 @@ fr:
         name: Nom
         description: Description
         color: Couleur
+      rp_status:
+        name: Nom
+        description: Description
+        color: Couleur
+        display_last: "Afficher le dernier membre à avoir répondu ?"
+        num : Num
       category:
         title: Titre
         num: Num
@@ -134,6 +149,8 @@ fr:
         permission_level: Niveau de permission
         category: Sous-forum racine
         special: Catégorie spéciales
+        is_rpg: "RPG ?"
+        is_flood: "Flood ?"
       link:
         from_character_id: Personnage source
         to_character_id: Personnage cible
@@ -150,6 +167,7 @@ fr:
         subtitle: Sous-titre
         summary: Résumé
         weather: Météo
+        rp_status: Statut du RP
       answer:
         title: Titre
         content: Contenu

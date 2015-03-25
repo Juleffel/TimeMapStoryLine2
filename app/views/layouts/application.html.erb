@@ -53,10 +53,13 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
+            <li><%= link_to t('forum'), categories_path %></li>
+            <li><%= link_to t('links'), graph_links_path %></li>
             <li><%= link_to t('members'), characters_path %></li>
             <% if user_signed_in? %>
             <li><%= link_to t('characters'), user_characters_path(current_user) %></li>
             <% end %>
+            <% if user_signed_in? and current_user.admin? %>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Admin <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
@@ -64,11 +67,13 @@
                 <li><%= link_to t('factions'), factions_path %></li>
                 <li><%= link_to t('link_natures'), link_natures_path %></li>
                 <li><%= link_to t('categories'), categories_path(mod: true) %></li>
+                <li><%= link_to t('rp_statuses'), rp_statuses_path %></li>
               </ul>
               <!--li><%= link_to t('links'), links_path %></li-->
-              <li><%= link_to t('links'), graph_links_path %></li>
-              <li><%= link_to t('forum'), categories_path %></li>
             </li>
+            <% else %>
+              <li><%= link_to t('factions'), factions_path %></li>
+            <% end %>
           </ul>
           
           

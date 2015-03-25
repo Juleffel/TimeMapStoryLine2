@@ -17,8 +17,9 @@ class CategoriesController < ApplicationController
       @mod = true
     end
     @categories = @category.categories.includes(:categories)
-    @topics = Topic.order(@category.topics.includes(:user, {answers: {character: :faction}}))
-    @special_topics = Topic.order(@category.special_topics)
+    topics_includes = [:user, {answers: {character: :faction}}]
+    @topics = Topic.order(@category.topics.includes(topics_includes))
+    @special_topics = Topic.order(@category.special_topics(topics_includes))
     respond_with(@category)
   end
 
@@ -53,6 +54,8 @@ class CategoriesController < ApplicationController
     end
 
     def category_params
-      params.require(:category).permit(:category_id, :title, :description, :image_url, :permission_level, :num, :special)
+      params.require(:category).permit(
+        :category_id, :title, :description, :image_url, 
+        :permission_level, :num, :special, :is_rpg, :is_flood)
     end
 end
