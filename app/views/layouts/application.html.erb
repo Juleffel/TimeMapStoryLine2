@@ -74,6 +74,11 @@
             <% else %>
               <li><%= link_to t('factions'), factions_path %></li>
             <% end %>
+            <% if I18n.locale == :fr %>
+            <li><%= link_to t('en'), '/en' %></li>
+            <% else %>
+            <li><%= link_to t('fr'), '/fr' %></li>
+            <% end %>
           </ul>
           
           

@@ -34,6 +34,8 @@ fr:
   with: "Avec :"
   known_as: "dit"
   learn_more: "En savoir plus..."
+  fr: "FR"
+  en: "EN"
   
   editing: "Édition"
   recommended_size: "Taille recommandée"

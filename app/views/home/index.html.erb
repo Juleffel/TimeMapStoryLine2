@@ -56,8 +56,9 @@ Présentations, liens ou RPs à suivre ? Ici sont résumées ces catégories.</p
             où vous pouvez les parcourir sereinement, et où les gens peuvent vous
             parler, vous demander des liens.. Un forum quoi :)</p>
         <p>
-            <% category = Category.special_role(:links) %>
+            <% if category = Category.special_role(:links) %>
             <%= link_to category.title, category %>
+            <% end %>
         </p>
     </div>
     <div class="col-md-4">
@@ -67,8 +68,9 @@ Présentations, liens ou RPs à suivre ? Ici sont résumées ces catégories.</p
             terminés, et même savoir où vous attendez une réponse ou où est-ce qu'on
             vous attends !</p>
         <p>
-            <% category = Category.special_role(:rps) %>
+            <% if category = Category.special_role(:rps) %>
             <%= link_to category.title, category %>
+            <% end %>
         </p>
     </div>
 </div>
