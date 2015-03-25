@@ -1175,22 +1175,22 @@ Sliders
     margin: 5px;
     width: 100px;
 }
-.graph-links table {
+table.character-links {
     width: 100%;
 }
-.graph-links td:first-child {
+table.character-links td:first-child {
     width: 126px;
 }
-.graph-links td {
+table.character-links td {
     vertical-align: top;
     padding: 0 5px;
 }
-.graph-links table h4 {
+table.character-links h4 {
     margin-top: 0;
 }
-.category-topic img.thumbnail {
+table.character-links img.thumbnail {
     max-width: 200px;
 }
-.container-topic .thumbnail img {
+table.character-links .thumbnail img {
     width: 200px;
 }

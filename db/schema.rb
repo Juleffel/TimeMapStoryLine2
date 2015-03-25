@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150324213122) do
+ActiveRecord::Schema.define(version: 20150325105602) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,6 +38,8 @@ ActiveRecord::Schema.define(version: 20150324213122) do
     t.string   "permission_level"
     t.integer  "num"
     t.string   "special"
+    t.boolean  "is_rpg"
+    t.boolean  "is_flood"
   end
 
   add_index "categories", ["category_id"], name: "index_categories_on_category_id", using: :btree
@@ -70,10 +72,14 @@ ActiveRecord::Schema.define(version: 20150324213122) do
     t.text     "small_image_url"
     t.text     "shortline1"
     t.text     "shortline2"
+    t.integer  "links_topic_id"
+    t.integer  "rps_topic_id"
   end
 
   add_index "characters", ["faction_id"], name: "index_characters_on_faction_id", using: :btree
   add_index "characters", ["group_id"], name: "index_characters_on_group_id", using: :btree
+  add_index "characters", ["links_topic_id"], name: "index_characters_on_links_topic_id", using: :btree
+  add_index "characters", ["rps_topic_id"], name: "index_characters_on_rps_topic_id", using: :btree
   add_index "characters", ["topic_id"], name: "index_characters_on_topic_id", using: :btree
   add_index "characters", ["user_id"], name: "index_characters_on_user_id", using: :btree
 

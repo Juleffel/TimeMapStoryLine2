@@ -1,4 +1,4 @@
-<table>
+<table class="character-links">
   <% links.order('force DESC').each do |l| %> <!--# Sorted by force, desc-->
     <% other = if l.to_character_id == @character.id then l.from_character else l.to_character end %>
     <tr>

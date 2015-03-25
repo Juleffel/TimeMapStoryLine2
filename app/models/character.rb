@@ -2,9 +2,11 @@ class Character < ActiveRecord::Base
   extend HashBy
     
   belongs_to :user, inverse_of: :characters
-  belongs_to :topic, inverse_of: :character, dependent: :destroy
   belongs_to :group, inverse_of: :characters
   belongs_to :faction, inverse_of: :characters
+  belongs_to :topic, inverse_of: :character, dependent: :destroy # Character sheet topic
+  belongs_to :links_topic, class_name: "Topic", inverse_of: :links_character, dependent: :destroy # Character sheet topic
+  belongs_to :rps_topic, class_name: "Topic", inverse_of: :rps_character, dependent: :destroy # Character sheet topic
   
   has_many :to_links, foreign_key: :from_character_id, inverse_of: :from_character, class_name: "Link", dependent: :destroy
   has_many :to_links_characters, through: :to_links, class_name: "Character", source: :to_character
@@ -52,13 +54,21 @@ class Character < ActiveRecord::Base
   end
   
   def create_own_topic
+    Topic.skip_callback(:create)
     unless self.topic
-      Topic.skip_callback(:create)
       self.topic = Topic.new(user_id: self.user_id, image_url: self.image_url, title: self.name, subtitle: self.quote, summary: self.summary)
       self.topic.save(:validate => false)
-      Topic.set_callback(:create)
-      self.save
     end
+    unless self.links_topic
+      self.links_topic = Topic.new(user_id: self.user_id, image_url: self.image_url, title: self.name, subtitle: self.quote, summary: self.summary)
+      self.links_topic.save(:validate => false)
+    end
+    unless self.rps_topic
+      self.rps_topic = Topic.new(user_id: self.user_id, image_url: self.image_url, title: self.name, subtitle: self.quote, summary: self.summary)
+      self.rps_topic.save(:validate => false)
+    end
+    Topic.set_callback(:create)
+    self.save
   end
   
   def nodes_updated_at

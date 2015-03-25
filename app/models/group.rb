@@ -5,7 +5,8 @@ class Group < ActiveRecord::Base
   
   validates :color, format: { with: /\A#[0-9a-fA-F]{3}[0-9a-fA-F]{3}?\z/,
     message: "Must be like #1A6F20" }
-  scope :specials, ->(symb) { where(special: Category.special_symb_to_str(symb)) }
+  SPECIALS = Category::SPECIALS_HASH.map{|k,v| [v[1],v[0]] if v[2] == :character}.compact # [TXT, STR]
+  scope :specials, ->(symb) { where(special: Category.special_to_str(symb)) }
   
   def to_s
     name
@@ -19,9 +20,9 @@ class Group < ActiveRecord::Base
     special
   end
   def special_symb
-    Category.special_str_to_symb(special)
+    Category.special_to_symb(special)
   end
   def special_txt
-    Category.special_str_to_txt(special)
+    Category.special_to_txt(special)
   end
 end

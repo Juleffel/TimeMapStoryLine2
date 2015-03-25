@@ -6,7 +6,7 @@
     	<span class="right"><a class="codrops-icon codrops-icon-drop" href="http://tympanus.net/codrops/?p=19119"><span>Back to the Codrops Article</span></a></span>
     </div-->
     <header class="header">
-        <% if @character_topic %>
+        <% if @category_role %>
         	<div class="bg-img"><%= image_tag @character.image_url %></div>
         	<div class="title">
         		<!--nav class="codrops-demos">
@@ -14,16 +14,15 @@
         			<a class="current-demo" href="index2.html">Fade Out</a>
         		</nav-->
         		<h1>
-        		    <%= @character.complete_name %>
-        		    <% if @character.nickname %><br>
-        		    <small><%t 'known_as'%> <%= @character.nickname %></small>
-        		    <% end %>
+        		    <%= @character.name %>
+        		    <br>
+        		    <small><%= @character.quote %></small>
         		</h1>
-        		<% unless @character.shortline1.blank? or @character.shortline1.length > 200 %>
-        		<p class="subline"><%= @character.shortline1 %></p>
+        		<% unless @character.summary.blank? %>
+        		<p class="subline"><%= @character.summary %></p>
         		<% end %>
-        		<% unless @character.quote.blank? or @character.quote.length > 800 %>
-        		<p><%= @character.quote %></p>
+        		<% unless @character.anecdote.blank? %>
+        		<p><%= model_class.human_attribute_name(:anecdote) %> : <%= @character.anecdote %></p>
         		<% end %>
         	</div>
         <% else %>
@@ -44,7 +43,7 @@
     <button class="trigger" data-info="Voir les posts"><span>Posts</span></button>
     <article class="content">
         <div>
-            <% if @character_topic %>
+            <% if @category_role == :character %>
                 <div class="row">
     		        <div class="col-md-6">
     		            <%=l @character.created_at %>
@@ -52,11 +51,6 @@
                         <% if can? :manage, @character %>
                         <%= link_to t('.edit_character', :default => t("helpers.links.edit")),
                                       edit_user_character_path(@character, user_id: current_user), :class => 'btn btn-default btn-xs' %> 
-                        <% link_to t('.destroy_character', :default => t("helpers.links.destroy")),
-                                      user_character_path(@character, user_id: current_user),
-                                      :method => 'delete',
-                                      :data => { :confirm => t('.confirm_character', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-                                      :class => 'btn btn-danger btn-xs' %> 
                         <% end %>
                     </div>
     		    </div>
@@ -70,37 +64,82 @@
     		            </div>
     		        </div>
     		        <div class="col-md-9">
-    		            <% unless @character.summary.blank? %>
-    		            <h1><%= Character.human_attribute_name(:summary) %></h1>
-    		            <p style="text-align: justify">
-    		                <%= sanitize @character.summary.gsub(/\n/,"<br/>"), 
-    		                :tags => %w(table tr td br b i span p blockquote img div h1 h2 h3 h4 h5 h6) %>
-                        </p>
-                        <% end %>
-    		            <% unless @character.summary.blank? %>
+    		            <% unless @character.story.blank? %>
     		            <h1><%= Character.human_attribute_name(:story) %></h1>
     		            <p style="text-align: justify">
     		                <%= sanitize @character.story.gsub(/\n/,"<br/>"), 
-    		                :tags => %w(table tr td br b i span p blockquote img div h1 h2 h3 h4 h5 h6) %>
+    		                :tags => %w(table tr td br b i span p blockquote img div) %>
                         </p>
                         <% end %>
     		            <% unless @character.appearance.blank? %>
     		            <h1><%= Character.human_attribute_name(:appearance) %></h1>
     		            <p style="text-align: justify">
     		                <%= sanitize @character.appearance.gsub(/\n/,"<br/>"), 
-    		                :tags => %w(table tr td br b i span p blockquote img div h1 h2 h3 h4 h5 h6) %>
+    		                :tags => %w(table tr td br b i span p blockquote img div) %>
                         </p>
                         <% end %>
     		            <% unless @character.psychology.blank? %>
     		            <h1><%= Character.human_attribute_name(:psychology) %></h1>
     		            <p style="text-align: justify">
     		                <%= sanitize @character.psychology.gsub(/\n/,"<br/>"), 
-    		                :tags => %w(table tr td br b i span p blockquote img div h1 h2 h3 h4 h5 h6) %>
+    		                :tags => %w(table tr td br b i span p blockquote img div) %>
                         </p>
                         <% end %>
     		        </div>
     		    </div>
     		    <hr />
+            <% elsif @category.special_role == :links %>
+                <div class="row">
+    		        <div class="col-md-6">
+    		            <%=l @character.created_at %>
+                    </div><div class="col-md-6" style="text-align: right">
+                        <% if user_signed_in? %>
+                        <%= link_to t('.edit_links', :default => t("helpers.links.edit")),
+                                      graph_links_path, :class => 'btn btn-default btn-xs' %> 
+                        <% end %>
+                    </div>
+    		    </div>
+    		    <div class="row">
+    		        <div class="col-md-3">
+    		            <div class="thumbnail">
+        		            <%= image_tag(@character.avatar_url) if @character.avatar_url %>
+        		            <div class="caption">
+        		                <h3 style="color: <%= @character.faction.color %>"><%= @character.name %></h3>
+        		            </div>
+    		            </div>
+    		        </div>
+    		        <div class="col-md-9">
+		                <table class="character-links">
+                          <% @links.order('force DESC').each do |l| %> <!--# Sorted by force, desc-->
+                            <% other = if l.to_character_id == @character.id then l.from_character else l.to_character end %>
+                            <tr>
+                              <td>
+                                <%= image_tag other.small_image_url, class: "graph-avatar-link" %>
+                              </td>
+                              <td>
+                                <div class="text-center">
+                                  <h4>
+                                    <%= link_to other.name, other.links_topic, style: "color: " + other.faction.color %>
+                                    <br />
+                                    <small style="color: <%= l.link_nature.color %>"><%= l.link_nature.name %></small>
+                                  </h4>
+                                </div>
+                                
+                                <% if !l.title.blank? %>
+                                  <h3><%= l.title %></h3>
+                                <% end %>
+                                <% if !l.description.blank? %>
+                                  <p><%= l.description %></p>
+                                <% end %>
+                              </td>
+                            </tr>
+                          <% end %>
+                        </table>
+    		        </div>
+    		    </div>
+    		    <hr />
+            <% elsif @category.special_role == :rps %>
+                TODO
             <% end %>
     		<% @answers.each do |answer| %>
     		    <div class="row">

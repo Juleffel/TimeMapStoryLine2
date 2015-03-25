@@ -1,9 +1,14 @@
 class Topic < ActiveRecord::Base
-    has_one :character, inverse_of: :topic
     has_one :spacetime_position, inverse_of: :topic
     has_many :answers, inverse_of: :topic, :dependent => :destroy
     belongs_to :user, inverse_of: :topics
     belongs_to :category, inverse_of: :topics
+    # If it's a topic for a character sheet
+    has_one :character, inverse_of: :topic 
+    # If it's a topic for character links
+    has_one :links_character, inverse_of: :links_topic, foreign_key: :links_topic_id, class_name: "Character"
+    # If it's a topic for character rps
+    has_one :rps_character, inverse_of: :rps_topic, foreign_key: :rps_topic_id, class_name: "Character"
     
     validates :image_url, format: { with: /\A(https?:\/\/.*|)\z/,
         message: "Must be like 'http://...'" }
@@ -23,7 +28,6 @@ class Topic < ActiveRecord::Base
         topics.sort { |x,y| x.last_answered_at <=> y.last_answered_at }.reverse
     end
     
-    # Category extended by special categories
     # Make the link between character group and category special
     def special_category
         @special_category = @special_category || if character and character.group
@@ -33,15 +37,24 @@ class Topic < ActiveRecord::Base
             else
                 Category.specials(group_special)
             end
+        elsif links_character
+            Category.special_role(:links)
+        elsif rps_character
+            Category.special_role(:rps)
         end
     end
+    # Category extended by special categories
     def _category
         @_category = @_category || if category
             category
-        elsif @special_category
-            @special_category
+        elsif special_category
+            special_category
         else
             nil
         end
+    end
+    # Special character
+    def special_character
+        character || links_character || rps_character
     end
 end

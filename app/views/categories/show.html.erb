@@ -82,9 +82,10 @@
     </div>
     <% end %>
     <% @special_topics.each do |topic| %>
-    <% if topic.character.image_url.match(/\Ahttps?:\/\//) %>
+    <% character = topic.special_character %>
+    <% if character.image_url.match(/\Ahttps?:\/\//) %>
     <div class="category-topic"
-        style="background: url('<%= url_for topic.character.image_url %>') no-repeat fixed center center / cover transparent"
+        style="background: url('<%= url_for character.image_url %>') no-repeat fixed center center / cover transparent"
     >
     <% else %><div class="category-topic"><% end %>
         <div class="wrapper">
@@ -92,15 +93,15 @@
             <div class="content">
                 <div class="row">
                     <div class="col-md-2">
-                        <%= image_tag topic.character.avatar_url, class: 'thumbnail', style: "opacity: 0.8" %>
+                        <%= image_tag character.avatar_url, class: 'thumbnail', style: "opacity: 0.8" %>
                     </div>
                     <div class="col-md-10">
-                        <span class="bottom-right" style="background-color: <%= topic.character.group.color %>">
-                            <%= topic.character.group.name %>
+                        <span class="bottom-right" style="background-color: <%= character.group.color %>">
+                            <%= character.group.name %>
                         </span>
-                        <h1 class="surline"><span><%= topic.character.name %></span></h1>
-                        <h2 class="surline"><span><%= topic.character.quote %></span></h2>
-                        <p class="surline"><span><%= topic.character.summary %></span></p>
+                        <h1 class="surline"><span><%= character.complete_name %></span></h1>
+                        <h2 class="surline"><span><%= character.quote %></span></h2>
+                        <p class="surline"><span><%= character.summary %></span></p>
                         <p class="surline"><span><%= render partial: 'last_answer', locals: {topic: topic} %></span></p>
                         <p><%= link_to t('read_topic'), topic_url(topic), class: "btn btn-primary btn-lg" %></p>
                     </div>
@@ -109,7 +110,16 @@
         </div>
     </div>
     <% end %>
-    <%= link_to t('new_topic'),
-            new_topic_path(category_id: @category),
-            :class => 'btn btn-primary' %>
+    <% if user_signed_in? %>
+        <% unless @category.special_role %>
+            <%= link_to t('new_topic'),
+                    new_topic_path(category_id: @category),
+                    :class => 'btn btn-primary' %>
+        <% end %>
+        <% if @category.special_role == :character %>
+            <%= link_to t('new_topic'),
+                    new_user_character_path(current_user),
+                    :class => 'btn btn-primary' %>
+        <% end %>
+    <% end %>
 <% end %>

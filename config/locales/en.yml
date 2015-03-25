@@ -59,6 +59,7 @@ en:
       destroy: "Delete topic"
       edit_answer: "Edit"
       edit_character: "Edit"
+      edit_links: "Edit my links"
       destroy_answer: "Delete"
       destroy_character: "Delete Character"
       deleted_character: "Removed character."

@@ -19,7 +19,7 @@
               </span>
             </h3>
             <h4><i>by <%= character.user.pseudo %></i></h4>
-            <%= simple_format truncate(character.summary, length: 500, separator: ' ', omission: ' [...]') %>
+            <p><%= truncate(character.summary, length: 500, separator: ' ', omission: ' [...]') %></p>
             <!--p><%= link_to t(:learn_more), topic_path(character.topic) %></p-->
             <% if character.group.name != "Validé" %>
             <br />

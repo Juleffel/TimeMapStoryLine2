@@ -59,6 +59,7 @@ fr:
       destroy: "Supprimer le topic"
       edit_answer: "Éditer"
       edit_character: "Éditer"
+      edit_links: "Éditer mes liens"
       destroy_answer: "Supprimer"
       destroy_character: "Supprimer le personnage"
       deleted_character: "Personnage supprimé."
@@ -112,10 +113,7 @@ fr:
         group_id: Statut
         npc: PV
         image_url: Image Principale (URL)
-        small_image_url: Mini-Image (URL)
         quote: Citation favorite
-        shortline1: "Courte phrase 1"
-        shortline2: "Courte phrase 2"
       nature_link:
         name: Nom
         description: Description
