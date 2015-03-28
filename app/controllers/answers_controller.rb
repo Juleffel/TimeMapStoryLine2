@@ -28,6 +28,7 @@ class AnswersController < ApplicationController
 
   def create
     @answer = Answer.new(answer_params)
+    @answer.user = current_user
     if can? :update, @answer
       @answer.save
     end

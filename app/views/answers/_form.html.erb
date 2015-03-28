@@ -16,6 +16,7 @@
   <% end %>
 
   <%= f.hidden_field :topic_id %>
+  <% if current_user.characters.length > 0 %>
   <div class="control-group">
     <%= f.label :character_id, :class => 'control-label' %>
     <div class="controls">
@@ -23,6 +24,7 @@
     </div>
     <%= error_span(@answer[:character_id]) %>
   </div>
+  <% end %>
   <div class="control-group">
     <%= f.label :title, :class => 'control-label' %>
     <div class="controls">

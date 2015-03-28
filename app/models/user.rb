@@ -6,10 +6,14 @@ class User < ActiveRecord::Base
          
   has_many :characters, inverse_of: :user, :dependent => :destroy
   has_many :topics, inverse_of: :user
-  has_many :answers, through: :characters
+  has_many :answers, inverse_of: :user
+  
+  def number_of_messages
+    @number_of_messages = @number_of_messages || User.all.joins(:answers).select(:id, 'COUNT(answers.id) AS c').group('users.id').where(id: self.id).first.c
+  end
   
   def to_s
-    email
+    pseudo
   end
   
   def admin?

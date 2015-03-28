@@ -22,7 +22,9 @@ class Ability
         topic.user_id == user.id and not topic.special_character
       end
       can :create, Answer
-      can :manage, Answer, character: {user_id: user.id} 
+      can :manage, Answer do |answer|
+        can?(:read, answer.topic) and (answer.user_id == user.id) and (not answer.character or answer.character.user_id == user.id)
+      end
     else
       can :read, :all
       can :graph, Link

@@ -57,7 +57,7 @@
 				</div>
 				<div class="row">
 					<div class="col-md-3">
-						<%= render partial: 'profile', locals: {character: @character} %>
+						<%= render partial: 'profile', locals: {character: @character, user: nil} %>
 					</div>
 					<div class="col-md-9">
 					<% unless @character.summary.blank? %>
@@ -104,7 +104,7 @@
 				</div>
 				<div class="row">
 					<div class="col-md-3">
-						<%= render partial: 'profile', locals: {character: @character} %>
+						<%= render partial: 'profile', locals: {character: @character, user: nil} %>
 					</div>
 					<div class="col-md-9">
 						<table class="character-links">
@@ -184,7 +184,7 @@
 				</div>
 				<div class="row">
 					<div class="col-md-3">
-						<%= render partial: 'profile', locals: {character: answer.character} %>
+						<%= render partial: 'profile', locals: {character: answer.character, user: answer.user} %>
 					</div>
 					<div class="col-md-9">
 						<% unless answer.title.blank? %>

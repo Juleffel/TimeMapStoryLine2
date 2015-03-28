@@ -4,6 +4,9 @@
     <% if c = la.character %>
         <%=t 'by'%>
         <span style="color: <%= c.faction.color %>"><%= c.name %></span>
+    <% elsif u = la.user %>
+        <%=t 'by'%>
+        <%= u.pseudo %>
     <% end %>
 <% else %>
     <%=t 'by'%> <%= topic.user.pseudo %>
