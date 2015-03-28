@@ -115,7 +115,7 @@ class Category < ActiveRecord::Base
   # Special Topics
   #######
   # If current category is special, return its topics
-  def special_topics(topics_includes)
+  def special_topics(topics_includes = [])
     @special_topics = @special_topics || if special
       if special_role == :character and Group.specials(special)
         special_groups = Group.specials(special).includes(characters: {topic: topics_includes})
@@ -172,7 +172,14 @@ class Category < ActiveRecord::Base
   # SuB-Topics (topics in this category and all its sub-categories)
   #######
   def subtopics
-    Topic.order(Topic.all.includes(:answers).where(category_id: [self.id]+subcategory_ids))
+    subcats = subcategories
+    subcat_ids = subcategories.map(&:id)
+    res = Topic.all.includes(:answers).where(category_id: [self.id]+subcat_ids)
+    # Add special topics
+    ([self]+subcats).each do |cat|
+      res += cat.special_topics(:answers)
+    end
+    Topic.order(res)
   end
   
   #######
