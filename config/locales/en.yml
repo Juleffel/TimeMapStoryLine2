@@ -108,7 +108,10 @@ en:
         one: spacetime position
         other: spacetime positions
       topic: topic
-      answer: answer
+      answer: 
+        zero: answers
+        one: answer
+        other: answers
       category: sub-forum
       rp_status:
         one: RP Status
