@@ -15,7 +15,8 @@
             <% end %>
             <%=time_ago topic.last_answered_at %> <br>
             <%=t 'by'%>
-            <span style="color: <%= c.faction.color %>"><%= c.name %></span>
+            <span style="color: <%= c.faction.color %>"><%= c.name %></span><br>
+            <small>(<%= topic.answers.length %> <%=Answer.model_name.human(count: topic.answers.length) %>)</small>
         </td>
     </tr></table>
 <% elsif la and u = la.user %>
@@ -26,6 +27,7 @@
     <%=time_ago topic.last_answered_at %>
     <%=t 'by'%>
     <%= u.pseudo %>
+    <small>(<%= topic.answers.length %> <%=Answer.model_name.human(count: topic.answers.length) %>)</small>
 <% else %>
     <%=t('last_answer')%>:
     <% if title %>
@@ -34,4 +36,5 @@
     <%=time_ago topic.last_answered_at %>
     <%=t 'by'%>
     <%= topic.user.pseudo %>
+    <small>(<%= topic.answers.length %> <%=Answer.model_name.human(count: topic.answers.length) %>)</small>
 <% end %>

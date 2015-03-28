@@ -108,7 +108,10 @@ fr:
         one: position spaciotemporelle
         other: positions paciotemporelles
       topic: sujet
-      answer: réponse
+      answer: 
+        zero: réponses
+        one: réponse
+        other: réponses
       category: sous-forum
       rp_status:
         one: Statut de RP
