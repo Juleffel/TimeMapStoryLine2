@@ -53,6 +53,7 @@ fr:
   recommended_size: "Taille recommandée"
   screen_size: "Taille d'écran"
   last_answer: "Dernière réponse"
+  topic_created: "Créé"
   num_helper: "Le numéro est utilisé pour afficher les catégories dans l'ordre de num croissant."
   special_helper_cat: "Vous ne devez avoir qu'une seule catégorie spéciale de chaque type. Elles sont utilisées pour y ranger les fiches de personnages."
   special_helper_group: "Dans quelle catégorie spéciale seront rangés les fiches de personnages de ce groupe ?"
@@ -70,7 +71,7 @@ fr:
   new_answer_topic: "Répondre à ce sujet"
   read_topic: "Lire le sujet"
   
-  time_ago_before: "Il y a"
+  time_ago_before: "il y a"
   time_ago_after: ""
   
   topics:

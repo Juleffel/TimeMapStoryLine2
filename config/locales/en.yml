@@ -53,6 +53,7 @@ en:
   recommended_size: "Recommended size"
   screen_size: "Screen size"
   last_answer: "Last answer"
+  topic_created: "Created"
   num_helper: "The num is used to display categories in ascendant order of num."
   special_helper_cat: "You can have only one category of each special type. They are used to fold the characters sheets."
   special_helper_group: "In wich special category will be folded the character sheets of this group?"

@@ -13,7 +13,7 @@
             <% if title %>
             <%= link_to title.title, title %><br>
             <% end %>
-            <%=time_ago topic.last_answered_at %> <br>
+            <%=time_ago topic.last_answered_at, true %> <br>
             <%=t 'by'%>
             <span style="color: <%= c.faction.color %>"><%= c.name %></span><br>
             <small>(<%= topic.answers.length %> <%=Answer.model_name.human(count: topic.answers.length) %>)</small>
@@ -24,16 +24,16 @@
     <% if title %>
     <%= link_to title.title, title %> : 
     <% end %>
-    <%=time_ago topic.last_answered_at %>
+    <%=time_ago topic.last_answered_at, true %>
     <%=t 'by'%>
     <%= u.pseudo %>
     <small>(<%= topic.answers.length %> <%=Answer.model_name.human(count: topic.answers.length) %>)</small>
 <% else %>
-    <%=t('last_answer')%>:
     <% if title %>
     <%= link_to title.title, title %> : 
     <% end %>
-    <%=time_ago topic.last_answered_at %>
+    <%=t('topic_created')%> 
+    <%=time_ago topic.last_answered_at %> 
     <%=t 'by'%>
     <%= topic.user.pseudo %>
     <small>(<%= topic.answers.length %> <%=Answer.model_name.human(count: topic.answers.length) %>)</small>
