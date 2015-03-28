@@ -66,4 +66,24 @@ class Topic < ActiveRecord::Base
     def special_character
         character || links_character || rps_character
     end
+    
+    def self.rpg_topics
+        Topic.all.includes(:category).where('categories.is_rpg' => true)
+    end
+    def self.flood_topics
+        Topic.all.includes(:category).where('categories.is_flood' => true)
+    end
+    def self.other_topics
+        Topic.all.includes(:category).where('categories.is_rpg' => false, 'categories.is_flood' => false)
+    end
+    def self.auto_topics(topic_includes)
+        characters = Character.all.includes(topic: topic_includes, links_topic: topic_includes, rps_topic: topic_includes)
+        topics = []
+        characters.each do |character|
+            topics << character.topic
+            topics << character.links_topic
+            topics << character.rps_topic
+        end
+        topics
+    end
 end

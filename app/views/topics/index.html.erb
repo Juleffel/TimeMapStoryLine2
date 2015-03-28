@@ -1,54 +1,20 @@
 <%- model_class = Topic -%>
 <div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+  <h1><%=t 'last_topics' %></h1>
 </div>
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th><%= model_class.human_attribute_name(:id) %></th>
-      <th><%= model_class.human_attribute_name(:user_id) %></th>
-      <th><%= model_class.human_attribute_name(:spacetime_position_id) %></th>
-      <th><%= model_class.human_attribute_name(:category_id) %></th>
-      <th><%= model_class.human_attribute_name(:image_url) %></th>
-      <th><%= model_class.human_attribute_name(:title) %></th>
-      <th><%= model_class.human_attribute_name(:subtitle) %></th>
-      <th><%= model_class.human_attribute_name(:summary) %></th>
-      <th><%= model_class.human_attribute_name(:weather) %></th>
-      <th><%= model_class.human_attribute_name(:created_at) %></th>
-      <th><%=t '.actions', :default => t("helpers.actions") %></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @topics.each do |topic| %>
-      <tr>
-        <td><%= link_to topic.id, topic_path(topic) %></td>
-        <td><%= topic.user.pseudo if topic.user %></td>
-        <td><%= topic.spacetime_position_id %></td>
-        <td><%= topic.category.title if topic.category %></td>
-        <td><%= topic.title %></td>
-        <td><%= topic.subtitle %></td>
-        <td><%= topic.summary %></td>
-        <td><%= topic.weather %></td>
-        <td><%= if topic.image_url then image_tag topic.image_url, width: 100 end %></td>
-        <td><%=l topic.created_at %></td>
-        <td>
-          <% if can? :manage, topic %>
-          <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                      edit_topic_path(topic), :class => 'btn btn-default btn-xs' %>
-          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-                      topic_path(topic),
-                      :method => :delete,
-                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-                      :class => 'btn btn-xs btn-danger' %>
-          <% end %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<% if can? :create, Topic %>
-<%= link_to t('.new', :default => t("helpers.links.new")),
-            new_topic_path,
-            :class => 'btn btn-primary' %>
+<h1><%=t 'rpg_topics' %></h1>
+<% @rpg_topics.each do |topic| %>
+    <%= render partial: 'topics/show_line', locals: {topic: topic} %>
+<% end %>
+<h1><%=t 'rpg_topics' %></h1>
+<% @auto_topics.each do |topic| %>
+    <%= render partial: 'topics/show_line', locals: {topic: topic} %>
+<% end %>
+<h1><%=t 'other_topics' %></h1>
+<% @other_topics.each do |topic| %>
+    <%= render partial: 'topics/show_line', locals: {topic: topic} %>
+<% end %>
+<h1><%=t 'flood_topics' %></h1>
+<% @flood_topics.each do |topic| %>
+    <%= render partial: 'topics/show_line', locals: {topic: topic} %>
 <% end %>

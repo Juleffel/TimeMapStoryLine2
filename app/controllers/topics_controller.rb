@@ -5,7 +5,12 @@ class TopicsController < ApplicationController
   respond_to :html
 
   def index
-    @topics = Topic.all
+    topic_includes = [:user, {answers: {character: :faction}}]
+    @rpg_topics = Topic.order(Topic.rpg_topics.includes(topic_includes))
+    @flood_topics = Topic.order(Topic.flood_topics.includes(topic_includes))
+    @other_topics = Topic.order(Topic.other_topics.includes(topic_includes))
+    @auto_topics = Topic.order(Topic.auto_topics(topic_includes))
+    @topics = @rpg_topics+@flood_topics+@auto_topics+@other_topics
     respond_with(@topics)
   end
 

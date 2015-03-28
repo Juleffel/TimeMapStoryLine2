@@ -30,6 +30,15 @@ fr:
   rp_statuses: "Statuts de RPs"
   links: "Liens de personnages"
   forum: "Forum"
+  last_topics: "Derniers sujets"
+  other_dropdown: "Autre"
+  
+  rpg_topics: "RPs du forum"
+  map_topics: "RPs sur la carte"
+  auto_topics: "Présentations et liens"
+  other_topics: "Autres sujets"
+  flood_topics: "Le Flood"
+  
   by: "par"
   with: "Avec :"
   known_as: "dit"

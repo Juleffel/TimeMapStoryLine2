@@ -6,16 +6,48 @@
   </p>
 </div>
 <div class="row">
-    <div class="col-md-4">
+    <% unless user_signed_in? %>
+    <div class="col-md-3">
         <h2>Inscrivez-vous !</h2>
         <p>Pour profiter à fond de toutes les fonctionnalités de TMSL, commencer à créer des 
             personnages bidons, leurs faire des liens et poster quelques RPs, bref essayer !
             Nul besoin de valider son email, vous pouvez mettre des identifiants bidons. Vous
             pouvez aussi simplement tester avec le compte "test@test.com", "testtest". Pour toute création,
             aucun champ n'est obligatoire, alors n'hésitez pas à aller vite sur le remplissage.</p>
-        <p><%= link_to "Login", new_user_registration_path, class: "btn btn-default" %></p>
+        <p>
+            <%= link_to 'Sign up', new_user_registration_path, class: "btn btn-info" %>
+        </p>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
+        <h2>Ou connectez-vous directement</h2>
+        <p>
+            <%= form_for(:user, url: session_path(:user)) do |f| %>
+              <div class="form-group">
+                <%= f.label :email %><br />
+                <%= f.email_field :email, autofocus: true, class: "form-control", placeholder: "Email" %>
+                <p class="help-block">Vous pouvez vous connecter avec "test@test.com"</p>
+              </div>
+            
+              <div class="form-group">
+                <%= f.label :password %><br />
+                <%= f.password_field :password, autocomplete: "off", class: "form-control", placeholder: "Password" %>
+                <p class="help-block">Mot de passe "testtest"</p>
+              </div>
+              
+                <div class="checkbox">
+                  <label>
+                    <%= f.check_box :remember_me %> <%= t :remember_me %>
+                  </label>
+                </div>
+            
+              <div class="actions">
+                <%= f.submit "Sign in", class: "btn btn-success" %>
+              </div>
+            <% end %>
+        </p>
+    </div>
+    <% end %>
+    <div class="col-md-<%= if user_signed_in? then "6" else "3" end %>">
         <h2>Le Forum</h2>
         <p>Vous pouvez dès à présent RP normalement dans le forum.
             Un panneau d'admin permet d'y créer facilement des catégories et des les imbriquer.
@@ -24,7 +56,7 @@
             bien d'autres choses !</p>
         <p><%= link_to "Forum", categories_path, class: "btn btn-default" %></p>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-<%= if user_signed_in? then "6" else "3" end %>">
         <h2>Les liens</h2>
         <p>Vous pouvez lier chacun de vos personnages aux autres personnages présents, cela
             crée un graphe des personnages du forum. Par qui êtes-vous liés à tel ou tel personnage ?

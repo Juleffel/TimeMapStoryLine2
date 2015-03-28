@@ -55,10 +55,17 @@
           <ul class="nav navbar-nav">
             <li><%= link_to t('forum'), categories_path %></li>
             <li><%= link_to t('links'), graph_links_path %></li>
-            <li><%= link_to t('members'), characters_path %></li>
-            <% if user_signed_in? %>
-            <li><%= link_to t('characters'), user_characters_path(current_user) %></li>
-            <% end %>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><%=t 'other_dropdown'%> <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><%= link_to t('members'), characters_path %></li>
+                <% if user_signed_in? %>
+                <li><%= link_to t('characters'), user_characters_path(current_user) %></li>
+                <% end %>
+                <li><%= link_to t('last_topics'), topics_path %></li>
+                <li><%= link_to t('factions'), factions_path %></li>
+              </ul>
+            </li>
             <% if user_signed_in? and current_user.admin? %>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Admin <span class="caret"></span></a>
@@ -69,10 +76,7 @@
                 <li><%= link_to t('categories'), categories_path(mod: true) %></li>
                 <li><%= link_to t('rp_statuses'), rp_statuses_path %></li>
               </ul>
-              <!--li><%= link_to t('links'), links_path %></li-->
             </li>
-            <% else %>
-              <li><%= link_to t('factions'), factions_path %></li>
             <% end %>
             <% if I18n.locale == :fr %>
             <li><%= link_to t('en'), '/en' %></li>
@@ -81,26 +85,14 @@
             <% end %>
           </ul>
           
-          
+          <span class="navbar-right">
           <% if not user_signed_in? %>
-            <%= form_for(:user, url: session_path(:user), html: { class: "navbar-form navbar-right" }) do |f| %>
-              <div class="form-group">
-                <%= f.email_field :email, placeholder: "Email", class: "form-control input-sm" %>
-              </div>
-              <div class="form-group">
-                <%= f.password_field :password, placeholder: "Password", autocomplete: "off", class: "form-control input-sm" %>
-              </div>
-              
-              <div class="checkbox">
-                <%= f.check_box :remember_me %><% f.label :remember_me %>
-              </div>
-              
-              <%= f.submit "Sign in", class: "btn btn-success btn-sm" %>
-              <%= link_to 'Sign up', new_user_registration_path, class: "btn btn-info navbar-btn btn-sm" %>
-            <% end %>
+              <%= link_to 'Sign in', new_user_session_path, class: "btn btn-success navbar-btn btn-sm" %>
+              <%= link_to 'Sign up', destroy_user_session_path, method: :delete, class: "btn btn-info navbar-btn btn-sm" %>
           <% else %>
-            <%= link_to 'Sign out', destroy_user_session_path, method: :delete, class: "btn btn-info navbar-btn btn-sm navbar-right" %>
+              <%= link_to 'Sign out', destroy_user_session_path, method: :delete, class: "btn btn-info navbar-btn btn-sm" %>
           <% end %>
+          </span>
         </div><!--/.navbar-collapse -->
       </div>
     </nav>

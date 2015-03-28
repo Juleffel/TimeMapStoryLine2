@@ -1,0 +1,46 @@
+<% character = topic.special_character %>
+<% if not character %>
+    <% if topic.image_url.match(/\Ahttps?:\/\//) %>
+    <div class="category-topic"
+        style="background: url('<%= url_for topic.image_url %>') no-repeat fixed center center / cover transparent"
+    >
+    <% else %><div class="category-topic"><% end %>
+        <div class="wrapper">
+            <div class="bg-overlay"></div>
+            <div class="content">
+                <h1 class="surline"><span><%= topic.title %></span></h1>
+                <h2 class="surline"><span><%= topic.subtitle %></span></h2>
+                <p class="surline"><span><%= topic.summary %></span></p>
+                <div class="surline"><span><%= render partial: 'categories/last_answer', locals: {topic: topic, title: nil} %></span></div>
+                <p><%= link_to t('read_topic'), topic_url(topic), class: "btn btn-primary btn-lg" %></p>
+            </div>
+        </div>
+    </div>
+<% else %>
+    <% if character.image_url.match(/\Ahttps?:\/\//) %>
+    <div class="category-topic"
+        style="background: url('<%= url_for character.image_url %>') no-repeat fixed center center / cover transparent"
+    >
+    <% else %><div class="category-topic"><% end %>
+        <div class="wrapper">
+            <div class="bg-overlay"></div>
+            <div class="content">
+                <div class="row">
+                    <div class="col-md-2">
+                        <%= image_tag character.avatar_url, class: 'thumbnail', style: "opacity: 0.8" %>
+                    </div>
+                    <div class="col-md-10">
+                        <span class="bottom-right" style="background-color: <%= character.group.color %>">
+                            <%= character.group.name %>
+                        </span>
+                        <h1 class="surline"><span><%= character.complete_name %></span></h1>
+                        <h2 class="surline"><span><%= character.quote %></span></h2>
+                        <p class="surline"><span><%= character.summary %></span></p>
+                        <p class="surline"><span><%= render partial: 'categories/last_answer', locals: {topic: topic, title: nil} %></span></p>
+                        <p><%= link_to t('read_topic'), topic_url(topic), class: "btn btn-primary btn-lg" %></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<% end %>

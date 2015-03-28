@@ -37,14 +37,10 @@ class Character < ActiveRecord::Base
     @number_of_messages = @number_of_messages || Character.all.joins(:answers).select(:id, 'COUNT(answers.id) AS c').group('characters.id').where(id: self.id).first.c
   end
   
-  def rp_topics
-    if @rp_topics
-      @rp_topics
-    else
+  def generate_rp_topics
+    unless @user_rp_topics
       topic_includes = [:user, {answers: :character}, :category]
-      user_rpg_topics_q = Topic.select(:id).joins(:answers, :category).where(user_id: 1, 'categories.is_rpg' => true)
-      
-      user_rpg_topic_ids = Topic.select(:id).joins(:category).where(user_id: 1, 'categories.is_rpg' => true).map(&:id).uniq
+      user_rpg_topic_ids = Topic.select(:id).joins(:category).where(user_id: character.user_id, 'categories.is_rpg' => true).map(&:id).uniq
       user_rpg_topic_with_answers_ids = Topic.select(:id).joins(:answers).where(id: user_rpg_topic_ids).map(&:id).uniq
       user_rpg_topic_with_character_answers_ids = Topic.select(:id).joins(:answers).where(id: user_rpg_topic_ids, 'answers.character_id' => self.id).map(&:id).uniq
       user_rpg_topic_without_answers_ids = user_rpg_topic_ids - user_rpg_topic_with_answers_ids
@@ -54,15 +50,11 @@ class Character < ActiveRecord::Base
     end
   end
   def user_rp_topics
-    unless @user_rp_topics
-      rp_topics
-    end
+    generate_rp_topics
     @user_rp_topics
   end
   def character_rp_topics
-    unless @character_rp_topics
-      rp_topics
-    end
+    generate_rp_topics
     @character_rp_topics
   end
   

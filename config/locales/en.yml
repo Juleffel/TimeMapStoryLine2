@@ -30,6 +30,15 @@ en:
   rp_statuses: "RP Statuses"
   links: "Character links"
   forum: "Forum"
+  last_topics: "Derniers sujets"
+  other_dropdown: "Other"
+  
+  rpg_topics: "RPs in forum"
+  map_topics: "RPs on map"
+  auto_topics: "Presentations and links"
+  other_topics: "Other topics"
+  flood_topics: "The Flood"
+  
   by: "by"
   with: "With:"
   known_as: "known as"
