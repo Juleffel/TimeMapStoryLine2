@@ -61,6 +61,9 @@ fr:
   new_answer_topic: "Répondre à ce sujet"
   read_topic: "Lire le sujet"
   
+  time_ago_before: "Il y a"
+  time_ago_after: ""
+  
   topics:
     show:
       answer: "Répondre"

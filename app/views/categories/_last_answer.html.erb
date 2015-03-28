@@ -1,13 +1,37 @@
-<%=t('last_answer')%>: 
-<%=l topic.last_answered_at %>
-<% if la = topic.last_answer %>
-    <% if c = la.character %>
-        <%=t 'by'%>
-        <span style="color: <%= c.faction.color %>"><%= c.name %></span>
-    <% elsif u = la.user %>
-        <%=t 'by'%>
-        <%= u.pseudo %>
+<% la = topic.last_answer %>
+<% if la and c = la.character %>
+    <table><tr>
+        <td>
+            <%= image_tag c.small_image_url, class: "mini-avatar float-left" unless c.small_image_url.blank? %>
+        </td>
+        <td>
+            &nbsp;
+            &nbsp;
+        </td>
+        <td>
+            <%=t('last_answer')%>: <br>
+            <% if title %>
+            <%= link_to title.title, title %><br>
+            <% end %>
+            <%=time_ago topic.last_answered_at %> <br>
+            <%=t 'by'%>
+            <span style="color: <%= c.faction.color %>"><%= c.name %></span>
+        </td>
+    </tr></table>
+<% elsif la and u = la.user %>
+    <%=t('last_answer')%>: 
+    <% if title %>
+    <%= link_to title.title, title %> : 
     <% end %>
+    <%=time_ago topic.last_answered_at %>
+    <%=t 'by'%>
+    <%= u.pseudo %>
 <% else %>
-    <%=t 'by'%> <%= topic.user.pseudo %>
+    <%=t('last_answer')%>:
+    <% if title %>
+    <%= link_to title.title, title %> : 
+    <% end %>
+    <%=time_ago topic.last_answered_at %>
+    <%=t 'by'%>
+    <%= topic.user.pseudo %>
 <% end %>

@@ -19,6 +19,11 @@
             <% end %>
             </div>
             <% end %>
+            <% if last_subtopic = category.last_subtopic %>
+            <div class="last-topic">
+              <%= render partial: 'last_answer', locals: {topic: last_subtopic, title: last_subtopic} %>
+            </div>
+            <% end %>
           </div>
         </div>
       </div>

@@ -14,4 +14,8 @@ module ApplicationHelper
         flash_type.to_s
     end
   end
+  
+  def time_ago(time)
+    t('time_ago_before')+" "+time_ago_in_words(time)+" "+t('time_ago_after')
+  end
 end

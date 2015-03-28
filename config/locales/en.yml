@@ -61,6 +61,9 @@ en:
   new_answer_topic: "Answer topic"
   read_topic: "Read topic"
   
+  time_ago_before: ""
+  time_ago_after: "ago"
+  
   topics:
     show:
       answer: "Answer"

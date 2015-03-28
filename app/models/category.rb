@@ -154,17 +154,31 @@ class Category < ActiveRecord::Base
   # SuB-Categories
   #######
   def subcategories
-    cats = self.categories
+    cats = categories.to_a
     subcats = []
     cat = nil
-    while cats.length and cat != self # Stupid guy, I will fucking kill you. (loop)
+    while not cats.empty? and cat != self # Stupid guy, I will fucking kill you. (loop) (do a warniiiing!)
       cat = cats.pop
       subcats << cat
-      cats << cat.categories
+      cats += cat.categories.to_a
     end
     subcats
   end
   def subcategory_ids
-    self.subcategories.map(&:id)
+    subcategories.map(&:id)
+  end
+  
+  #######
+  # SuB-Topics (topics in this category and all its sub-categories)
+  #######
+  def subtopics
+    Topic.order(Topic.all.includes(:answers).where(category_id: [self.id]+subcategory_ids))
+  end
+  
+  #######
+  # Last sub-topic (last answered topic in all subtopics)
+  #######
+  def last_subtopic
+    subtopics.first # topics are in a reverse order (last is first)
   end
 end
