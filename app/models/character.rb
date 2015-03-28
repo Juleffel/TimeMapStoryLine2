@@ -40,7 +40,7 @@ class Character < ActiveRecord::Base
   def generate_rp_topics
     unless @user_rp_topics
       topic_includes = [:user, {answers: :character}, :category]
-      user_rpg_topic_ids = Topic.select(:id).joins(:category).where(user_id: character.user_id, 'categories.is_rpg' => true).map(&:id).uniq
+      user_rpg_topic_ids = Topic.select(:id).joins(:category).where(user_id: self.user_id, 'categories.is_rpg' => true).map(&:id).uniq
       user_rpg_topic_with_answers_ids = Topic.select(:id).joins(:answers).where(id: user_rpg_topic_ids).map(&:id).uniq
       user_rpg_topic_with_character_answers_ids = Topic.select(:id).joins(:answers).where(id: user_rpg_topic_ids, 'answers.character_id' => self.id).map(&:id).uniq
       user_rpg_topic_without_answers_ids = user_rpg_topic_ids - user_rpg_topic_with_answers_ids
