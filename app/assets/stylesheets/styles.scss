@@ -1207,9 +1207,12 @@ img.medium-avatar {
     width: 100%;
 }
 
-.rp-summary .participants {
-    clear: both;
-}
 .rp-summary .participant {
     float: left;
+}
+.rp-summary .last-answer {
+    clear: both;
+}
+img.thumbnail {
+    margin-bottom: 0;
 }

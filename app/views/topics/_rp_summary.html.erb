@@ -6,6 +6,11 @@
         <h1><%= link_to topic.title, topic %><br />
         <small><%= topic.subtitle %></small></h1>
         <%= simple_format topic.summary %>
+        <% if topic.rp_status.display_last %>
+            <div class="last-answer">
+                <%= render partial: 'categories/last_answer', locals: {topic: topic, title: nil} %>
+            </div>
+        <% end %>
         <% if (parts = (topic.participants - [character])).length > 0 %>
         <h2><%=t 'with'%></h2>
         <div class="participants">
