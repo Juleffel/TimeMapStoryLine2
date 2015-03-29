@@ -24,7 +24,7 @@ if ($('.container-topic').size() > 0) {
 	// left: 37, up: 38, right: 39, down: 40,
 	// spacebar: 32, pageup: 33, pagedown: 34, end: 35, home: 36
 	var keys = [32, 37, 38, 39, 40], wheelIter = 0;
-
+	
 	function preventDefault(e) {
 		e = e || window.event;
 		if (e.preventDefault)
@@ -71,7 +71,7 @@ if ($('.container-topic').size() > 0) {
 		trigger = container.querySelector( 'button.trigger' ),
 		$container = $('.container-topic'),
 		$body = $('body');
-
+		
 	function scrollY() {
 		return (-$container.offset().top + $body.offset().top);
 		// || window.pageYOffset || docElem.scrollTop || document.body.scrollTop

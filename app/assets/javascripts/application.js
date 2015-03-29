@@ -17,6 +17,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap-sprockets
+// JqueryUI: For autocomplete... TODO: Load only necessary
 //= require jquery-ui-bootstrap
 //= require lib/jquery.fancybox.pack
 
@@ -48,6 +49,7 @@
 //= require graph/sigmajs.events
 //= require graph/cerebro
 
+// TODO use jquery in place of classie in posts
 //= require lib/classie
 //= require posts
 
