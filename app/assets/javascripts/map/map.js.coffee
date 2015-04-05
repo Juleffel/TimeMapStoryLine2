@@ -24,7 +24,7 @@ $ ->
     }).setView([33.45772,-89.802246], 6)
     
     #cloudmade_api_key = $map.data("cloudmade-api-key")
-    #L.Icon.Default.imagePath = "http://leafletjs.com/dist/images"
+    L.Icon.Default.imagePath = "http://leafletjs.com/dist/images"
     
     ###L.tileLayer("http://fortests.chez.com/carte_arven/{z}/{x}/{y}.png", {
         attribution: '&copy; <a href="http://dragonvale.forumactif.org">Dragonvale</a>',
