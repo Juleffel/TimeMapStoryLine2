@@ -13,7 +13,6 @@ gem 'sass-rails', '~> 5.0.1'
 gem 'bootstrap-sass', '~> 3.3.3'
 gem "node"
 gem "twitter-bootstrap-rails"
-gem 'bootstrap-slider-rails'
 gem 'jquery-ui-bootstrap-rails-asset'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '~> 2.7.1'

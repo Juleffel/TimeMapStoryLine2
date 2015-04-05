@@ -1,4 +1,6 @@
 class Topic < ActiveRecord::Base
+    extend HashBy
+
     has_one :spacetime_position, inverse_of: :topic
     has_many :answers, inverse_of: :topic, :dependent => :destroy
     belongs_to :user, inverse_of: :topics
@@ -15,6 +17,7 @@ class Topic < ActiveRecord::Base
         message: "Must be like 'http://...'" }
     
     after_save -> { spacetime_position.touch if spacetime_position }
+    after_touch -> { spacetime_position.touch if spacetime_position }
     before_destroy -> { spacetime_position.touch if spacetime_position }
     
     def last_answer
@@ -85,5 +88,9 @@ class Topic < ActiveRecord::Base
             topics << character.rps_topic
         end
         topics
+    end
+    
+    def json_attributes
+        attributes
     end
 end

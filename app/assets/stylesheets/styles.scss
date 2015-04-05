@@ -3,6 +3,14 @@
 =================================================== */
 html {
     overflow-x: hidden;
+	height: 100%;
+}
+
+body.without-container {
+	overflow-x: hidden;
+	margin-top: 50px;
+	height: calc(100% - 50px);
+	position: relative;
 }
 .invisible {
   display: none;

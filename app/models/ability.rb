@@ -8,7 +8,7 @@ class Ability
     if user.admin?
       can [:read, :update], :all
       can :manage, [Character, Answer, Category, Faction, Group, Link, 
-        LinkNature, Presence, SpacetimePosition, User, RpStatus]
+        LinkNature, Presence, SpacetimePosition, User, RpStatus, Presence]
       can :manage, Topic do |topic|
         not topic.special_character
       end
@@ -25,9 +25,18 @@ class Ability
       can :manage, Answer do |answer|
         can?(:read, answer.topic) and (answer.user_id == user.id) and (not answer.character or answer.character.user_id == user.id)
       end
+      can :manage, Presence, character: {user_id: user.id}
+      can :manage, SpacetimePosition do |sp|
+        ok = false
+        sp.presences.each do |pres|
+          ok ||= pres.character.user_id == user.id
+        end
+        ok
+      end
     else
       can :read, :all
       can :graph, Link
+      can :map, Character
     end
     #
     # The first argument to `can` is the action you are giving the user 

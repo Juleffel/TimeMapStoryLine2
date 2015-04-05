@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150328183542) do
+ActiveRecord::Schema.define(version: 20150404112939) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -77,6 +77,7 @@ ActiveRecord::Schema.define(version: 20150328183542) do
     t.text     "shortline2"
     t.integer  "links_topic_id"
     t.integer  "rps_topic_id"
+    t.datetime "map_nodes_updated_at"
   end
 
   add_index "characters", ["faction_id"], name: "index_characters_on_faction_id", using: :btree
@@ -161,6 +162,7 @@ ActiveRecord::Schema.define(version: 20150328183542) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
+    t.boolean  "birth"
   end
 
   add_index "spacetime_positions", ["topic_id"], name: "index_spacetime_positions_on_topic_id", using: :btree

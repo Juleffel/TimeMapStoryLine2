@@ -14,7 +14,7 @@ class Character < ActiveRecord::Base
   has_many :from_links_characters, through: :from_links, class_name: "Character", source: :from_character
   
   has_many :presences, inverse_of: :character, dependent: :destroy
-  has_many :spacetime_positions, through: :presences
+  has_many :spacetime_positions, through: :presences, inverse_of: :characters
   has_many :answers, inverse_of: :character
   
   validates :avatar_url, format: { with: /\A(https?:\/\/.*|)\z/,
@@ -28,7 +28,13 @@ class Character < ActiveRecord::Base
   
   default_scope -> { order(:id) }
   
-  after_create -> { create_own_topic }
+  after_create -> do
+    create_own_topic
+    update_birth_spacetime_position
+  end
+  after_update -> { update_birth_spacetime_position }
+  
+  RAND = Random.new(1234)
   
   def links
     from_links.order(:force) + to_links.order(:force)
@@ -58,17 +64,36 @@ class Character < ActiveRecord::Base
     @character_rp_topics
   end
   
+  def update_birth_spacetime_position
+    sp = self.spacetime_positions.where(birth: true).first || self.spacetime_positions.new
+    sp.birth = true
+    sp.latitude ||= 33.45772 + RAND.rand(-1.00..1.00)
+    sp.longitude ||= -89.802246 + RAND.rand(-1.00..1.00)
+    sp.title = "Naissance de "+complete_name
+    sp.subtitle = shortline1
+    sp.resume = quote
+    sp.begin_at = birth_date.to_datetime || (DateTime.now - 25.years)
+    sp.topic_id = topic_id
+    sp.user_id = user_id
+    sp.save
+  end
+  def self.update_birth_spacetime_positions
+    all.each do |c|
+      c.update_birth_spacetime_position
+    end
+  end
+  
   # "Toto Madrillano Q. sueño" => "T. M. Q. S."
   def contracted_middle_name
     ((middle_name || '').split(' ').map {|s| s[0].capitalize + "."}).join(" ")
   end
   # "Michel Jean Marc Corones" => "Michel Jean Marc Corones"
   def complete_name
-    [first_name, middle_name, last_name].compact.join(' ')
+    [first_name, middle_name, last_name].delete_if {|e| e.blank?}.join(' ')
   end
   # "Michel Jean Marc Corones" => "Michel J. M. Corones"
   def contracted_name
-    [first_name, contracted_middle_name, last_name].compact.join(' ')
+    [first_name, contracted_middle_name, last_name].delete_if {|e| e.blank?}.join(' ')
   end
   def name
     contracted_name
@@ -95,14 +120,13 @@ class Character < ActiveRecord::Base
     self.save
   end
   
-  def nodes_updated_at
-    spacetime_positions.maximum(:updated_at)
+  def self.last_update
+    [self.maximum(:updated_at), self.maximum(:map_nodes_updated_at)].max
   end
   
   def json_attributes
     attributes.merge({
-      node_ids: spacetime_positions.order(:begin_at).map(&:id), 
-      nodes_updated_at: nodes_updated_at, 
+      node_ids: spacetime_position_ids,
       to_link_ids: to_link_ids, 
       name: to_s,
       importance: 1,

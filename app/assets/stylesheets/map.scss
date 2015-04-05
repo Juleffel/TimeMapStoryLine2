@@ -1,0 +1,87 @@
+/*#map {
+  width: 800px;
+  height: 400px;
+}*/
+#map {
+  
+}
+
+.map-slider {
+  position: absolute;
+  bottom: 5px;
+  z-index: 1000;
+  width: 80%;
+  left: 10%;
+  text-align: center;
+}
+.map-slider .slider {
+  width: 100% !important;
+}
+.map-slider .slider-handle {
+  background-image: linear-gradient(to bottom, #E7B280 0px, #81593B 100%);
+}
+
+.map-character-icon  {
+}
+.frame  {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.map-character-icon.map-icon-small {
+}
+.map-character-icon.map-icon-medium {
+}
+.map-character-icon.map-icon-large {
+}
+.map-character-icon img {
+}
+.map-character-icon img.gear  {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+.map-character-icon .avatar {
+  position: absolute;
+}
+.map-character-icon .avatar img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+.map-character-icon .avatars-1 {
+  width: 70%;
+  height: 70%;
+}
+.map-character-icon .avatar-1.avatars-1 {
+  top: 15%;
+  left: 15%;
+}
+
+.map-character-icon .avatars-2 {
+  width: 70%;
+  height: 70%;
+}
+.map-character-icon .avatar-1.avatars-2 {
+  top: 15%;
+  left: -15%;
+}
+.map-character-icon .avatar-2.avatars-2 {
+  top: 15%;
+  left: 45%;
+}
+
+.map-character-icon .avatars-3more {
+  width: 60%;
+  height: 60%;
+}
+.map-character-icon .avatar-1.part-1.avatars-3more  {
+  width: 15%;
+  overflow: hidden;
+}
+.map-character-icon .avatar-1.part-2.avatars-3more  {
+  width: 15%;
+  margin-left: -15%;
+}

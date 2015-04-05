@@ -3,7 +3,7 @@ class CharactersController < ApplicationController
   #before_action :set_character, only: [:show, :edit, :update, :destroy]
   before_action :set_user
 
-  respond_to :html
+  respond_to :html#, :json
 
   def index
     if @user
@@ -13,6 +13,32 @@ class CharactersController < ApplicationController
     end
       
     respond_with(@characters, user_id: @user, template: 'characters/index_thumbs')
+  end
+  
+  def map
+    @without_container = true
+    respond_to do |format|
+      format.html
+      format.json do
+        @characters_updated_at = Character.last_update
+        if params[:all] == "true"
+          @spacetime_positions_by_id = SpacetimePosition.hash_by(:id)
+          @characters_by_id = Character.hash_by(:id)
+          @topics_by_id = Topic.hash_by(:id)
+          #@nodes_by_begin_at = Node.hash_by(:begin_at)
+          render :json => {
+            :characters_updated_at => @characters_updated_at,
+            :characters_by_id => @characters_by_id,
+            :spacetime_positions_by_id => @spacetime_positions_by_id,
+            :topics_by_id => @topics_by_id,
+          }
+        else
+          render :json => {
+            :characters_updated_at => @characters_updated_at,
+          }
+        end
+      end
+    end
   end
 
   def show

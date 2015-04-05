@@ -92,15 +92,6 @@
 		image-url('fonts/icomoon/icomoon.svg?-ee0u0f#icomoon') format('svg');
 }
 
-html {
-	height: 100%;
-}
-body.without-container {
-	overflow-x: hidden;
-	margin-top: 50px;
-	height: calc(100% - 50px);
-	position: relative;
-}
 .container-topic {
 	height: 100%;
 }

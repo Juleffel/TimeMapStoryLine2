@@ -3,4 +3,7 @@ class RpStatus < ActiveRecord::Base
     
     default_scope -> { order(:num) }
     
+    validates :color, format: { with: /\A#[0-9a-fA-F]{3}[0-9a-fA-F]{3}?\z/,
+        message: "Must be like #1A6F20" }
+    
 end

@@ -1,0 +1,11 @@
+<%= content_tag :div, class: "fullscreen" do %>
+  <%= content_tag :div, "", id: "map", class: "background",
+    data: {
+        current_user_id: (current_user.id if current_user),
+        #cloudmade_api_key: ENV["CLOUDMADE_API_KEY"] || "9afc3ab7f647400f9e1c7fa91187fdcb",
+      } %>
+  <%= content_tag :div, class: "map-slider" do %>
+    <%= content_tag :input, "", id: "date-slider", type: "text",
+    data: {from: "11/12/2013".to_date, to: "16/12/2013".to_date} %>
+  <% end %>
+<% end %>

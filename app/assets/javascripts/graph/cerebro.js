@@ -1,3 +1,14 @@
+//= require graph/sigmajs.loadData
+//= require graph/sigmajs.searchNode
+//= require graph/sigmajs.fisheye
+//= require graph/sigmajs.circularLayout
+//= require graph/sigmajs.changeColors
+//= require graph/sigmajs.selectNodes
+//= require graph/sigmajs.buttonFilters
+//= require graph/sigmajs.nodesInfo
+//= require graph/sigmajs.layoutButtons
+//= require graph/sigmajs.events
+
 function init() {
 	/*** VARIABLES ***/
 	zoom_min = 0.9;

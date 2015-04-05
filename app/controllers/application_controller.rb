@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   before_action :set_locale
   
   rescue_from CanCan::AccessDenied do |exception|
+    p current_user
     redirect_to root_url, :alert => exception.message
   end
 

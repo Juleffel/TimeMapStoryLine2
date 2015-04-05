@@ -17,7 +17,9 @@ Rails.application.routes.draw do
     
     resources :link_natures
   
-    resources :characters, only: [:index]
+    resources :characters, only: [:index] do
+      get 'map', on: :collection
+    end
     resources :users, only: [] do
       resources :characters, except: [:show]
     end

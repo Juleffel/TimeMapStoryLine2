@@ -2,7 +2,7 @@ class SpacetimePositionsController < ApplicationController
   load_and_authorize_resource
   #before_action :set_spacetime_position, only: [:show, :edit, :update, :destroy]
 
-  respond_to :html
+  respond_to :html, :json
 
   def index
     @spacetime_positions = SpacetimePosition.all
@@ -22,14 +22,13 @@ class SpacetimePositionsController < ApplicationController
   end
 
   def create
-    @spacetime_position = SpacetimePosition.new(spacetime_position_params)
-    @spacetime_position.user_id = current_user.id
+    @spacetime_position = SpacetimePosition.new(spacetime_position_params.merge({user_id: current_user.id}))
     @spacetime_position.save
     respond_with(@spacetime_position)
   end
 
   def update
-    @spacetime_position.update(spacetime_position_params)
+    @spacetime_position.update(spacetime_position_params.merge({user_id: current_user.id}))
     respond_with(@spacetime_position)
   end
 
@@ -44,6 +43,6 @@ class SpacetimePositionsController < ApplicationController
     end
 
     def spacetime_position_params
-      params.require(:spacetime_position).permit(:longitude, :latitude, :title, :subtitle, :resume, :weather, :begin_at, :end_at, :topic_id)
+      params.require(:spacetime_position).permit(:longitude, :latitude, :title, :subtitle, :resume, :weather, :begin_at, :end_at, :topic_id, :character_ids => [])
     end
 end
