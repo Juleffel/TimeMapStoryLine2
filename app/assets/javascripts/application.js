@@ -21,29 +21,29 @@
 //= require bootstrap-sprockets
 // JqueryUI: For autocomplete... TODO: Load only necessary
 //= require jquery-ui-bootstrap
-/// require lib/jquery.fancybox.pack
+//= require lib/jquery.fancybox.pack
 
-/// require lib/bootstrap-datepicker.min
-/// require lib/bootstrap-datepicker.fr.min
-/// require lib/bootstrap-datepicker.en-GB.min
+//= require lib/bootstrap-datepicker.min
+//= require lib/bootstrap-datepicker.fr.min
+//= require lib/bootstrap-datepicker.en-GB.min
 //= require lib/bootstrap-slider
 
-/// require lib/jquery.mosaicflow.min.js
+//= require lib/jquery.mosaicflow.min.js
 
 // require lib/retina
 // require lib/waypoints.min
 
-/// require lib/sigma
-/// require lib/sigma.utils
-/// require lib/sigma.forceatlas
+//= require lib/sigma
+//= require lib/sigma.utils
+//= require lib/sigma.forceatlas
 
 //= require lib/jquery.mCustomScrollbar.concat.min
 
-/// require graph/cerebro
+//= require graph/cerebro
 
 // TODO use jquery in place of classie in posts
-/// require lib/classie
-/// require posts
+//= require lib/classie
+//= require posts
 
 //= require lib/leaflet
 //= require map/main

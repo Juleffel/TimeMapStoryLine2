@@ -2,17 +2,17 @@
 @import "normalize";
 @import "bootstrap-sprockets";
 @import "bootstrap";
-///@import "jquery-ui-bootstrap";  // For autocomplete... TODO: Load only necessary
-///@import "lib/jquery.fancybox";
+@import "jquery-ui-bootstrap";  // For autocomplete... TODO: Load only necessary
+@import "lib/jquery.fancybox";
 //@import "lib/flickity";
-///@import "lib/animate";
+@import "lib/animate";
 //@import "lib/queries";
-///@import "lib/bootstrap-datepicker3.min";
-///@import "lib/jquery.mCustomScrollbar";
+@import "lib/bootstrap-datepicker3.min";
+@import "lib/jquery.mCustomScrollbar";
 @import "lib/bootstrap-slider";
 @import "lib/leaflet";
 @import "map";
-///@import "posts";
-///@import "categories";
+@import "posts";
+@import "categories";
 @import "styles";
 @import "graph";
