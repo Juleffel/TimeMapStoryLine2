@@ -251,9 +251,9 @@ class Map.Node
   icon_html_4_characters: ->
     l = @characters.length
     if @owned
-      gear = '/assets/gearwheel2-small.png'
+      gear = 'http://img15.hostingpics.net/pics/663529gearwheel2small.png'
     else
-      gear = '/assets/gearwheel1-small.png'
+      gear = 'http://img15.hostingpics.net/pics/369641gearwheel1small.png'
     gear_html = "<img class='gear' src='#{gear}'/>"
     if l == 0
       html = "<div class='frame frame-0'>"+gear_html
