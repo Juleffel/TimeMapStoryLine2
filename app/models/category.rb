@@ -7,6 +7,8 @@ class Category < ActiveRecord::Base
     message: "Must be like 'http://...'" }
   
   scope :roots, -> { where(category_id: nil) }
+  scope :rpg, -> { where(is_rpg: true) }
+  scope :flood, -> { where(is_flood: true) }
   default_scope {order(:num)}
   
   PERMISSION_LEVELS = [
@@ -122,10 +124,10 @@ class Category < ActiveRecord::Base
         characters = special_groups.map(&:characters).flatten.compact
         characters.map(&:topic).compact
       elsif special_role == :links
-        characters = Character.all.includes({links_topic: topics_includes})
+        characters = Character.not_npc.all.includes({links_topic: topics_includes})
         characters.map(&:links_topic).compact
       elsif special_role == :rps
-        characters = Character.all.includes({rps_topic: topics_includes})
+        characters = Character.not_npc.all.includes({rps_topic: topics_includes})
         characters.map(&:rps_topic).compact
       end
     end || []

@@ -33,6 +33,13 @@ fr:
   forum: "Forum"
   last_topics: "Derniers sujets"
   other_dropdown: "Autre"
+  back: "Retour"
+  back_map: "Retour à la carte"
+  back_category: "Retour au forum"
+  free: "Libre"
+  reserved: "Réservé"
+  taken: "Pris"
+  npc: "PV"
   
   rpg_topics: "RPs du forum"
   map_topics: "RPs sur la carte"
@@ -95,102 +102,106 @@ fr:
   activerecord:
     models:
       user/gender:
-        female: utilisateur
-        male: utilisatrice
-      character: personnage
-      member: membre
-      faction: faction
-      group: statut
+        female: "utilisateur"
+        male: "utilisatrice"
+      character: "personnage"
+      member: "membre"
+      faction: "faction"
+      group: "statut"
       link_nature:
-        one: type de lien
-        other: types de liens
-      link: lien
-      presence: présence
+        one: "type de lien"
+        other: "types de liens"
+      link: "lien"
+      presence: "présence"
       spacetime_position:
-        one: position spaciotemporelle
-        other: positions paciotemporelles
-      topic: sujet
-      answer: 
-        zero: réponses
-        one: réponse
-        other: réponses
-      category: sous-forum
+        one: "position spaciotemporelle"
+        other: "positions paciotemporelles"
+      topic: "sujet"
+      answer:
+        zero: "réponses"
+        one: "réponse"
+        other: "réponses"
+      category: "sous-forum"
       rp_status:
-        one: Statut de RP
-        other: Statuts de RPs
+        one: "Statut de RP"
+        other: "Statuts de RPs"
     attributes:
       user:
-        role: Rôle
-        login: Login
-        pseudo: Pseudo
-        email: E-mail
+        role: "Rôle"
+        login: "Login"
+        pseudo: "Pseudo"
+        email: "E-mail"
       character:
-        first_name: Prénom
-        middle_name: Seconds prénoms
-        last_name: Nom
-        nickname: Surnom
-        birth_date: Date de naissance
-        sex: Homme
-        avatar_url: Url de l'avatar
-        copyright: Copyright de l'avatar
-        story: Histoire
-        resume: Résumé
-        summary: Résumé
-        anectdote: Anecdote
-        test_rp: Test RP
-        psychology: Psychologie
-        appearance: Apparence
-        faction_id: Faction
-        group_id: Statut
-        npc: PV
-        image_url: Image Principale (URL)
-        quote: Citation favorite
+        first_name: "Prénom"
+        middle_name: "Seconds prénoms"
+        last_name: "Nom"
+        nickname: "Surnom"
+        birth_date: "Date de naissance"
+        sex: "Homme"
+        avatar_url: "Url de l'avatar"
+        copyright: "Copyright de l'avatar"
+        story: "Histoire"
+        resume: "Résumé"
+        summary: "Résumé"
+        anectdote: "Anecdote"
+        test_rp: "Test RP"
+        psychology: "Psychologie"
+        appearance: "Apparence"
+        faction_id: "Faction"
+        group_id: "Statut"
+        npc: "PV"
+        image_url: "Image Principale (URL)"
+        quote: "Citation favorite"
       nature_link:
-        name: Nom
-        description: Description
+        name: "Nom"
+        description: "Description"
       group:
-        name: Nom
-        description: Description
-        color: Couleur
-        special: Catégorie
+        name: "Nom"
+        description: "Description"
+        color: "Couleur"
+        special: "Catégorie"
+        default_group: "Statut par défault pour les nouveaux personnages (ex: non validés) (limité à 1 statut)"
+        no_modif: "Modifiable uniquement par administrateur (ex: non validés)"
+        only_admin: "Visible uniquement par administrateur (ex: PV)"
       faction:
-        name: Nom
-        description: Description
-        color: Couleur
+        name: "Nom"
+        description: "Description"
+        color: "Couleur"
       rp_status:
-        name: Nom
-        description: Description
-        color: Couleur
+        name: "Nom"
+        description: "Description"
+        color: "Couleur"
         display_last: "Afficher le dernier membre à avoir répondu ?"
-        num : Num
+        num : "Num"
       category:
-        title: Titre
-        num: Num
-        description: Description
-        image_url: Url de l'image
-        permission_level: Niveau de permission
-        category: Sous-forum racine
-        special: Catégorie spéciales
+        title: "Titre"
+        num: "Num"
+        description: "Description"
+        image_url: "Url de l'image"
+        permission_level: "Niveau de permission"
+        category: "Sous-forum racine"
+        special: "Catégorie spéciales"
         is_rpg: "RPG ?"
         is_flood: "Flood ?"
       link:
-        from_character_id: Personnage source
-        to_character_id: Personnage cible
-        title: Titre
-        description: Description
-        force: Force
-        link_nature_id: Type de lien
+        from_character_id: "Personnage source"
+        to_character_id: "Personnage cible"
+        title: "Titre"
+        description: "Description"
+        force: "Force"
+        link_nature_id: "Type de lien"
       topic:
-        user_id: Créateur
-        spacetime_position_id: Position spatio-temporelle
-        category: Sous-forum
-        image_url: Url de l'image
-        title: Titre
-        subtitle: Sous-titre
-        summary: Résumé
-        weather: Météo
-        rp_status: Statut du RP
+        user_id: "Créateur"
+        spacetime_position_id: "Position spatio-temporelle"
+        category: "Sous-forum"
+        category_id: "Sous-forum"
+        image_url: "Url de l'image"
+        title: "Titre"
+        subtitle: "Sous-titre"
+        summary: "Résumé"
+        weather: "Météo"
+        rp_status: "Statut du RP"
       answer:
-        title: Titre
-        content: Contenu
-        character_id: Personnage
+        title: "Titre"
+        content: "Contenu"
+        character_id: "Personnage"

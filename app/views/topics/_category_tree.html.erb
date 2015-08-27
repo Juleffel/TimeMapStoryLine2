@@ -1,0 +1,4 @@
+<% c.categories.each do |c| -%>
+  <%= content_tag(:option, "|"+("-"*deep)+" "+c.title, value: c.id, selected: c.id == @topic.category_id) %>
+  <%= render partial: 'category_tree', locals: {deep: deep + 1, c: c} %>
+<% end %>

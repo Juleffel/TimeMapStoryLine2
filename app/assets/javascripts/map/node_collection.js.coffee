@@ -6,18 +6,24 @@ class Map.NodeCollection # Not RockCollection, man
     # Initiate the hash table
     @node_objs_by_id = {}
     @node_objs = []
+    @logs = false
   
   # [ Called by node_obj creation, node_obj maj
   register: (node_obj)-> 
-    #console.log("nc: register", node_obj.node.id)
+    console.log("nc: register", node_obj.node.id) if @logs
+    @remove(node_obj)
     @node_objs.push(node_obj)
     id = node_obj.node.id
     if id
       @node_objs_by_id[id] = node_obj
+  
+  # [ Called by node_obj creation, node_obj maj, in place of register, to update the object
+  update: (node_obj)->
+    @register(node_obj)
     
   # [ Called by node_obj_maj, node_obj_destruction
   remove: (node_obj) ->
-    #console.log("nc: remove", node_obj.node.id)
+    console.log("nc: remove", node_obj.node.id) if @logs
     id = node_obj.node.id
     if id
       @node_objs_by_id[id] = null
@@ -25,14 +31,14 @@ class Map.NodeCollection # Not RockCollection, man
     # Remove node_obj from @node_objs
     index = -1
     for nd_obj, ind in @node_objs
-      if nd_obj == node_obj
+      if nd_obj.node.id == node_obj.node.id
         index = ind
     if (index > -1)
       @node_objs.splice(index, 1)
     
   # [ Called before register
   fetch: (id) ->
-    #console.log("nc: fetch", id)
+    console.log("nc: fetch", id) if @logs
     node_obj = @node_objs_by_id[id]
     if node_obj
       node_obj

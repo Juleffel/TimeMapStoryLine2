@@ -20,6 +20,7 @@ Rails.application.routes.draw do
     resources :characters, only: [:index] do
       get 'map', on: :collection
     end
+    post 'characters/:id/destroy_presence' => 'characters#destroy_presence'
     resources :users, only: [] do
       resources :characters, except: [:show]
     end

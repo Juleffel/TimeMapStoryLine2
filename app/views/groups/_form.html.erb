@@ -44,6 +44,27 @@
     <p class="help-block"><%= t('special_helper_group') %></p>
     <%= error_span(@group[:special]) %>
   </div>
+  <div class="control-group">
+    <%= f.label :default_group, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.check_box :default_group, :class => 'form-control' %>
+    </div>
+    <%= error_span(@group[:default_group]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :no_modif, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.check_box :no_modif, :class => 'form-control' %>
+    </div>
+    <%= error_span(@group[:no_modif]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :only_admin, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.check_box :only_admin, :class => 'form-control' %>
+    </div>
+    <%= error_span(@group[:only_admin]) %>
+  </div>
 
 
   <%= f.submit nil, :class => 'btn btn-primary' %>

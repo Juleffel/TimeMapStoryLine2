@@ -16,15 +16,27 @@
   <% end %>
 
   <%= f.hidden_field :user_id %>
+  
   <%= f.hidden_field :spacetime_position_id %>
-  <%= f.hidden_field :category_id %>
+  <div class="control-group">
+    <%= f.label :category_id, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.select(:category_id) do %>
+        <% if false and @topic.spacetime_position_id %>
+        <%= content_tag(:option, "---", value: "", selected: !@topic.category_id) %>
+        <% end %>
+        <% @categories.each do |c| -%>
+          <%= content_tag(:option, "| "+c.title, value: c.id, selected: c.id == @topic.category_id) %>
+          <%= render partial: 'category_tree', locals: {deep: 1, c: c} %>
+        <% end %>
+      <% end %>
+    </div>
+    <%= error_span(@topic[:category_id]) %>
+  </div>
   <div class="control-group">
     <%= f.label :title, :class => 'control-label' %>
     <div class="controls">
       <%= f.text_field :title, :class => 'form-control' %>
-    </div>
-    <%= error_span(@topic[:title]) %>
-  </div>
   <div class="control-group">
     <%= f.label :subtitle, :class => 'control-label' %>
     <div class="controls">

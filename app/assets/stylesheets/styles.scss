@@ -133,3 +133,18 @@ img.medium-avatar {
 img.thumbnail {
     margin-bottom: 0;
 }
+.control-label.required::after {
+    content: " *";
+}
+.field_with_errors {
+  @extend .has-error;
+  display: inline-block;
+}
+
+.unselectable {
+   -ms-user-select: none; /* IE 10+ */
+   -moz-user-select: -moz-none;
+   -khtml-user-select: none;
+   -webkit-user-select: none;
+   user-select: none;
+}

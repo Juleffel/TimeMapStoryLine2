@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150404112939) do
+ActiveRecord::Schema.define(version: 20150824152145) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -78,6 +78,7 @@ ActiveRecord::Schema.define(version: 20150404112939) do
     t.integer  "links_topic_id"
     t.integer  "rps_topic_id"
     t.datetime "map_nodes_updated_at"
+    t.boolean  "npc",                  default: false
   end
 
   add_index "characters", ["faction_id"], name: "index_characters_on_faction_id", using: :btree
@@ -102,6 +103,9 @@ ActiveRecord::Schema.define(version: 20150404112939) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "special"
+    t.boolean  "no_modif",      default: false
+    t.boolean  "only_admin",    default: false
+    t.boolean  "default_group", default: false
   end
 
   add_index "groups", ["special"], name: "index_groups_on_special", using: :btree
@@ -158,14 +162,12 @@ ActiveRecord::Schema.define(version: 20150404112939) do
     t.text     "weather"
     t.datetime "begin_at"
     t.datetime "end_at"
-    t.integer  "topic_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
     t.boolean  "birth"
   end
 
-  add_index "spacetime_positions", ["topic_id"], name: "index_spacetime_positions_on_topic_id", using: :btree
   add_index "spacetime_positions", ["user_id"], name: "index_spacetime_positions_on_user_id", using: :btree
 
   create_table "topics", force: true do |t|

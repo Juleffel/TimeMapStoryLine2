@@ -14,6 +14,8 @@ gem 'bootstrap-sass', '~> 3.3.3'
 gem "node"
 gem "twitter-bootstrap-rails"
 gem 'jquery-ui-bootstrap-rails-asset'
+gem 'bootbox-rails'
+gem 'image-picker-rails'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '~> 2.7.1'
 # Use CoffeeScript for .js.coffee assets and views

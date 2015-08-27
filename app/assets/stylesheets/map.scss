@@ -6,12 +6,40 @@
   
 }
 
-.map-slider {
+.map-bottom {
   position: absolute;
-  bottom: 5px;
   z-index: 1000;
-  width: 80%;
-  left: 10%;
+  bottom: 5%;
+  left: 0%;  
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+.map-bottom-left,
+.map-bottom-right {
+  position: absolute;
+  bottom: 0;
+  width: 10%;
+  background-color: rgba(110, 67, 67, 0.55);
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+  padding: 5px 0;
+}
+.map-bottom-left {
+  left: 3%;
+}
+.map-bottom-right {
+  right: 3%;
+}
+.map-bottom-center {
+  position: absolute;
+  bottom: 0;
+  width: 70%;
+  left: 15%;
+}
+.map-slider {
   text-align: center;
 }
 .map-slider .slider {
@@ -84,4 +112,7 @@
 .map-character-icon .avatar-1.part-2.avatars-3more  {
   width: 15%;
   margin-left: -15%;
+}
+.map-edit-node {
+  cursor: pointer;
 }

@@ -1,4 +1,5 @@
 $(document).ready(function() {
+	$("select.imageselect").imagepicker({hide_select: false})
 
 	/***************** Waypoints ******************/
 /*

@@ -19,11 +19,14 @@ class Map.Node
     # Add the node in NodeCollection and @marker on Map
     @on_map = false
     if !Map.node_collection.fetch(@node.id)
+      console.log "Node creation <#{@node.id}>: NOT found in node_collection, register and display on map" 
       Map.node_collection.register(this)
       Map.map.addLayer(@marker)
+      console.log "<#{@character_names}> [ON MAP]"
       @on_map = true
     else
-      console.log "#{@node.id} already present (same node for multiple characters)"
+      console.log "Node creation <#{@node.id}>: found in node_collection. Do nothing"
+      Map.node_collection.update(this)
       
     @popup = false
     @resize_marker()
@@ -37,52 +40,80 @@ class Map.Node
     )
     @marker.on('dragend', (e) =>
       @restore_point()
+      
       if @target
         # Fuuuuusion !
         console.log('Fuuuuusion')     
+        @target.restore_point()
         concerned_ch_id = null
-        if @node.character_ids.length >= 1 # TODOOO BUG
-          concerned_ch_id = @node.character_ids[0]
-        else
+        deselect = true
+        if @node.character_ids.length < 1 # TODOOO BUG
           alert("NO CHARACTER IN THIS FUCKING NODE ? HOW IS THAT POSSIBLE ? Contact juleffel@hotmail.fr.")
-          # TODOOO BUG
-          concerned_ch_id = null #main_character.id
-        
-        # Join points and create a node
-        if @target.node.real
-          # Update it
-          if @node.real
-            # Target and source are real
-            # TODO : two solutions : transfer all or just the main character
-            # Remove character from the source
-            @remove_character(concerned_ch_id)
-            # Update target adding a character
-            @target.add_character(concerned_ch_id)
-          else
-            # Only target is real
-            # Update it adding a character
-            @target.add_character(concerned_ch_id)
+          @restore_node()
         else
-          target_ch_id = @target.node.character_ids[0]
-          if @node.real
-            # Only source is real
-            # Deplace source and update it adding a character
-            @node.latitude = @target.node.latitude
-            @node.longitude = @target.node.longitude
-            @add_character(target_ch_id)
+          # Join points and create a node
+          if @node.real and (!window.blank(@node.title) or !window.blank(@node.resume) or  @node.character_ids.length > 1 or @node.topic_id > 0)
+            plural = false
+            if @target.node.character_ids.length > 1
+              plural = true
+            str = "Vous ne pouvez pas rejoindre ce"
+            if plural
+              str += "s"
+            str += " personnage"
+            if plural
+              str += "s"
+            str += " car vous avez créé une position ailleurs auparavant, à la même date."
+            str += "Merci de quitter ce noeud (croix rouge à côté de votre personnage, dans le popup) avant de procéder à la fusion."
+            alert(str)
+            @restore_node()
           else
-            # Nodes aren't real
-            # Create a new node
-            @node.latitude = @target.node.latitude
-            @node.longitude = @target.node.longitude
-            ok = @set_node_default_values()
-            if not ok
-              @restore_node()
+            ch_id = @node.character_ids[0]
+            if @node.real
+              if @target.node.real
+                # Both source and target are real
+                # Remove character from the source
+                console.log "Both source and target are real"
+                _target = @target
+                @remove_character(ch_id, ->
+                  # If remove ok on server
+                  # Update target adding a character
+                  _target.add_character(ch_id)
+                )
+              else
+                # Only source is real
+                console.log "Only source is real"
+                # Deplace source and update it adding a character
+                target_ch_id = @target.node.character_ids[0]
+                @node.latitude = @target.node.latitude
+                @node.longitude = @target.node.longitude
+                @add_character(target_ch_id)
             else
-              @node.character_ids.push(target_ch_id)
-              @update_characters()
-              @create_on_server()
-        @deselect_target()
+              if @target.node.real
+                # Only target is real
+                console.log "Only target is real"
+                # Update it adding a character
+                @target.add_character(ch_id)
+              else
+                # Both source and target aren't real
+                console.log "Both source and target aren't real"
+                # Create a new node
+                @node.latitude = @target.node.latitude
+                @node.longitude = @target.node.longitude
+                deselect = false
+                @set_node_values(this,
+                  ((__this) -> # Success
+                    target_ch_id = __this.target.node.character_ids[0]
+                    __this.node.character_ids.push(target_ch_id)
+                    __this.update_characters()
+                    __this.create_on_server()
+                    __this.deselect_target()
+                  ),((__this) -> # Failure
+                    __this.deselect_target()
+                    __this.restore_node()
+                  ),true # Set defaults
+                )
+        if deselect
+          @deselect_target()
       else
         console.log("Deplacement")
         latlng = @marker.getLatLng()
@@ -105,33 +136,63 @@ class Map.Node
       @node = @old_node
       @old_node = null
       @update_node(@node)
-  
-  fill_informations: ->
-    title = prompt("Titre")
-    if title == null
-      return false
-    summary = prompt("Résumé")
-    if summary == null
-      return false
-    @node.title = title
-    @node.resume = summary
-    delete @node.topic_id
-    return true
+      
   set_default_dates: ->
     @node.begin_at = Map.character_list.last_date
     delete @node.end_at
-  set_node_default_values: ->
-    ok = @fill_informations()
-    if not ok
-      return false
-    @set_default_dates()
-    return true
-  create_new_real_node: () ->
-    ok = @set_node_default_values()
-    if ok
-      @create_on_server()
-    else
-      @restore_node()
+  
+  set_node_values: (__this, callback_success, callback_failure, defaults) ->
+    bootbox.prompt(
+      size: 'small',
+      title: 'Titre',
+      locale: 'fr',
+      value: __this.node.title if !defaults,
+      placeholder: "Entrez le titre du topic" if defaults,
+      message: "Entrez le titre du topic", 
+      callback: ((title) ->
+        if title != null
+          bootbox.prompt(
+            size: 'large',
+            title: 'Résumé',
+            inputType: 'textarea',
+            value: __this.node.resume if !defaults,
+            placeholder: "Entrez le résumé du topic" if defaults,
+            locale: 'fr',
+            message: "Entrez le résumé du topic", 
+            callback: ((summary) ->
+              if summary != null
+                __this.node.title = title
+                __this.node.resume = summary
+                if defaults
+                  delete __this.node.topic_id
+                  __this.set_default_dates()
+                callback_success(__this)
+              else
+                callback_failure(__this)
+            )
+          )
+        else
+          callback_failure(__this)
+      )
+    )
+    
+  edit_node: () ->
+    @set_node_values(this,
+      ((__this) -> # Success
+        __this.update_on_server()
+      ),((__this) -> # Failure
+        __this.restore_node()
+      ),false # Set defaults
+    )
+    
+  create_new_real_node: ->
+    @set_node_values(this,
+      ((__this) -> # Success
+        __this.create_on_server()
+      ),((__this) -> # Failure
+        __this.restore_node()
+      ),true # Set defaults
+    )
   
   # Updates the position of the marker on the map
   update_latlng: ->
@@ -169,39 +230,82 @@ class Map.Node
       @update_latlng()
     else
       # Not the same node as before, update all attributes
-      console.log("Changement of node :", @node, "->", node)
+      console.log "Node update: #{@node.id} <- #{node.id}"
+      console.log "Remove old node from node collection"
       Map.node_collection.remove(this)
       
       @node = @clone_node(node)
       @update_characters()
       
       if fetch = Map.node_collection.fetch(@node.id)
-        console.log("fetch ok")
+        console.log("#{@node.id} found in node_collection")
+        Map.node_collection.update(this) #update node in node_collection, in case it is fetch and used while fusion (#brainfuck)
         # Already present on the map (topic)
         if @on_map
-          console.log("on_map -> hide yourself, there is someone else", fetch)
+          console.log("Previous node was already on map. Hide the marker", fetch, @node, @old_node)
           Map.map.removeLayer(@marker)
+          console.log "<#{@character_names}> [NOT ON MAP]"
           @on_map = false
       else
         # Not present, add it
-        console.log("fetch fail, register...")
+        console.log("#{@node.id} NOT found in node_collection, register it.")
         Map.node_collection.register(this)
         if !@on_map
-          console.log("not on_map -> show yourself, there is noone else")
+          console.log("Previous node was not on map. We display the marker.", @node)
           Map.map.addLayer(@marker)
+          console.log "<#{@character_names}> [ON MAP]"
           @on_map = true
       @update_marker()
       
   # Return the content of the popup of the marker.
   # Must be null to not create a popup
   popup_content: ->
+    popup_container = $('<div />');
+    __this = this
+    popup_container.on('click', '.js-leave-node', ->
+      $this = $(this)
+      character_id = $this.data('character-id')
+      spacetime_position_id = $this.data('node-id')
+      __this.restore_point()
+      __this.delete_presence_on_server(character_id, spacetime_position_id)
+    )
+    popup_container.on('click', '.js-edit-node', ->
+      __this.edit_node()
+    )
     if @node.real
-      str = ""
-      str += "<h4>#{@node.title}</h4>" if !window.blank(@node.title)
-      str += "<p>#{@node.resume}</p>" if !window.blank(@node.resume)
-      str += "<small>#{@character_names}</small>" if !window.blank(@character_names)
-    else
-      null
+      if @owned
+        edit_button = '<small><span class="glyphicon glyphicon-pencil map-edit-node js-edit-node"></span></small>'
+        if window.blank(@node.title)
+          popup_container.append("<h4>"+edit_button+"</h4>")
+        else
+          popup_container.append("<h4>#{@node.title} #{edit_button}</h4>")
+      else
+        popup_container.append("<h4>#{@node.title}</h4>") if !window.blank(@node.title)
+      popup_container.append("<p>#{@node.resume}</p>") if !window.blank(@node.resume)
+      if @node.topic_id
+        topic = Map.topics_by_id[@node.topic_id]
+        console.log(topic)
+        popup_container.append("<p><small><a href='#{Map.topics_url}/#{@node.topic_id}'>Lire le sujet</a></small></p>")
+      else
+        params = {
+          spacetime_position_id: @node.id,
+        }
+        popup_container.append("<p><small><a href='#{Map.topics_url}/new?#{$.param(params)}'>Créer un sujet</a></small></p>")
+    if !window.blank(@character_names)
+      str = "<small>" 
+      first = true
+      for character, ind in @characters
+        if first
+          first = false
+        else
+          str += "& "
+        str += character.name + " "
+        if @node.real and character.owned
+          str += "<button class='js-leave-node btn btn-xs btn-danger' data-character-id=#{character.id} data-node-id=#{@node.id}>x</button> " 
+      str += "</small>"
+      popup_container.append(str)
+    popup_container[0]
+    
     
   # Change the icon of the marker according the importance of the node
   resize_marker: ->
@@ -295,10 +399,14 @@ class Map.Node
       else
         # Create a new popup
         @marker.bindPopup cont, {autoPan: false, autoClose: false}
-        @marker.openPopup()
         @popup = true
+      if @node.real and (not window.blank(@node.title) or not window.blank(@node.resume) or @owned)
+        @marker.openPopup()
+      else
+        @marker.closePopup()
     else
-      # Not real node
+      alert("Woops, not normal.")
+      console.log("popup_content must return something, or I'm a fool")
       @destroy_popup()
   update_marker: ->
     @resize_marker()
@@ -308,18 +416,22 @@ class Map.Node
   # Destroy popup and marker
   destroy: ->
     @destroy_popup()
+    console.log "Destroy node <#{@node.id}>:"
     if fetch = Map.node_collection.fetch(@node.id)
+      console.log "Found in node_collection, remove from node_collection"
       Map.node_collection.remove(this)
       if fetch != this
+        console.log "Fetched was different from current node destroyed, so destroy fetched"
         fetch.destroy()
     if @on_map
+      console.log "Destroy node <#{@node.id}>: On map : Remove marker."
       Map.map.removeLayer(@marker)
+      console.log "<#{@character_names}> [NOT ON MAP]"
       @on_map = false
       
   # Idem + on server
-  really_destroy: ->
-    @restore_point()
-    @delete_on_server()
+  really_destroy: (callback) ->
+    @delete_on_server(callback)
     @destroy()
     
   # Fetch characters model by @node.character_ids
@@ -327,10 +439,13 @@ class Map.Node
   update_characters: ->
     @characters = []
     @owned = false
+    @owned_characters = []
     for ch_id in @node.character_ids
       ch = Map.character_list.characters_by_id[ch_id]
-      @owned ||= ch.owned
       @characters.push(ch)
+      @owned ||= ch.owned
+      if ch.owned
+        @owned_characters.push(ch)
     @character_names = ""
     for character in @characters
       @character_names += character.name + ' '
@@ -344,17 +459,19 @@ class Map.Node
     
   # remove a character from the node
   # if the node has only one character, it is removed
-  remove_character: (id)->
+  remove_character: (id, callback)->
     @restore_point()
     if @node.character_ids.length <= 1
-      @really_destroy()
+      console.log("really destroy node", @node.id)
+      @really_destroy(callback)
     else
       # Remove character id from @node.character_ids
+      console.log("Remove character #{id} from", @node.character_ids)
       ind = 0
       while (ind = @node.character_ids.indexOf(id)) != -1
         @node.character_ids.splice(ind, 1)
       @update_characters()
-      @update_on_server()
+      @update_on_server(callback)
   
   node2spacetime_position: (node) ->
     spacetime_position = $.extend({}, node)
@@ -365,7 +482,7 @@ class Map.Node
     delete spacetime_position.real
     spacetime_position
   # Update @node on server
-  update_on_server: () ->
+  update_on_server: (callback) ->
     if @node.id and @node.id > 0
       @update_marker()
       $.ajax
@@ -377,14 +494,19 @@ class Map.Node
         success: =>
           console.log "Node #{@node.id} updated on server."
           @old_node = null
-        error: =>
-          alert "Error on server ! Node #{@node.id} can't be updated."
+          if callback
+            callback()
+        error: (xhr) =>
+          if xhr.responseJSON and xhr.responseJSON.errors and xhr.responseJSON.errors.base
+            alert "Error: "+xhr.responseJSON.errors.base[0]
+          else
+            alert "Error on server ! Node #{@node.id} can't be updated."
           @restore_node()
     else
       alert("update a non real node !")
       @restore_node()
   # Create @node on server
-  create_on_server: (old_latlng) ->
+  create_on_server: (callback) ->
     #alert('create on server !')
     @update_marker()
     $.ajax
@@ -399,11 +521,16 @@ class Map.Node
         if @marker and @marker.dragging
           @marker.dragging.disable()
         @old_node = null
-      error: =>
-        alert "Error on server ! Node can't be created."
+        if callback
+          callback()
+      error: (xhr) =>
+        if xhr.responseJSON and xhr.responseJSON.errors and xhr.responseJSON.errors.base
+          alert "Error: "+xhr.responseJSON.errors.base[0]
+        else
+          alert "Error on server ! Node #{@node.id} can't be created."
         @restore_node()
   # Update @node on server
-  delete_on_server: ->
+  delete_on_server: (callback) ->
     alert("delete a non real node !") unless @node.id != 0
     $.ajax
       type: "DELETE"
@@ -412,6 +539,22 @@ class Map.Node
       success: =>
         console.log "Node #{@node.id} deleted on server."
         @old_node = null
+        if callback
+          callback()
       error: =>
         alert "Error on server ! Node #{@node.id} can't be deleted."
+        @restore_node()
+  # Delete a presence on server (leave a spacetime position)
+  delete_presence_on_server: (character_id, spacetime_position_id) ->
+    $.ajax
+      type: "POST"
+      url: "/characters/"+character_id+"/destroy_presence"
+      dataType: "json"
+      data: 
+        spacetime_position_id: spacetime_position_id
+      success: =>
+        console.log "Presence of #{character_id} @ #{spacetime_position_id} deleted on server."
+        @old_node = null
+      error: =>
+        alert "Error on server ! Presence of #{character_id} @ #{spacetime_position_id} can't be deleted."
         @restore_node()

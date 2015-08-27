@@ -32,6 +32,7 @@ GEM
       execjs
       json
     bcrypt (3.1.10)
+    bootbox-rails (0.5.0)
     bootstrap-sass (3.3.3)
       autoprefixer-rails (>= 5.0.0.1)
       sass (>= 3.2.19)
@@ -59,6 +60,8 @@ GEM
     execjs (2.4.0)
     hike (1.2.3)
     i18n (0.7.0)
+    image-picker-rails (0.2.4)
+      railties (>= 3.0)
     jbuilder (2.2.11)
       activesupport (>= 3.0.0, < 5)
       multi_json (~> 1.2)
@@ -153,10 +156,12 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bootbox-rails
   bootstrap-sass (~> 3.3.3)
   cancancan
   coffee-rails (~> 4.1.0)
   devise
+  image-picker-rails
   jbuilder
   jquery-rails
   jquery-ui-bootstrap-rails-asset

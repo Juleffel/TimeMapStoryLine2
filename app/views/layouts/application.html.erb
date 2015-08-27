@@ -91,7 +91,7 @@
           <span class="navbar-right">
           <% if not user_signed_in? %>
               <%= link_to 'Sign in', new_user_session_path, class: "btn btn-success navbar-btn btn-sm" %>
-              <%= link_to 'Sign up', destroy_user_session_path, method: :delete, class: "btn btn-info navbar-btn btn-sm" %>
+              <%= link_to 'Sign up', new_user_registration_path, class: "btn btn-info navbar-btn btn-sm" %>
           <% else %>
               <%= link_to 'Sign out', destroy_user_session_path, method: :delete, class: "btn btn-info navbar-btn btn-sm" %>
           <% end %>

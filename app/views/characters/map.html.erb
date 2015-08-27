@@ -4,8 +4,16 @@
         current_user_id: (current_user.id if current_user),
         #cloudmade_api_key: ENV["CLOUDMADE_API_KEY"] || "9afc3ab7f647400f9e1c7fa91187fdcb",
       } %>
-  <%= content_tag :div, class: "map-slider" do %>
-    <%= content_tag :input, "", id: "date-slider", type: "text",
-    data: {from: "11/12/2013".to_date, to: "16/12/2013".to_date} %>
+  <%= content_tag :div, class: "map-bottom" do %>
+    <%= content_tag :div, class: "map-bottom-left js-map-prev-week unselectable" do %>
+      <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Previous Week
+    <% end %>
+    <%= content_tag :div, class: "map-slider map-bottom-center" do %>
+      <%= content_tag :input, "", id: "date-slider", type: "text",
+      data: {to: "16/12/2013".to_date, by: 7} %>
+    <% end %>
+    <%= content_tag :div, class: "map-bottom-right js-map-next-week unselectable" do %>
+      Next Week <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+    <% end %>
   <% end %>
 <% end %>

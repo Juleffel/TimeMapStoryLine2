@@ -17,6 +17,7 @@ class Character < ActiveRecord::Base
   has_many :spacetime_positions, through: :presences, inverse_of: :characters
   has_many :answers, inverse_of: :character
   
+  validates_presence_of :first_name, :last_name, :birth_date
   validates :avatar_url, format: { with: /\A(https?:\/\/.*|)\z/,
       message: "must be like 'http://...'" }
   validates :image_url, format: { with: /\A(https?:\/\/.*|)\z/,
@@ -27,6 +28,8 @@ class Character < ActiveRecord::Base
   #validates_inclusion_of :sex, :in => %w( m f )
   
   default_scope -> { order(:id) }
+  scope :npc, -> { where(npc: true) }
+  scope :not_npc, -> { where(npc: false) }
   
   after_create -> do
     create_own_topic
@@ -40,42 +43,53 @@ class Character < ActiveRecord::Base
     from_links.order(:force) + to_links.order(:force)
   end
   def number_of_messages
-    @number_of_messages = @number_of_messages || Character.all.joins(:answers).select(:id, 'COUNT(answers.id) AS c').group('characters.id').where(id: self.id).first.c
+    @number_of_messages = @number_of_messages || if (char_c = Character.all.joins(:answers).select(:id, 'COUNT(answers.id) AS c').group('characters.id').where(id: self.id).first) then char_c.c else 0 end
   end
   
   def generate_rp_topics
-    unless @user_rp_topics
-      topic_includes = [:user, {answers: :character}, :category]
-      user_rpg_topic_ids = Topic.select(:id).joins(:category).where(user_id: self.user_id, 'categories.is_rpg' => true).map(&:id).uniq
-      user_rpg_topic_with_answers_ids = Topic.select(:id).joins(:answers).where(id: user_rpg_topic_ids).map(&:id).uniq
-      user_rpg_topic_with_character_answers_ids = Topic.select(:id).joins(:answers).where(id: user_rpg_topic_ids, 'answers.character_id' => self.id).map(&:id).uniq
-      user_rpg_topic_without_answers_ids = user_rpg_topic_ids - user_rpg_topic_with_answers_ids
-      
-      @user_rp_topics = Topic.includes(topic_includes).where(id: user_rpg_topic_without_answers_ids)
-      @character_rp_topics = Topic.includes(topic_includes).where(id: user_rpg_topic_with_character_answers_ids)
+    if not npc
+      unless @user_rp_topics
+        topic_includes = [:user, {answers: :character}, :category]
+        user_rpg_topic_ids = Topic.select(:id).joins(:category).where(user_id: self.user_id, 'categories.is_rpg' => true).map(&:id).uniq
+        user_rpg_topic_with_answers_ids = Topic.select(:id).joins(:answers).where(id: user_rpg_topic_ids).map(&:id).uniq
+        user_rpg_topic_with_character_answers_ids = Topic.select(:id).joins(:answers).where(id: user_rpg_topic_ids, 'answers.character_id' => self.id).map(&:id).uniq
+        user_rpg_topic_without_answers_ids = user_rpg_topic_ids - user_rpg_topic_with_answers_ids
+        
+        @user_rp_topics = Topic.includes(topic_includes).where(id: user_rpg_topic_without_answers_ids)
+        @character_rp_topics = Topic.includes(topic_includes).where(id: user_rpg_topic_with_character_answers_ids)
+      end
     end
   end
   def user_rp_topics
-    generate_rp_topics
-    @user_rp_topics
+    if not npc
+      generate_rp_topics
+      @user_rp_topics
+    end
   end
   def character_rp_topics
-    generate_rp_topics
-    @character_rp_topics
+    if not npc
+      generate_rp_topics
+      @character_rp_topics
+    end
   end
   
   def update_birth_spacetime_position
-    sp = self.spacetime_positions.where(birth: true).first || self.spacetime_positions.new
-    sp.birth = true
-    sp.latitude ||= 33.45772 + RAND.rand(-1.00..1.00)
-    sp.longitude ||= -89.802246 + RAND.rand(-1.00..1.00)
-    sp.title = "Naissance de "+complete_name
-    sp.subtitle = shortline1
-    sp.resume = quote
-    sp.begin_at = birth_date.to_datetime || (DateTime.now - 25.years)
-    sp.topic_id = topic_id
-    sp.user_id = user_id
-    sp.save
+    if not npc
+      sp = self.spacetime_positions.where(birth: true).first || self.spacetime_positions.new
+      sp.birth = true
+      sp.latitude ||= 33.45772 + RAND.rand(-1.00..1.00)
+      sp.longitude ||= -89.802246 + RAND.rand(-1.00..1.00)
+      sp.title = "Naissance de "+complete_name
+      sp.subtitle = shortline1
+      sp.resume = quote
+      sp.begin_at = birth_date.to_datetime || (DateTime.now - 25.years)
+      sp.user_id = user_id
+      sp.save
+      if topic.spacetime_position_id != sp.id
+        topic.update_attribute(:spacetime_position_id, sp.id)
+      end
+      sp
+    end
   end
   def self.update_birth_spacetime_positions
     all.each do |c|
@@ -108,13 +122,15 @@ class Character < ActiveRecord::Base
       self.topic = Topic.new(user_id: self.user_id, image_url: self.image_url, title: self.name, subtitle: self.quote, summary: self.summary)
       self.topic.save(:validate => false)
     end
-    unless self.links_topic
-      self.links_topic = Topic.new(user_id: self.user_id, image_url: self.image_url, title: self.name, subtitle: self.quote, summary: self.summary)
-      self.links_topic.save(:validate => false)
-    end
-    unless self.rps_topic
-      self.rps_topic = Topic.new(user_id: self.user_id, image_url: self.image_url, title: self.name, subtitle: self.quote, summary: self.summary)
-      self.rps_topic.save(:validate => false)
+    if not npc
+      unless self.links_topic
+        self.links_topic = Topic.new(user_id: self.user_id, image_url: self.image_url, title: self.name, subtitle: self.quote, summary: self.summary)
+        self.links_topic.save(:validate => false)
+      end
+      unless self.rps_topic
+        self.rps_topic = Topic.new(user_id: self.user_id, image_url: self.image_url, title: self.name, subtitle: self.quote, summary: self.summary)
+        self.rps_topic.save(:validate => false)
+      end
     end
     Topic.set_callback(:create)
     self.save
@@ -132,5 +148,21 @@ class Character < ActiveRecord::Base
       importance: 1,
       depth: 0,
     })
+  end
+  
+  def npc_status
+    if npc
+      copys = Character.not_npc.where(first_name: self.first_name, last_name: self.last_name)
+      st = "free"
+      copys.each do |c|
+        if st == "free" and c.group.default_group
+          st = "reserved"
+        end
+        if not c.group.default_group
+          st = "taken"
+        end
+      end
+      st
+    end
   end
 end

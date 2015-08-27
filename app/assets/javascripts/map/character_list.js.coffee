@@ -1,5 +1,5 @@
 ###############################
-# Class for stock and update automitically the character list and their nodes
+# Class for stock and update automatically the character list and their nodes
 # @characters: models from the db
 # @list: list of Character objects
 # @updated_at: store the value of @characters_updated_at at each fetch from the db
@@ -8,6 +8,7 @@
 class Map.CharacterList
   constructor: ->
     @characters_by_id = {}
+    @last_date = null
     @construct_list()
     @updated_at = null
     # Refresh data by AJAX every 3 seconds # TODO Adjust
@@ -71,12 +72,14 @@ class Map.CharacterList
           nodes_by_id[id].end_at = window.j_date(node.end_at)
         Map.nodes_by_id = nodes_by_id
         Map.topics_by_id = data.topics_by_id
+        Map.topics_url = data.topics_url
         @update()
   # Update only the characters that have been changed since the last fetch
   update: ->
     # Something has changed since last loading
     if Object.size(@characters_by_id) == @list.length
       ind = 0
+      reconstruct = false
       for id, new_ch of @characters_by_id
         old_ch = @list[ind].character
         if old_ch.id != new_ch.id
@@ -84,17 +87,25 @@ class Map.CharacterList
           console.log "Not the same character at the same position as before. Reload all map."
           console.log(@characters_by_id, @list)
           @construct_list()
+          reconstruct = true
           break
-        if old_ch.updated_at - new_ch.updated_at != 0
-          # Character (or its nodes) updated
-          console.log "Character", new_ch.name, "has been updated on server. Reload this character and its nodes."
-          #console.log "ch", new_ch, "updated"
-          @list[ind].update_character(new_ch)
-        else if old_ch.map_nodes_updated_at - new_ch.map_nodes_updated_at != 0
-          # Character_nodes updated
-          console.log "Some nodes of character", new_ch.name, "have been updated on server. Reload its nodes."
-          @list[ind].update_character_nodes(new_ch)
+        if old_ch.updated_at - new_ch.updated_at != 0 or old_ch.map_nodes_updated_at - new_ch.map_nodes_updated_at != 0
+          # Character or its nodes updated, clean it, it will be reset in the next loop or a reconstruct
+          @list[ind].destroy_node_obj()
         ind++
+      ind = 0
+      if not reconstruct
+        for id, new_ch of @characters_by_id
+          old_ch = @list[ind].character
+          if old_ch.updated_at - new_ch.updated_at != 0
+            # Character (or its nodes) updated
+            console.log "Character", new_ch.name, "has been updated on server. Reload this character and its nodes."
+            @list[ind].update_character(new_ch)
+          else if old_ch.map_nodes_updated_at - new_ch.map_nodes_updated_at != 0
+            # Character_nodes updated
+            console.log "Some nodes of character", new_ch.name, "have been updated on server. Reload its nodes."
+            @list[ind].update_character_nodes(new_ch)
+          ind++
     else
       # not the same number of characters as before
       console.log "Not the same number of characters as before"

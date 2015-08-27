@@ -15,22 +15,24 @@ sigma.publicPrototype.loadData = function ($data_container) {
     var node_ids = type_node.node_ids;
     for (node_id_ind in node_ids) {
       var node_id = node_ids[node_id_ind];
-      var node = nodes_by_id[node_id];
-      var g_node = {
-        label: node.name,
-        color: color,
-        size: node.importance
-      }; // Create basic node
-      
-      /* Add other attributes to node */
-      g_node['temp'] = []; // These attributes will be not displayed as character information !
-      g_node['temp']['node_id'] = node.id;
-      g_node['temp']['type_node_id'] = type_node_id;
-      g_node['temp']['true_color'] = color;
-      g_node['temp']['depth'] = node.depth;
-
-      sigInst.addNode('n' + node.id, g_node);
-      //console.log("addNode:", g_node);
+      if (node_id in nodes_by_id) {
+        var node = nodes_by_id[node_id];
+        var g_node = {
+          label: node.name,
+          color: color,
+          size: node.importance
+        }; // Create basic node
+        
+        /* Add other attributes to node */
+        g_node['temp'] = []; // These attributes will be not displayed as character information !
+        g_node['temp']['node_id'] = node.id;
+        g_node['temp']['type_node_id'] = type_node_id;
+        g_node['temp']['true_color'] = color;
+        g_node['temp']['depth'] = node.depth;
+  
+        sigInst.addNode('n' + node.id, g_node);
+        //console.log("addNode:", g_node);
+      }
     }
   }
 
@@ -42,29 +44,29 @@ sigma.publicPrototype.loadData = function ($data_container) {
     for (link_id_ind in link_ids) {
       var link_id = link_ids[link_id_ind];
       var link = links_by_id[link_id];
-      var g_edge = {
-        id: link.id,
-        sourceID: link.node_from_id,
-        targetID: link.node_to_id,
-        label: link.name,
-        color: color
-      }; // Create basic edge
-
-      /* Add character attributes to node */
-      g_edge['weight'] = link.strengh / 40;
-
-      /* Add other attributes to node */
-      g_edge['temp'] = []; // These attributes will be not displayed as character information !
-      g_edge['temp']['type_link_id'] = type_link_id;
-      g_edge['temp']['true_color'] = color;
-
-      sigInst.addEdge(
-        'l' + link.id,
-        'n' + link.node_from_id,
-        'n' + link.node_to_id,
-        g_edge
-      );
-      //console.log("addEdge:", g_edge);
+      if (link.node_from_id in nodes_by_id && link.node_to_id in nodes_by_id) {
+        var g_edge = {
+          id: link.id,
+          sourceID: link.node_from_id,
+          targetID: link.node_to_id,
+          label: link.name,
+          color: color,
+          weight: link.strengh / 40,
+        }; // Create basic edge
+  
+        /* Add other attributes to node */
+        g_edge['temp'] = []; // These attributes will be not displayed as character information !
+        g_edge['temp']['type_link_id'] = type_link_id;
+        g_edge['temp']['true_color'] = color;
+  
+        sigInst.addEdge(
+          'l' + link.id,
+          'n' + link.node_from_id,
+          'n' + link.node_to_id,
+          g_edge
+        );
+        //console.log("addEdge:", g_edge);
+      }
     }
   }
   sigInst.draw();

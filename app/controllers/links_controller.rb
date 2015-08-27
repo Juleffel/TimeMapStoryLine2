@@ -10,8 +10,8 @@ class LinksController < ApplicationController
   end
   
   def graph
-    @characters = Character.all
-    @characters_by_id = Character.hash_by(:id)
+    @characters = Character.not_npc.all
+    @characters_by_id = Character.not_npc.hash_by(:id)
     @modifiable_character_ids = if current_user then current_user.character_ids else [] end
     @links = Link.all
     @links_by_id = Link.hash_by(:id)

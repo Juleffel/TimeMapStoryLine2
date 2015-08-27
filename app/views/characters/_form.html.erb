@@ -17,8 +17,17 @@
   <% end %>
 
   <%= f.hidden_field :user_id %>
+  <% if current_user.admin? and @character.new_record? %>
   <div class="control-group">
-    <%= f.label :first_name, :class => 'control-label' %>
+    <%= f.label :npc, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.check_box :npc, :class => 'form-control' %>
+    </div>
+    <%= error_span(@character[:npc]) %>
+  </div>
+  <% end %>
+  <div class="control-group">
+    <%= f.label :first_name, :class => 'control-label required' %>
     <div class="controls">
       <%= f.text_field :first_name, :class => 'form-control' %>
     </div>
@@ -32,7 +41,7 @@
     <%= error_span(@character[:middle_name]) %>
   </div>
   <div class="control-group">
-    <%= f.label :last_name, :class => 'control-label' %>
+    <%= f.label :last_name, :class => 'control-label required' %>
     <div class="controls">
       <%= f.text_field :last_name, :class => 'form-control' %>
     </div>
@@ -60,7 +69,7 @@
     <%= error_span(@character[:shortline2]) %>
   </div>
   <div class="control-group">
-    <%= f.label :birth_date, :class => 'control-label' %>
+    <%= f.label :birth_date, :class => 'control-label required' %>
     <div class="controls">
       <%= f.date_field :birth_date, value: (@character.birth_date.to_s(:datepicker) if @character.birth_date), :class => 'form-control datepicker' %>
     </div>
@@ -174,14 +183,19 @@
     </div>
     <%= error_span(@character[:faction_id]) %>
   </div>
+  <% if (current_user.admin? or (@character.group and @character.group.no_modif == false)) and not @character.npc %>
   <div class="control-group">
     <%= f.label :group_id, :class => 'control-label' %>
     <div class="controls">
-      <%= f.collection_select(:group_id, Group.all, :id, :name, :class => 'form-control') %>
+      <% if current_user.admin? %>
+        <%= f.collection_select(:group_id, Group.all, :id, :name, :class => 'form-control') %>
+      <% else %>
+        <%= f.collection_select(:group_id, Group.where(no_modif: false).all, :id, :name, :class => 'form-control') %>
+      <% end %>
     </div>
     <%= error_span(@character[:group_id]) %>
   </div>
-
+  <% end %>
 
   <%= f.submit nil, :class => 'btn btn-primary' %>
   <%= link_to t('.cancel', :default => t("helpers.links.cancel")),

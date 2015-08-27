@@ -1,6 +1,10 @@
 <%- model_class = Character -%>
 <div class="page-header">
+  <% if @user %>
   <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+  <% else %>
+  <h1><%=t 'members' %></h1>
+  <% end %>
 </div>
 <table class="table table-striped">
   <thead>

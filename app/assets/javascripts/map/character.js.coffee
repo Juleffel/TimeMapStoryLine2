@@ -54,7 +54,7 @@ class Map.Character
     
   # Delete the @node_obj
   destroy_node_obj: ->
-    console.log("Remoooooove!")
+    console.log "Character <#{@character.first_name}>: destroy_node_obj:", @node_obj
     if @node_obj
       @node_obj.destroy()
       delete @node_obj
@@ -67,7 +67,6 @@ class Map.Character
     @update_character_nodes(ch)
   # Refetch nodes, remove node_obj and recreate it
   update_character_nodes: (ch) ->
-    @destroy_node_obj()
     @character = ch
     @update_nodes()
     @update_node_obj()
@@ -112,7 +111,7 @@ class Map.Character
         # Same node as before
         @update_node_obj_position()
     else
-      console.log "No node for this date. (Before birth.)"
+      console.log "No node for this date. (Before birth ?)"
       @destroy_node_obj()
       
   # Update @next_node_index with the index of the node just before the date,
@@ -124,12 +123,16 @@ class Map.Character
       search_forward = =>
         while @nodes[node_index+1] && (@nodes[node_index+1].begin_at <= @date)
           node_index += 1
+      ###
       search_backward = =>
         while @nodes[node_index-1] && (@nodes[node_index-1].begin_at > @date)
           node_index -= 1
         if @nodes[node_index-1]
           node_index -= 1
+      ###
       # Core
+      search_forward()
+      ###
       if @last_node_index == -1
         search_forward()
       else
@@ -138,6 +141,7 @@ class Map.Character
           search_forward()
         else
           search_backward()
+      ###
       @next_node_index = node_index
     else
       @next_node_index = -1
@@ -155,7 +159,8 @@ class Map.Character
         node.character_ids = [@character.id]
         node.id = -@character.id
       @node_obj = new Map.Node(node)
-      console.log "MapNode created:", @node_obj
+      console.log "Character <#{@character.first_name}>: created node_obj:", @node_obj
+      @update_node_obj_position()
     @last_node_index = @next_node_index
     
   # Update content and position of @node and @node_obj
@@ -203,21 +208,5 @@ class Map.Character
     if not node.real
       node.character_ids = [@character.id]
       node.id = -@character.id
+    console.log "Character <#{@character.first_name}>: node_obj.update_node: #{@node_obj.node.id} <- #{node.id}"
     @node_obj.update_node(node)
-    
-  # Update the character on the server ### WARNING ! Theorically NEVER CALLED
-  # TODO DELETE
-  ###
-  update_on_server: ->
-    alert("UPDATE CHARACTER ON SERVER. NOT LOGICAL")
-    $.ajax
-      type: "PUT"
-      url: "/characters/"+@character.id
-      data: 
-        character: @character
-      dataType: "json"
-      success: =>
-        console.log "Character #{@id} updated on server."
-      error: =>
-        alert "Error on server ! Character #{@id} update failed."
-  ###

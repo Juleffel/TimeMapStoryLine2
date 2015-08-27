@@ -3,12 +3,18 @@
 	<%= image_tag(character.avatar_url) if character.avatar_url %>
 	<div class="caption">
 		<h3 style="color: <%= character.faction.color %>"><%= character.name %></h3>
+	    <% if not character.npc %>
 		<p>
 		    <%= link_to t('character_sheet'), topic_path(character.topic) %><br />
 		    <%= link_to t('character_links'), topic_path(character.links_topic) %><br />
 		    <%= link_to t('character_rps'), topic_path(character.rps_topic) %><br />
 		    Messages: <%= character.number_of_messages %>
 		</p>
+		<% else %>
+		<p>
+			<%=t 'npc'%> <%=t character.npc_status %>
+		</p>
+	    <% end %>
 	</div>
 	<% elsif user %>
 	<div class="caption">

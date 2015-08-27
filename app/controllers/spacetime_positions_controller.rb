@@ -43,6 +43,8 @@ class SpacetimePositionsController < ApplicationController
     end
 
     def spacetime_position_params
-      params.require(:spacetime_position).permit(:longitude, :latitude, :title, :subtitle, :resume, :weather, :begin_at, :end_at, :topic_id, :character_ids => [])
+      params.require(:spacetime_position).permit(
+        :longitude, :latitude, :title, :subtitle, :resume, :weather, 
+        :begin_at, :end_at, character_ids: [])
     end
 end

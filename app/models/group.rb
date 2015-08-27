@@ -7,6 +7,7 @@ class Group < ActiveRecord::Base
     message: "Must be like #1A6F20" }
   SPECIALS = Category::SPECIALS_HASH.map{|k,v| [v[1],v[0]] if v[2] == :character}.compact # [TXT, STR]
   scope :specials, ->(symb) { where(special: Category.special_to_str(symb)) }
+  default_scope { order(:id) }
   
   def to_s
     name

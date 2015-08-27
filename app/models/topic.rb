@@ -1,7 +1,7 @@
 class Topic < ActiveRecord::Base
     extend HashBy
 
-    has_one :spacetime_position, inverse_of: :topic
+    belongs_to :spacetime_position, inverse_of: :topic
     has_many :answers, inverse_of: :topic, :dependent => :destroy
     belongs_to :user, inverse_of: :topics
     belongs_to :category, inverse_of: :topics

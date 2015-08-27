@@ -22,11 +22,14 @@
 // JqueryUI: For autocomplete... TODO: Load only necessary
 //= require jquery-ui-bootstrap
 //= require lib/jquery.fancybox.pack
+//= require lib/jquery.url.min
 
 //= require lib/bootstrap-datepicker.min
 //= require lib/bootstrap-datepicker.fr.min
 //= require lib/bootstrap-datepicker.en-GB.min
 //= require lib/bootstrap-slider
+//= require bootbox
+//= require image-picker
 
 //= require lib/jquery.mosaicflow.min.js
 

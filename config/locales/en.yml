@@ -33,6 +33,12 @@ en:
   forum: "Forum"
   last_topics: "Latest topics"
   other_dropdown: "Other"
+  back_map: "Back to map"
+  back_category: "Back to categories"
+  free: "Free"
+  reserved: "Reserved"
+  taken: "Taken"
+  npc: "NPC"
   
   rpg_topics: "RPs in forum"
   map_topics: "RPs on map"
@@ -154,6 +160,10 @@ en:
         name: Name
         description: Description
         color: Color
+        special: Category
+        default_group: "Statut by default for new characters (ex: not validated) (limited to 1)"
+        no_modif: "Modifiable only by admin (ex: not validated)"
+        only_admin: "Only visible by admin (ex: PV)"
       faction:
         name: Name
         description: Description

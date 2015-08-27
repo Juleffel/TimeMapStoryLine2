@@ -36,11 +36,21 @@ class TopicsController < ApplicationController
     end
     if @spacetime_position
       @topic.spacetime_position = @spacetime_position
+      @topic.title = @spacetime_position.title
+      @topic.subtitle = @spacetime_position.resume
+      @categories = Category.roots.rpg.all
+    else
+      @categories = Category.roots.all
     end
     respond_with(@topic)
   end
 
   def edit
+    if @topic.spacetime_position
+      @categories = Category.roots.rpg.all
+    else
+      @categories = Category.roots.all
+    end
   end
 
   def create

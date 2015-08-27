@@ -18,6 +18,9 @@
 				<% if @character.nickname %><br>
 				<small><%t 'known_as'%> <%= @character.nickname %></small>
 				<% end %>
+                <% if @character.npc %>
+                <small class="npc-<%= @character.npc_status %>"><%=t @character.npc_status %></small>
+                <% end %>
 				</h1>
 				<% unless @character.shortline1.blank? or @character.shortline1.length > 200 %>
 			<p class="subline"><%= @character.shortline1 %></p>
@@ -33,7 +36,10 @@
 					<a href="index.html">Push</a>
 					<a class="current-demo" href="index2.html">Fade Out</a>
 				</nav-->
-				<h1><%= @topic.title %><br><small><%= @topic.subtitle %></small></h1>
+				<h1>
+					<%= @topic.title %><br>
+					<small><%= @topic.subtitle %></small>
+                </h1>
 				<p class="subline"><%= @topic.summary %></p>
 				<% unless @topic.weather.blank? %>
 				<p><%= model_class.human_attribute_name(:weather) %> : <%= @topic.weather %></p>
@@ -203,8 +209,14 @@
 		</div>
 	</article>
 	<section class="related">
-		<%= link_to t('.back', :default => t("helpers.links.back")),
-					  topic_back_url(@topic), :class => 'btn btn-default'  %>
+		<% if @topic.spacetime_position_id %>
+		<%= link_to t('back_map', :default => t("helpers.links.back")),
+					  topic_back_map_url(@topic), :class => 'btn btn-default'  %>
+		<% end %>
+		<% if @topic.category_id %>
+		<%= link_to t('back_category', :default => t("helpers.links.back")),
+					  topic_back_categories_url(@topic), :class => 'btn btn-default'  %>
+		<% end %>
 		<% if @topic.character %>
 			<% if  @topic.character.user == current_user %>
 			<%= link_to t('characters'),
