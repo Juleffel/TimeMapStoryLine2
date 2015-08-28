@@ -13,6 +13,7 @@
 
 //= require utils
 //= require utils2
+//= require lib/date.format
 // require lib/min/toucheffects-min
 // require lib/flickity.pkgd.min
 

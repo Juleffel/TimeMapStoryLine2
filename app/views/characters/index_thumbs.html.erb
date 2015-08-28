@@ -6,6 +6,15 @@
     <h1><%=t 'members' %></h1>
     <% end %>
   </div>
+<div class="groups">
+  
+  <div class="btn-group btn-group-sm" role="group" aria-label="groups">
+      <% @groups.each do |id, g, g_name, active, opts| %>
+        <%= link_to g.name,
+            ucharacters_path(opts), :class => 'btn '+(if active then 'btn-default' else 'btn-info' end) %>
+      <% end %>
+  </div>
+</div>
 <div class="clearfix mosaicflow" data-min-item-width="350">
   <% @characters.each do |character| %>
     <div class="mosaicflow__item">

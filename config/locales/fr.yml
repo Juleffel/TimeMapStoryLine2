@@ -32,10 +32,14 @@ fr:
   map: "Carte"
   forum: "Forum"
   last_topics: "Derniers sujets"
+  last_days: "derniers jours"
+  last_answers: "Voir les dernières réponses du forum"
+  days: "jours"
   other_dropdown: "Autre"
   back: "Retour"
   back_map: "Retour à la carte"
   back_category: "Retour au forum"
+  back_forum: "Retour au forum"
   free: "Libre"
   reserved: "Réservé"
   taken: "Pris"
@@ -43,7 +47,7 @@ fr:
   
   rpg_topics: "RPs du forum"
   map_topics: "RPs sur la carte"
-  auto_topics: "Présentations et liens"
+  auto_topics: "Présentations, suivis RPs et fiches de liens"
   other_topics: "Autres sujets"
   flood_topics: "Le Flood"
   

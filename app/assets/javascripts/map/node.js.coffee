@@ -285,7 +285,14 @@ class Map.Node
       if @node.topic_id
         topic = Map.topics_by_id[@node.topic_id]
         console.log(topic)
-        popup_container.append("<p><small><a href='#{Map.topics_url}/#{@node.topic_id}'>Lire le sujet</a></small></p>")
+        if topic.nb_answers > 1
+          plural="s"
+        else
+          plural=""
+        popup_container.append("<p><small><a href='#{Map.topics_url}/#{@node.topic_id}'>Lire le sujet</a> (#{topic.nb_answers} réponse#{plural})</small></p>")
+        if topic.last_answered_by
+          popup_container.append("<p><small>Dernière réponse par #{topic.last_answered_by} le #{window.j_date(topic.last_answered_at).format('french2')}</small></p>")
+        
       else
         params = {
           spacetime_position_id: @node.id,

@@ -27,13 +27,21 @@
     opacity: 0.6;
     border-radius: 2px;
 }
-.category-topic .bottom-right {
+.category-topic .bottom-right-1,
+.category-topic .bottom-right-2 {
     position: absolute;
-    bottom: 10px;
-    right: 25px;
     padding: 5px 10px;
     opacity: 0.6;
+    color: white;
     border-radius: 2px;
+}
+.category-topic .bottom-right-1 {
+    bottom: 31px;
+    right: 25px;
+}
+.category-topic .bottom-right-2 {
+    bottom: -3px;
+    right: 25px;
 }
 .bg-overlay {
     position: absolute;

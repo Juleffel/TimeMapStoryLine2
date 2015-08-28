@@ -6,10 +6,18 @@ class TopicsController < ApplicationController
 
   def index
     topic_includes = [:user, {answers: {character: :faction}}]
-    @rpg_topics = Topic.order(Topic.rpg_topics.includes(topic_includes))
-    @flood_topics = Topic.order(Topic.flood_topics.includes(topic_includes))
-    @other_topics = Topic.order(Topic.other_topics.includes(topic_includes))
-    @auto_topics = Topic.order(Topic.auto_topics(topic_includes))
+    @nb_days = 2
+    if params["nb_days"]
+      begin
+        @nb_days = Integer(params["nb_days"])
+      rescue ArgumentError
+        p("Wrong number:", params["nb_days"])
+      end
+    end
+    @rpg_topics = Topic.filter_recent(Topic.order(Topic.rpg_topics.includes(topic_includes)), @nb_days)
+    @flood_topics = Topic.filter_recent(Topic.order(Topic.flood_topics.includes(topic_includes)), @nb_days)
+    @other_topics = Topic.filter_recent(Topic.order(Topic.other_topics.includes(topic_includes)), @nb_days)
+    @auto_topics = Topic.filter_recent(Topic.order(Topic.auto_topics(topic_includes)), @nb_days)
     @topics = @rpg_topics+@flood_topics+@auto_topics+@other_topics
     respond_with(@topics)
   end

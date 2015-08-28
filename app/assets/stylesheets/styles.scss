@@ -148,3 +148,21 @@ img.thumbnail {
    -webkit-user-select: none;
    user-select: none;
 }
+.npc-free {
+    color: green;
+}
+.npc-bg-free {
+    background-color: green;
+}
+.npc-reserved {
+    color: blue;
+}
+.npc-bg-reserved {
+    background-color: blue;
+}
+.npc-taken {
+    color: red;
+}
+.npc-bg-taken {
+    background-color: red;
+}

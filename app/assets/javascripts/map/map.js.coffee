@@ -54,7 +54,8 @@ $ ->
     $date_slider = $("#date-slider")
     #from = window.j_date(window.json_data($date_slider, "from"))
     #from_date = from.valueOf()
-    date_to = window.j_date(window.json_data($date_slider, "to"))
+    date_to_orig = window.j_date(window.json_data($date_slider, "to"))
+    date_to = date_to_orig
     date_by = parseInt(window.json_data($date_slider, "by"))
     hour_in_ms = 1000*60*60
     day_in_ms = hour_in_ms*24
@@ -94,7 +95,16 @@ $ ->
     #console.log(integer2date((date_now-date_from)/sample))
     #console.log(date_from)
     #console.log(date_from.toLocaleString())
-      
+    
+    #Control appearance of "Next week" button
+    refresh_next_week = () ->
+      if date_to >= date_to_orig
+        $('.js-map-next-week').hide()
+        $('.js-map-today').show()
+      else
+        $('.js-map-next-week').show()
+        $('.js-map-today').hide()
+    
     # Send the date to the character_list
     update_date = (date)->
       Map.character_list.update_date(date)
@@ -103,6 +113,7 @@ $ ->
       date_to = date_from
       date_from = minusBy(date_to)
       #console.log(date_to,date_from)
+      refresh_next_week()
       update_date(date_to)
       $date_slider.bootstrapSlider('setValue', duration)
     )
@@ -110,24 +121,34 @@ $ ->
       date_from = date_to
       date_to = plusBy(date_from)
       #console.log(date_to,date_from)
+      refresh_next_week()
       update_date(date_from)
       $date_slider.bootstrapSlider('setValue', 0)
+    )
+    $('.js-map-today').click(->
+      date_to = date_to_orig
+      date_from = minusBy(date_to)
+      #console.log(date_to,date_from)
+      refresh_next_week()
+      update_date(date_to)
+      $date_slider.bootstrapSlider('setValue', duration)
     )
     
     # Begin to the current date (the last)
     update_date(date_now)
+    refresh_next_week()
     
     # Set the slider correctly
     $date_slider.bootstrapSlider({
       formatter: (value) -> (
-        integer2date(value).toLocaleString()
+        integer2date(value).format("french")
       ),
       tooltip: 'always',
       step: 1,
       min: 0,
       max: duration,
       value: (date_now-date_from)/sample,
-    }).on('slide', (slide) -> 
-      update_date(integer2date(slide.value))
+    }).on('change', (slide) ->
+      update_date(integer2date(slide.value.newValue))
     )
     

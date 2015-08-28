@@ -39,6 +39,9 @@
   width: 70%;
   left: 15%;
 }
+.map-bottom .tooltip-inner {
+  font-weight: bold;
+}
 .map-slider {
   text-align: center;
 }
@@ -115,4 +118,44 @@
 }
 .map-edit-node {
   cursor: pointer;
+}
+
+#map .leaflet-popup-content-wrapper,
+#map .leaflet-popup-tip {
+  /*background-color: rgba(80, 44, 44, 0.9);*/
+}
+#map .leaflet-popup-tip {
+  background-color: black;
+}
+#map .leaflet-popup-content-wrapper {
+  background-color: transparent;
+  position: relative;
+  border: 3px solid #000;
+  
+  color: #fff;
+  font-size: 16px;
+  line-height: 24px;
+  border-radius: 2px;
+  }
+#map .leaflet-popup-content-wrapper:after {
+  background: url(http://www.consostatic.com/wp-content/uploads/2010/09/bois-etagere-cire-meuble.jpg);
+  opacity: 0.89;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  position: absolute;
+  z-index: -1;
+  content: "";
+}
+#map .leaflet-popup-content-wrapper a,
+#map .leaflet-popup-content-wrapper small {
+  color: rgba(255,255,255,0.8);
+  }
+#map a.leaflet-popup-close-button {
+  z-index: 1;
+}
+#map .leaflet-popup-tip-container {
+  }
+#map .leaflet-popup-tip {
 }

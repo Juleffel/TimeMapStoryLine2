@@ -1,4 +1,8 @@
 <%- model_class = Category -%>
+<div class="text-center">
+  <%= link_to t('last_answers'), topics_path, class: 'btn btn-lg btn-default' %>
+</div>
+
 <% @categories.each do |category| %>
   <div class="page-header">
     <div class="row">

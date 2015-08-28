@@ -27,9 +27,21 @@ class Topic < ActiveRecord::Base
         @last_answered_at = @last_answered_at || 
             (if last_answer then last_answer.created_at else created_at end)
     end
+    def last_answered_by
+        if last_answer and last_answer.character
+            last_answer.character.name
+        elsif last_answer and last_answer.user
+            last_answer.user.pseudo
+        elsif user
+            user.pseudo
+        end
+    end
     def self.order(topics)
         topics = topics || []
         topics.sort { |x,y| x.last_answered_at <=> y.last_answered_at }.reverse
+    end
+    def self.filter_recent(topics, nb_days)
+        topics.keep_if {|t| t.last_answered_at >= DateTime.now - nb_days.days}
     end
     def participants
         @participants = @participants || answers.map(&:character).uniq.compact
@@ -84,13 +96,15 @@ class Topic < ActiveRecord::Base
         topics = []
         characters.each do |character|
             topics << character.topic
-            topics << character.links_topic
-            topics << character.rps_topic
+            if not character.npc
+                topics << character.links_topic
+                topics << character.rps_topic
+            end
         end
         topics
     end
     
     def json_attributes
-        attributes
+        attributes.merge(last_answered_at: last_answered_at, last_answered_by: last_answered_by, nb_answers: answers.length)
     end
 end

@@ -2,19 +2,42 @@
 <div class="page-header">
   <h1><%=t 'last_topics' %></h1>
 </div>
-<h1><%=t 'rpg_topics' %></h1>
-<% @rpg_topics.each do |topic| %>
-    <%= render partial: 'topics/show_line', locals: {topic: topic} %>
+<div class="btn-group btn-group-sm" role="group" aria-label="days">
+    <% [2,4,8,16,32].each do |n| %>
+        <%= link_to n.to_s+" "+t('last_days'),
+            topics_path(nb_days: n), :class => 'btn '+(if n==@nb_days then 'btn-info disabled' else 'btn-default' end) %>
+    <% end %>
+</div>
+<% if not @rpg_topics.empty? %>
+    <h1><%=t 'rpg_topics' %></h1>
+    <% @rpg_topics.each do |topic| %>
+        <%= render partial: 'topics/show_line', locals: {topic: topic} %>
+    <% end %>
 <% end %>
-<h1><%=t 'rpg_topics' %></h1>
-<% @auto_topics.each do |topic| %>
-    <%= render partial: 'topics/show_line', locals: {topic: topic} %>
+<% if not @rpg_topics.empty? %>
+    <h1><%=t 'auto_topics' %></h1>
+    <% @auto_topics.each do |topic| %>
+        <%= render partial: 'topics/show_line', locals: {topic: topic} %>
+    <% end %>
 <% end %>
-<h1><%=t 'other_topics' %></h1>
-<% @other_topics.each do |topic| %>
-    <%= render partial: 'topics/show_line', locals: {topic: topic} %>
+<% if not @rpg_topics.empty? %>
+    <h1><%=t 'other_topics' %></h1>
+    <% @other_topics.each do |topic| %>
+        <%= render partial: 'topics/show_line', locals: {topic: topic} %>
+    <% end %>
 <% end %>
-<h1><%=t 'flood_topics' %></h1>
-<% @flood_topics.each do |topic| %>
-    <%= render partial: 'topics/show_line', locals: {topic: topic} %>
+<% if not @rpg_topics.empty? %>
+    <h1><%=t 'flood_topics' %></h1>
+    <% @flood_topics.each do |topic| %>
+        <%= render partial: 'topics/show_line', locals: {topic: topic} %>
+    <% end %>
 <% end %>
+<div class="btn-group btn-group-sm" role="group" aria-label="days">
+    <% [2,4,8,16,32].each do |n| %>
+        <%= link_to n.to_s+" "+t('last_days'),
+            topics_path(nb_days: n), :class => 'btn '+(if n==@nb_days then 'btn-info disabled' else 'btn-default' end) %>
+    <% end %>
+</div>
+<br /><br />
+<%= link_to t('back_forum'),
+    categories_path, :class => 'btn btn-default' %>

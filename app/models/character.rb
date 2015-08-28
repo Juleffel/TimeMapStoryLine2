@@ -31,6 +31,16 @@ class Character < ActiveRecord::Base
   scope :npc, -> { where(npc: true) }
   scope :not_npc, -> { where(npc: false) }
   
+  def self.groups(groups_hash)
+    list = []
+    groups_hash.each do |id, active|
+      if not active
+        list.append(id)
+      end
+    end
+    self.where(group_id: list)
+  end
+  
   after_create -> do
     create_own_topic
     update_birth_spacetime_position

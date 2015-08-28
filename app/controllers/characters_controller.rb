@@ -6,10 +6,23 @@ class CharactersController < ApplicationController
   respond_to :html#, :json
 
   def index
+    @groups = []
+    @groups_hash = {}
+    groups = []
+    opts = {}
+    Group.all.each do |g|
+      g_name = 'group-'+g.id.to_s
+      groups.append([g.id, g, g_name, params[g_name] == 'true'])
+      opts[g_name] = params[g_name] == 'true'
+    end
+    groups.each do |id, g, g_name, active|
+      @groups.append([id, g, g_name, active, opts.merge({g_name => (not active)})])
+      @groups_hash[id] = active
+    end
     if @user
-      @characters = @user.characters.not_npc
+      @characters = @user.characters.not_npc.groups(@groups_hash)
     else
-      @characters = Character.not_npc.all
+      @characters = Character.not_npc.groups(@groups_hash)
     end
       
     respond_with(@characters, user_id: @user, template: 'characters/index_thumbs')
@@ -17,14 +30,15 @@ class CharactersController < ApplicationController
   
   def map
     @without_container = true
+    @today = "16/12/2013".to_date
     respond_to do |format|
       format.html
       format.json do
         @characters_updated_at = Character.last_update
         if params[:all] == "true"
-          @spacetime_positions_by_id = SpacetimePosition.hash_by(:id)
-          @characters_by_id = Character.hash_by(:id)
-          @topics_by_id = Topic.where("spacetime_position_id > 0").hash_by(:id)
+          @spacetime_positions_by_id = SpacetimePosition.includes(:characters, :topic).hash_by(:id)
+          @characters_by_id = Character.includes(:spacetime_positions, :to_links).hash_by(:id)
+          @topics_by_id = Topic.where("spacetime_position_id > 0").includes([:user, answers: [:user, :character]]).hash_by(:id)
           #@nodes_by_begin_at = Node.hash_by(:begin_at)
           render :json => {
             :characters_updated_at => @characters_updated_at,

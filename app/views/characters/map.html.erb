@@ -10,10 +10,13 @@
     <% end %>
     <%= content_tag :div, class: "map-slider map-bottom-center" do %>
       <%= content_tag :input, "", id: "date-slider", type: "text",
-      data: {to: "16/12/2013".to_date, by: 7} %>
+      data: {to: @today, by: 7} %>
     <% end %>
-    <%= content_tag :div, class: "map-bottom-right js-map-next-week unselectable" do %>
+    <%= content_tag :div, class: "map-bottom-right js-map-next-week unselectable", style: "display: none" do %>
       Next Week <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+    <% end %>
+    <%= content_tag :div, class: "map-bottom-right js-map-today unselectable" do %>
+      <span class="glyphicon glyphicon-time" aria-hidden="true"></span> Today
     <% end %>
   <% end %>
 <% end %>

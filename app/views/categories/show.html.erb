@@ -1,22 +1,4 @@
-<ol class="breadcrumb">
-    <% if @mod %>
-        <li><%= t('Forum') %></li>
-        <% @category.supcategories.each do |cat| %>
-            <li><%= cat.title %></li>
-        <% end %>
-    <% else %>
-        <li><%= link_to t('Forum'), categories_path %></li>
-        <% first_cat = @category.supcategories.first %>
-        <% if first_cat %>
-        <li><%= first_cat.title %></li>
-        <% end %>
-        <% supcats = @category.supcategories[1..-1] || [] %>
-        <% supcats.each do |cat| %>
-            <li><%= link_to cat.title, category_path(cat) %></li>
-        <% end %>
-    <% end %>
-    <li class="active"><%= @category.title %></li>
-</ol>
+<%= render partial: 'breadcrumb', locals: {last_active: false} %>
 
 <div class="page-header">
     <div class="row">
@@ -63,22 +45,17 @@
     <div class="page-header">
       <h1><%= Topic.model_name.human.pluralize.titleize %></h1>
     </div>
+    <% unless @topics.empty? and @special_topics.empty? %>
+    <%= render partial: 'link_new_topic' %>
+    <% end %>
     <% @topics.each do |topic| %>
         <%= render partial: 'topics/show_line', locals: {topic: topic} %>
     <% end %>
     <% @special_topics.each do |topic| %>
         <%= render partial: 'topics/show_line', locals: {topic: topic} %>
     <% end %>
-    <% if user_signed_in? %>
-        <% unless @category.special_role %>
-            <%= link_to t('new_topic'),
-                    new_topic_path(category_id: @category),
-                    :class => 'btn btn-primary' %>
-        <% end %>
-        <% if @category.special_role == :character %>
-            <%= link_to t('new_topic'),
-                    new_user_character_path(current_user),
-                    :class => 'btn btn-primary' %>
-        <% end %>
-    <% end %>
+    <%= render partial: 'link_new_topic' %>
 <% end %>
+
+<br/><br/> 
+<%= render partial: 'breadcrumb', locals: {last_active: false} %>

@@ -5,7 +5,11 @@ class CategoriesController < ApplicationController
   respond_to :html
 
   def index
-    @categories = Category.roots.includes({categories: :categories})
+    topic_incl = {topics: {answers: [:character, :user]}}
+    @categories = Category.roots.includes(
+      [topic_incl, {categories: [topic_incl, {categories: [topic_incl, {categories: 
+      [topic_incl, {categories: [topic_incl, {categories: [topic_incl, :categories
+      ]}]}]}]}]}])
     if params[:mod] == "true" and can? :manage, Category
       @mod = true
     end
