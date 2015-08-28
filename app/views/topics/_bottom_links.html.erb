@@ -1,0 +1,30 @@
+<% if not @category_role and @topic.spacetime_position_id %>
+<%= link_to t('back_map', :default => t("helpers.links.back")),
+			  topic_back_map_url(@topic), :class => 'btn btn-default'  %>
+<% end %>
+<% if false and @topic.category_id %>
+<%= link_to t('back_category', :default => t("helpers.links.back")),
+			  topic_back_categories_url(@topic), :class => 'btn btn-default'  %>
+<% end %>
+<% if @topic.character %>
+	<% if  @topic.character.user == current_user %>
+	<%= link_to t('characters'),
+				  user_characters_path(current_user), :class => 'btn btn-default'  %>
+	<% else %>
+	<%= link_to t('members'),
+				  characters_path, :class => 'btn btn-default'  %>
+	<% end %>
+<% end %>
+<% if can? :create, @topic.answers.new %>
+<%= link_to t('.answer'),
+			  new_answer_path(topic_id: @topic), :class => 'btn btn-default' %>
+<% end %>
+<% if with_mod and can? :manage, @topic %>
+<%= link_to t('.edit', :default => t("helpers.links.edit")),
+			  edit_topic_path(@topic), :class => 'btn btn-default' %>
+<%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+			  topic_path(@topic),
+			  :method => 'delete',
+			  :data => { :confirm => t('.confirm_topic', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+			  :class => 'btn btn-danger' %>
+<% end %>

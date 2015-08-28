@@ -1,0 +1,12 @@
+<% if user_signed_in? %>
+    <% unless @category.special_role %>
+        <%= link_to t('new_topic'),
+                new_topic_path(category_id: @category),
+                :class => 'btn btn-primary' %>
+    <% end %>
+    <% if @category.special_role == :character %>
+        <%= link_to t('new_topic'),
+                new_user_character_path(current_user),
+                :class => 'btn btn-primary' %>
+    <% end %>
+<% end %>

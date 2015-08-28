@@ -1,0 +1,28 @@
+<ol class="breadcrumb">
+    <% if @mod %>
+        <li><%= link_to t('Forum'), categories_path(mod: true) %></li>
+        <% first_cat = @category.supcategories.first %>
+        <% if first_cat %>
+        <li><%= first_cat.title %></li>
+        <% end %>
+        <% supcats = @category.supcategories[1..-1] || [] %>
+        <% supcats.each do |cat| %>
+            <li><%= link_to cat.title, category_path(cat, mod: true) %></li>
+        <% end %>
+    <% else %>
+        <li><%= link_to t('Forum'), categories_path %></li>
+        <% first_cat = @category.supcategories.first %>
+        <% if first_cat %>
+        <li><%= first_cat.title %></li>
+        <% end %>
+        <% supcats = @category.supcategories[1..-1] || [] %>
+        <% supcats.each do |cat| %>
+            <li><%= link_to cat.title, category_path(cat) %></li>
+        <% end %>
+    <% end %>
+    <% if last_active %>
+    <li class="active"><%= link_to @category.title, category_path(@category) %></li>
+    <% else %>
+    <li class="active"><%= @category.title %></li>
+    <% end %>
+</ol>
