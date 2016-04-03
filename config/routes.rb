@@ -7,6 +7,11 @@ Rails.application.routes.draw do
   scope "(:locale)", locale: /fr|en/ do
     devise_for :users
     
+    get 'xmpp_prebind', to: 'xmpp#prebind'
+    get 'xmpp_prebind_test', to: 'xmpp#prebind_test' 
+    get 'xmpp_prebind_test_rooms', to: 'xmpp#prebind_test'
+    get 'xmpp_prebind_test_contacts', to: 'xmpp#prebind_test_contacts' 
+    
     resources :presences
   
     resources :spacetime_positions

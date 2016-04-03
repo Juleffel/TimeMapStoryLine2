@@ -1,6 +1,4 @@
 $(document).ready(function() {
-	$("select.imageselect").imagepicker({hide_select: false})
-
 	/***************** Waypoints ******************/
 /*
 	$('.wp1').waypoint(function() {
@@ -62,16 +60,7 @@ $(document).ready(function() {
 	
 	/***************** Inputs ******************/
 	
-	$('.datepicker').datepicker({
-		format: "dd/mm/yyyy",
-	    startDate: "01/01/1900",
-	    defaultViewDate: {year: 1980},
-	    startView: 2,
-	    language: "fr",
-	    autoclose: true
-	});
-	
-	$(".js-scrollbar").mCustomScrollbar();
+	//$(".js-scrollbar").mCustomScrollbar(); TODO
 	
 	// With JQuery
 	var change_slider_color = function (slide, $slider) {
@@ -106,6 +95,17 @@ $(document).ready(function() {
 	  $(window).resize(resize);
 	}*/
 	//$('.tiny-button').disableSelection();
+	
+	$('.datepicker').datepicker({
+		format: "dd/mm/yyyy",
+	    startDate: "01/01/1900",
+	    defaultViewDate: {year: 1980},
+	    startView: 2,
+	    language: "fr",
+	    autoclose: true
+	});
+	
+	$("select.imageselect").imagepicker({hide_select: false});
 });
 
 /***************** Nav Transformicon ******************/

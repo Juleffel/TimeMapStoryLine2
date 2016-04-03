@@ -1,0 +1,26 @@
+<html>
+    <head>
+        <title>Conv test for TMSL</title>
+        <meta charset="utf-8">
+        <link type="text/css" rel="stylesheet" media="screen" href="/assets/lib/converse.min.css"></style>
+    </head>
+    <body>
+        Hello world.
+<script src="/assets/lib/converse.min.js"></script>
+<script>
+require(['converse'], function (converse) {
+    converse.listen.on('ready', function(ev) {
+        converse.rooms.open('tmsl@conference.conversejs.org', 'testtest');
+    });
+    converse.initialize({
+        bosh_service_url: 'https://conversejs.org/http-bind/', // Please use this connection manager only for testing purposes
+        auto_login: true,
+        authentication: 'prebind',
+        prebind_url: '/xmpp_prebind_test',
+        keepalive: true,
+        jid: 'testtest@jabberzac.org',
+    });
+});
+</script>
+    </body>
+</html>

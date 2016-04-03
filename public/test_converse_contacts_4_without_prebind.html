@@ -1,0 +1,35 @@
+<html>
+    <head>
+        <title>Conv test for TMSL</title>
+        <meta charset="utf-8">
+        <link type="text/css" rel="stylesheet" media="screen" href="/assets/lib/converse.min.css"></style>
+    </head>
+    <body>
+        Hello world.
+<script src="/assets/lib/converse.min.js"></script>
+<script>
+require(['converse'], function (converse) {
+    var num = '4';
+    converse.listen.on('initialized', function(ev) {
+        var contacts = converse.contacts.get()
+		console.log("Contacts:")
+		console.log(contacts);
+		for (var i in contacts) {
+			var contact = contacts[i];
+			console.log(contact.jid, contact.fullname, contact.subscription);
+		}
+    });
+    converse.initialize({
+        bosh_service_url: 'https://conversejs.org/http-bind/', // Please use this connection manager only for testing purposes
+        auto_login: true,
+        authentication: 'login',
+        keepalive: true,
+        jid: 'testtestcontacts'+num+'@conversejs.org',
+        fullname: 'Test Contacts '+num,
+        auto_subscribe: true,
+        password: 'testtest',
+    });
+});
+</script>
+    </body>
+</html>

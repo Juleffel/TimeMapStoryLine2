@@ -25,6 +25,13 @@
     <%= f.label :password_confirmation %><br />
     <%= f.password_field :password_confirmation, autocomplete: "off" %>
   </div>
+  
+  <div class="field">
+    <%= f.label :xmpp_password %>
+    <em>(<%=t 'xmpp_password_help' %>)</em>
+    <br />
+    <%= f.password_field :xmpp_password, autocomplete: "off" %>
+  </div>
 
   <div class="actions">
     <%= f.submit "Sign up" %>

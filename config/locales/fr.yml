@@ -44,6 +44,7 @@ fr:
   reserved: "Réservé"
   taken: "Pris"
   npc: "PV"
+  xmpp_password_help: "peut-être différent du mot de passe principal, ne peut-être changé que par un admin"
   
   rpg_topics: "RPs du forum"
   map_topics: "RPs sur la carte"
@@ -135,6 +136,9 @@ fr:
         login: "Login"
         pseudo: "Pseudo"
         email: "E-mail"
+        password: "Mot de passe principal"
+        password_confirmation: "Confirmer le mot de passe principal"
+        xmpp_password: "Mot de passe XMPP"
       character:
         first_name: "Prénom"
         middle_name: "Seconds prénoms"

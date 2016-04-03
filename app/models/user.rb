@@ -16,7 +16,28 @@ class User < ActiveRecord::Base
     pseudo
   end
   
+  def jid
+    "#{self.pseudo.parameterize}+tmsl@jabberzac.org"
+  end
+  
   def admin?
     role == "admin"
+  end
+  
+  def other_jids
+    hash = {}
+    User.where('id != ?', self.id).map do |u|
+      hash[u.jid] = u.pseudo
+    end
+    hash
+  end
+  
+  def update_vcard
+    ApplicationController.helpers.update_vcard(
+      self.jid, self.xmpp_password,
+      {
+        'FN' => self.pseudo,
+        'NICKNAME' => self.pseudo,
+      })
   end
 end
