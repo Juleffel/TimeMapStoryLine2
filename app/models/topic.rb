@@ -36,7 +36,7 @@ class Topic < ActiveRecord::Base
             user.pseudo
         end
     end
-    def self.order(topics)
+    def self.order_topics(topics)
         topics = topics || []
         topics.sort { |x,y| x.last_answered_at <=> y.last_answered_at }.reverse
     end
