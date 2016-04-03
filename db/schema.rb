@@ -49,6 +49,8 @@ ActiveRecord::Schema.define(version: 20150901093924) do
 
   create_table "characters", force: true do |t|
     t.integer  "user_id"
+    t.text     "first_name"
+    t.text     "last_name"
     t.date     "birth_date"
     t.text     "birth_place"
     t.boolean  "sex"
@@ -65,8 +67,6 @@ ActiveRecord::Schema.define(version: 20150901093924) do
     t.integer  "group_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "last_name"
-    t.text     "first_name"
     t.text     "image_url"
     t.text     "summary"
     t.text     "quote"

@@ -200,3 +200,9 @@ DEPENDENCIES
   twitter-bootstrap-rails
   uglifier (~> 2.7.1)
   xmpp4r
+
+RUBY VERSION
+   ruby 2.1.5p273
+
+BUNDLED WITH
+   1.12.0.rc
