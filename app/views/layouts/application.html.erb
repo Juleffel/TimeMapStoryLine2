@@ -35,7 +35,7 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  <% body_data = {signedin: user_signed_in?} 
+  <% body_data = {signedin: user_signed_in?}
   if user_signed_in?
     body_data[:jid] = @jid
     body_data[:pseudo] = current_user.pseudo
@@ -94,7 +94,7 @@
             <% end %>
             -->
           </ul>
-          
+
           <span class="navbar-right">
           <% if not user_signed_in? %>
               <%= link_to 'Sign in', new_user_session_path, class: "btn btn-success navbar-btn btn-sm" %>
@@ -113,7 +113,7 @@
     <div class="container-fluid">
       <p class="notice"><%= notice %></p>
       <p class="alert"><%= alert %></p>
-      <%= render partial: "shared/flash_messages", flash: flash %> 
+      <%= render partial: "shared/flash_messages", flash: flash %>
       <%= yield %>
 
       <hr>
@@ -123,7 +123,7 @@
       </footer>
     </div> <!-- /container -->
     <% end %>
-        
+
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->

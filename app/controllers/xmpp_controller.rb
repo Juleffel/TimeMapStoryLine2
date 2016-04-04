@@ -1,8 +1,9 @@
 class XmppController < ApplicationController
     require 'xmpp4r'
     require 'xmpp4r/vcard/helper/vcard'
+    require 'rexml/xpath'
     include Jabber
-    
+
     def prebind
         bosh_ok = true
         if current_user
@@ -30,22 +31,23 @@ class XmppController < ApplicationController
         end
         p bosh_ok
         if bosh_ok
+            current_user.update_attributes(xmpp_valid: true)
             current_user.update_vcard
             render :json => {jid: bosh_session.jabber_id, sid: bosh_session.sid, rid: bosh_session.rid}
         else
             render :json => {error: true}
         end
     end
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
+
+
+
     def prebind_test
         bosh_ok = false
         bosh_session = Bosh4r::Session.new("testtest@jabberzac.org", "testtest", {bosh_url: 'https://conversejs.org/http-bind/'})
@@ -63,7 +65,7 @@ class XmppController < ApplicationController
             render :json => {error: true}
         end
     end
-    
+
     def prebind_test_contacts
         bosh_ok = false
         jid = "testtestcontacts"
