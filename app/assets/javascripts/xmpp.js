@@ -1,5 +1,6 @@
 var $body = $('body')
 var signedin = $body.data('signedin');
+var int_set_status = undefined;
 console.log(signedin);
 if (signedin) {
 	var jid = $body.data('jid');
@@ -8,10 +9,10 @@ if (signedin) {
 	var users = $body.data('users');
 	require(['converse'], function (converse) {
 	    converse.listen.on('ready', function(ev) {
-	    	
+
 	    	setTimeout(function() {
 	    		console.log('Opening TMSL chatbox.')
-    			console.log(converse.rooms.open('tmsl@conference.conversejs.org', pseudo));
+    			console.log(converse.rooms.open('tmsl@conference-tmsl.no-ip.info', pseudo));
 	    	},500);
 	    	setTimeout(function() {
 	    		var contacts_set = new Set()
@@ -27,6 +28,7 @@ if (signedin) {
 	    				contacts_hash[contact.jid] = contact
 	    			} else {
 	    				// TODO remove contact
+							// Euuuuh... Nope.
 	    			}
 	    		}
 	    		console.log("Users:")
@@ -40,6 +42,32 @@ if (signedin) {
 	    			}
 	    		}
 	    	}, 500);
+	    	/*int_set_status = setInterval(function() {
+					status = converse.user.status.get();
+					status_message = converse.user.status.message.get();
+					console.log(status, status_message);
+					console.log("Status Set.",converse.user.status.set(status, status_message));
+	    	}, 2000);*/
+				/*int_set_status = setInterval(function() {
+					status = converse.user.status.get();
+					status_message = converse.user.status.message.get();
+					console.log(status, status_message);
+					var new_status;
+					if (status == "online") {
+						new_status = "dnd";
+					} else {
+						new_status = "online"
+					}
+					console.log("Temporary Status Set.",new_status,converse.user.status.set(new_status));
+					setTimeout(function() {
+						if (status_message !== undefined) {
+							console.log("Old Status Set.",status,status_message,converse.user.status.set(status, status_message));
+						} else {
+							console.log("Old Status Set.",status,converse.user.status.set(status));
+						}
+					}, 2000);
+
+	    	}, 5000);*/
 	    });
 	    converse.initialize({
 	        bosh_service_url: 'https://conversejs.org/http-bind/', // Please use this connection manager only for testing purposes
@@ -60,10 +88,13 @@ if (signedin) {
 	        auto_reconnect: true,
 	        auto_subscribe: true,
 	        hide_offline_users: false,
+					message_archiving: true,
+					use_vcards: true,
+					debug: true,
 	    });
 	    //converse.contacts.add('buddy@example.com‘, ‘Buddy’)
 	    //console.log(converse.rooms.get('tmsl@conference.conversejs.org'));
-	    
-	    
+
+
 	});
 }

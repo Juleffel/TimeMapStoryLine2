@@ -34,7 +34,7 @@ gem 'sdoc',          group: :doc
 
 # XMPP
 #gem 'ruby_bosh'
-gem 'bosh4r', github: 'mixxt/bosh4r'
+gem 'bosh4r', github: 'juleffel/bosh4r'
 gem 'xmpp4r'
 gem 'seed_dump'
 
@@ -51,7 +51,8 @@ gem 'spring', '~> 1.3.3',        group: :development
 # gem 'capistrano-rails', group: :development
 
 # Use debugger
-# gem 'debugger', group: [:development, :test]
+gem 'byebug'
+gem 'byebug', group: [:development, :test]
 
 ### Users ###
 gem 'devise'

@@ -8,6 +8,10 @@ class User < ActiveRecord::Base
   has_many :topics, inverse_of: :user
   has_many :answers, inverse_of: :user
 
+  def self.reset_xmpp
+    self.all.each {|u| u.update_attributes(xmpp_valid: false)}
+  end
+
   def number_of_messages
     @number_of_messages = @number_of_messages || User.all.joins(:answers).select(:id, 'COUNT(answers.id) AS c').group('users.id').where(id: self.id).first.c
   end

@@ -8,28 +8,37 @@ class XmppController < ApplicationController
         bosh_ok = true
         if current_user
             bosh_session = Bosh4r::Session.new(@jid, current_user.xmpp_password, {bosh_url: 'https://conversejs.org/http-bind/'})
+            p "Bosh session created:", bosh_session
             register = false
             begin
-                p bosh_session.connect
-            rescue
-                p 'rescue'
-                p bosh_session
+                bosh_session.connect
+            rescue Exception => e
+                p 'Rescue: Connect failed from the following reason:', e
                 register = true
             end
             if register
-                p 'register'
+                p 'Try register'
                 begin
-                    p bosh_session.register
-                    p bosh_session.connect
-                rescue
-                    p 'register rescue'
+                    answer = bosh_session.register
+                    status = answer.elements["/body/iq"].attributes["type"]
+                    if status == "result"
+                        p "Register Succeded."
+                        bosh_session.connect
+                    else
+                        p "Register Failed, status:", status
+                        p answer.to_s
+                        bosh_ok = false
+                    end
+                rescue Exception => e
+                    p 'Rescue: Register failed. Aborting.'
+                    p e
+                    p bosh_session
                     bosh_ok = false
                 end
             end
         else
             bosh_ok = false
         end
-        p bosh_ok
         if bosh_ok
             current_user.update_attributes(xmpp_valid: true)
             current_user.update_vcard
