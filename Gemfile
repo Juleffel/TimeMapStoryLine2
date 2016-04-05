@@ -51,7 +51,6 @@ gem 'spring', '~> 1.3.3',        group: :development
 # gem 'capistrano-rails', group: :development
 
 # Use debugger
-gem 'byebug'
 gem 'byebug', group: [:development, :test]
 
 ### Users ###
