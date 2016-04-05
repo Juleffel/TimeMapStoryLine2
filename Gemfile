@@ -36,6 +36,8 @@ gem 'sdoc',          group: :doc
 #gem 'ruby_bosh'
 gem 'bosh4r', github: 'juleffel/bosh4r'
 gem 'xmpp4r'
+gem 'fastimage'
+
 gem 'seed_dump'
 
 # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring

@@ -1,4 +1,7 @@
 class User < ActiveRecord::Base
+  require 'fastimage'
+  require "base64"
+  require 'open-uri'
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -10,6 +13,19 @@ class User < ActiveRecord::Base
 
   def self.reset_xmpp
     self.all.each {|u| u.update_attributes(xmpp_valid: false)}
+  end
+  
+  def avatar_url
+    @avatar_url || (rand_char = self.characters.offset(rand(self.characters.count)).first
+    if rand_char
+      @avatar_url = rand_char.small_image_url
+    else
+      nil
+    end)
+  end
+  
+  def avatar_type
+    @avatar_type || (@avatar_url if avatar_url)
   end
 
   def number_of_messages
@@ -37,11 +53,12 @@ class User < ActiveRecord::Base
   end
 
   def update_vcard
-    ApplicationController.helpers.update_vcard(
-      self.jid, self.xmpp_password,
-      {
-        'FN' => self.pseudo,
-        'NICKNAME' => self.pseudo,
-      })
+    vcard = {
+      'FN' => self.pseudo,
+      'NICKNAME' => self.pseudo,
+    }
+    vcard['TYPE'] = vcard['PHOTO/TYPE'] = self.avatar_type.to_s.upcase if self.avatar_type
+    vcard['BINVAL'] = vcard['PHOTO/BINVAL'] = Base64.encode64(open(self.avatar_url) { |io| io.read }) if self.avatar_url
+    ApplicationController.helpers.update_vcard(self.jid, self.xmpp_password, vcard)
   end
 end
