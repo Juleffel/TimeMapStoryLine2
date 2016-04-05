@@ -12,7 +12,7 @@
 @import "lib/bootstrap-datepicker3.min";
 @import "lib/jquery.mCustomScrollbar";
 @import "lib/bootstrap-slider";
-@import "lib/leaflet";
+@import "lib/leaflet"; // TODO Should now use mapbox // Now imported with mapbox
 @import "map";
 @import "posts";
 @import "categories";

@@ -49,13 +49,14 @@
 //= require lib/classie
 //= require posts
 
+// TODO Should now use mapbox // Now imported froom mapbox
 //= require lib/leaflet
 //= require map/main
 
 //= require scripts
 
-// Conversejs ; contains : jQuery, almond, Sizzle CSS Selector Engine, RequireJS, 
-// Underscore.js, jed.js, Underscore 1.3.0, sprintf(), jQuery Browser Plugin 0.0.8, 
+// Conversejs ; contains : jQuery, almond, Sizzle CSS Selector Engine, RequireJS,
+// Underscore.js, jed.js, Underscore 1.3.0, sprintf(), jQuery Browser Plugin 0.0.8,
 // CryptoJS v3.1.2, EventEmitter, otr.js, moment.js, SHA-1, RSA, Strophejs, Backbone,
 // typeahead.js
 //= require lib/converse.min

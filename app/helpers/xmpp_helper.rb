@@ -14,27 +14,29 @@ module XmppHelper
     vcard_helper = Vcard::Helper.new(cl)
     begin
         vcard = vcard_helper.get()
-        p "Vcard already existing:"
-        p vcard.to_s
-
+        p "Vcard already existing."
     rescue
         vcard = Vcard::IqVcard.new
         p "No vcard found, use a new one."
     end
 
     changed = false
-    p attributes
     attributes.each do |attribute, value|
-        p attribute, vcard[attribute], value
-        changed |= vcard[attribute] != value
+      if vcard[attribute] != value
+        changed = true
+        p attribute.to_s+" has changed."
+        p "From ",vcard[attribute]," to ",value
         vcard[attribute] = value
+      end
     end
 
     if changed
-        p "Setting vcard..."
-        p vcard.to_s
-        p vcard_helper.set(vcard)
-        p "Vcard setted correctly."
+        p "Vcard has changed, setting it..."
+        if e = vcard_helper.set(vcard)
+          p "Vcard successfully updated."
+        else
+          p "Error updating vcard:", e
+        end
     end
     cl.close
   end
