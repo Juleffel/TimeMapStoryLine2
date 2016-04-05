@@ -90,7 +90,7 @@ if (signedin) {
 	        hide_offline_users: false,
 					message_archiving: true,
 					use_vcards: true,
-					debug: true,
+					//debug: true,
 	    });
 	    //converse.contacts.add('buddy@example.com‘, ‘Buddy’)
 	    //console.log(converse.rooms.get('tmsl@conference.conversejs.org'));

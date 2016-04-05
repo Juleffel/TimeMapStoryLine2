@@ -7,7 +7,7 @@ class CategoriesController < ApplicationController
   def index
     topic_incl = {topics: {answers: [:character, :user]}}
     @categories = Category.roots.includes(
-      [topic_incl, {categories: [topic_incl, {categories: [topic_incl, {categories: 
+      [topic_incl, {categories: [topic_incl, {categories: [topic_incl, {categories:
       [topic_incl, {categories: [topic_incl, {categories: [topic_incl, :categories
       ]}]}]}]}]}])
     if params[:mod] == "true" and can? :manage, Category
@@ -22,8 +22,8 @@ class CategoriesController < ApplicationController
     end
     @categories = @category.categories.includes(:categories)
     topics_includes = [:user, {answers: {character: :faction}}]
-    @topics = Topic.order(@category.topics.includes(topics_includes))
-    @special_topics = Topic.order(@category.special_topics(topics_includes))
+    @topics = Topic.order_topics(@category.topics.includes(topics_includes))
+    @special_topics = Topic.order_topics(@category.special_topics(topics_includes))
     respond_with(@category)
   end
 
@@ -59,7 +59,7 @@ class CategoriesController < ApplicationController
 
     def category_params
       params.require(:category).permit(
-        :category_id, :title, :description, :image_url, 
+        :category_id, :title, :description, :image_url,
         :permission_level, :num, :special, :is_rpg, :is_flood)
     end
 end

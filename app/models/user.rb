@@ -60,6 +60,7 @@ class User < ActiveRecord::Base
     if not self.last_avatar_date or self.last_avatar_date.days_since(2) < DateTime.now
       vcard['TYPE'] = vcard['PHOTO/TYPE'] = self.avatar_type.to_s.upcase if self.avatar_type
       vcard['BINVAL'] = vcard['PHOTO/BINVAL'] = Base64.encode64(open(self.avatar_url) { |io| io.read }) if self.avatar_url
+      self.update_attributes(last_avatar_date: DateTime.now)
     end
     ApplicationController.helpers.update_vcard(self.jid, self.xmpp_password, vcard)
   end

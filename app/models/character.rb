@@ -1,22 +1,22 @@
 class Character < ActiveRecord::Base
   extend HashBy
-    
+
   belongs_to :user, inverse_of: :characters
   belongs_to :group, inverse_of: :characters
   belongs_to :faction, inverse_of: :characters
   belongs_to :topic, inverse_of: :character, dependent: :destroy # Character sheet topic
   belongs_to :links_topic, class_name: "Topic", inverse_of: :links_character, dependent: :destroy # Character sheet topic
   belongs_to :rps_topic, class_name: "Topic", inverse_of: :rps_character, dependent: :destroy # Character sheet topic
-  
+
   has_many :to_links, foreign_key: :from_character_id, inverse_of: :from_character, class_name: "Link", dependent: :destroy
   has_many :to_links_characters, through: :to_links, class_name: "Character", source: :to_character
   has_many :from_links, foreign_key: :to_character_id, inverse_of: :to_character, class_name: "Link", dependent: :destroy
   has_many :from_links_characters, through: :from_links, class_name: "Character", source: :from_character
-  
+
   has_many :presences, inverse_of: :character, dependent: :destroy
   has_many :spacetime_positions, through: :presences, inverse_of: :characters
   has_many :answers, inverse_of: :character
-  
+
   validates_presence_of :first_name, :last_name, :birth_date
   validates :avatar_url, format: { with: /\A(https?:\/\/.*|)\z/,
       message: "must be like 'http://...'" }
@@ -24,13 +24,13 @@ class Character < ActiveRecord::Base
       message: "must be like 'http://...'" }
   validates :small_image_url, format: { with: /\A(https?:\/\/.*|)\z/,
       message: "must be like 'http://...'" }
-  
+
   #validates_inclusion_of :sex, :in => %w( m f )
-  
+
   default_scope -> { order(:id) }
   scope :npc, -> { where(npc: true) }
   scope :not_npc, -> { where(npc: false) }
-  
+
   def self.groups(groups_hash)
     list = []
     groups_hash.each do |id, active|
@@ -40,22 +40,22 @@ class Character < ActiveRecord::Base
     end
     self.where(group_id: list)
   end
-  
+
   after_create -> do
     create_own_topic
     update_birth_spacetime_position
   end
   after_update -> { update_birth_spacetime_position }
-  
+
   RAND = Random.new(1234)
-  
+
   def links
     from_links.order(:force) + to_links.order(:force)
   end
   def number_of_messages
-    @number_of_messages = @number_of_messages || if (char_c = Character.all.joins(:answers).select(:id, 'COUNT(answers.id) AS c').group('characters.id').where(id: self.id).first) then char_c.c else 0 end
+    @number_of_messages ||= if (char_c = Character.all.joins(:answers).select(:id, 'COUNT(answers.id) AS c').group('characters.id').where(id: self.id).first) then char_c.c else 0 end
   end
-  
+
   def generate_rp_topics
     if not npc
       unless @user_rp_topics
@@ -64,7 +64,7 @@ class Character < ActiveRecord::Base
         user_rpg_topic_with_answers_ids = Topic.select(:id).joins(:answers).where(id: user_rpg_topic_ids).map(&:id).uniq
         user_rpg_topic_with_character_answers_ids = Topic.select(:id).joins(:answers).where(id: user_rpg_topic_ids, 'answers.character_id' => self.id).map(&:id).uniq
         user_rpg_topic_without_answers_ids = user_rpg_topic_ids - user_rpg_topic_with_answers_ids
-        
+
         @user_rp_topics = Topic.includes(topic_includes).where(id: user_rpg_topic_without_answers_ids)
         @character_rp_topics = Topic.includes(topic_includes).where(id: user_rpg_topic_with_character_answers_ids)
       end
@@ -82,7 +82,7 @@ class Character < ActiveRecord::Base
       @character_rp_topics
     end
   end
-  
+
   def update_birth_spacetime_position
     if not npc
       sp = self.spacetime_positions.where(birth: true).first || self.spacetime_positions.new
@@ -106,7 +106,7 @@ class Character < ActiveRecord::Base
       c.update_birth_spacetime_position
     end
   end
-  
+
   # "Toto Madrillano Q. sueño" => "T. M. Q. S."
   def contracted_middle_name
     ((middle_name || '').split(' ').map {|s| s[0].capitalize + "."}).join(" ")
@@ -125,7 +125,7 @@ class Character < ActiveRecord::Base
   def to_s
     name
   end
-  
+
   def create_own_topic
     Topic.skip_callback(:create)
     unless self.topic
@@ -145,23 +145,23 @@ class Character < ActiveRecord::Base
     Topic.set_callback(:create)
     self.save
   end
-  
+
   def self.last_update
     [self.maximum(:updated_at), self.maximum(:map_nodes_updated_at)].max
   end
-  
+
   def json_attributes
     attributes.merge({
       node_ids: spacetime_position_ids,
-      to_link_ids: to_link_ids, 
+      to_link_ids: to_link_ids,
       name: to_s,
       importance: 1,
       depth: 0,
     })
   end
-  
+
   def npc_status
-    if npc
+    @npc_status ||= if npc
       copys = Character.not_npc.where(first_name: self.first_name, last_name: self.last_name)
       st = "free"
       copys.each do |c|
