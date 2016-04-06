@@ -17,7 +17,13 @@
 // require lib/min/toucheffects-min
 // require lib/flickity.pkgd.min
 
-//= require jquery
+// Conversejs ; contains : jQuery, almond, Sizzle CSS Selector Engine, RequireJS,
+// Underscore.js, jed.js, Underscore 1.3.0, sprintf(), jQuery Browser Plugin 0.0.8,
+// CryptoJS v3.1.2, EventEmitter, otr.js, moment.js, SHA-1, RSA, Strophejs, Backbone,
+// typeahead.js
+//= require lib/converse.min
+
+// require jquery
 //= require jquery_ujs
 //= require bootstrap-sprockets
 // JqueryUI: For autocomplete... TODO: Load only necessary
@@ -55,11 +61,6 @@
 
 //= require scripts
 
-// Conversejs ; contains : jQuery, almond, Sizzle CSS Selector Engine, RequireJS,
-// Underscore.js, jed.js, Underscore 1.3.0, sprintf(), jQuery Browser Plugin 0.0.8,
-// CryptoJS v3.1.2, EventEmitter, otr.js, moment.js, SHA-1, RSA, Strophejs, Backbone,
-// typeahead.js
-//= require lib/converse.min
 
 //= require xmpp
 
