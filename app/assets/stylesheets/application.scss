@@ -1,6 +1,5 @@
-// "bootstrap-sprockets" must be imported before "bootstrap" and "bootstrap/variables"
 @import "normalize";
-@import "bootstrap-sprockets";
+@import "bootstrap-sprockets"; // must be imported before "bootstrap" and "bootstrap/variables"
 @import "bootstrap";
 @import "jquery-ui-bootstrap";  // For autocomplete... TODO: Load only necessary
 @import "lib/jquery.fancybox";

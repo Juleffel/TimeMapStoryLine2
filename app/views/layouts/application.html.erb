@@ -39,7 +39,17 @@
   </head>
   <% body_data = {signedin: user_signed_in?}
   if user_signed_in?
-    body_data[:jid] = @jid
+    prebind = current_user.prebind
+    if not prebind[:error]
+      body_data[:jid] = prebind[:jid]
+      body_data[:sid] = prebind[:sid]
+      body_data[:rid] = prebind[:rid]
+    else
+      body_data[:jid] = @jid
+      byebug
+      body_data[:sid] = nil
+      body_data[:rid] = nil
+    end
     body_data[:pseudo] = current_user.pseudo
     body_data[:users] = current_user.other_jids
   end

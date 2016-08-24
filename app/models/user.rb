@@ -64,4 +64,8 @@ class User < ActiveRecord::Base
     end
     ApplicationController.helpers.update_vcard(self.jid, self.xmpp_password, vcard)
   end
+
+  def prebind
+    return ApplicationController.helpers.prebind(self)
+  end
 end

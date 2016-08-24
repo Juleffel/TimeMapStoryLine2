@@ -4,17 +4,21 @@ var int_set_status = undefined;
 console.log(signedin);
 if (signedin) {
 	var jid = $body.data('jid');
+	var sid = $body.data('sid');
+	var rid = $body.data('rid');
 	var pseudo = $body.data('pseudo');
 	console.log("You are:", jid, pseudo);
 	var users = $body.data('users');
 	require(['converse'], function (converse) {
 	    converse.listen.on('ready', function(ev) {
-
 	    	setTimeout(function() {
-	    		console.log('Opening TMSL chatbox.')
-    			console.log(converse.rooms.open('tmsl@conference-tmsl.no-ip.info', pseudo));
-	    	},500);
-	    	setTimeout(function() {
+					/*var status = converse.user.status.get();
+					var status_message = converse.user.status.message.get();
+					if (status_message !== undefined) {
+						console.log("Status Reset.",status,status_message,converse.user.status.set(status, status_message));
+					} else {
+						console.log("Status Reset.",status,converse.user.status.set(status));
+					}*/
 	    		var contacts_set = new Set()
 	    		var contacts_hash = {}
 	    		var contacts = converse.contacts.get()
@@ -42,12 +46,33 @@ if (signedin) {
 	    			}
 	    		}
 	    	}, 500);
+	    	setTimeout(function() {
+	    		console.log('Opening TMSL chatbox.')
+    			var chatbox=converse.rooms.open('tmsl@conference-tmsl.no-ip.info', pseudo);
+					console.log(chatbox);
+					chatbox.minimize();
+					setTimeout(function() {
+						chatbox.minimize();
+					},1000);
+	    	},1000);
 	    	/*int_set_status = setInterval(function() {
 					status = converse.user.status.get();
 					status_message = converse.user.status.message.get();
 					console.log(status, status_message);
 					console.log("Status Set.",converse.user.status.set(status, status_message));
 	    	}, 2000);*/
+				/*int_set_status = setInterval(function() {
+					status = converse.user.status.get();
+					status_message = converse.user.status.message.get();
+					if (status_message !== undefined) {
+						console.log("Status Reset.",status,status_message,converse.user.status.set(status, status_message));
+					} else {
+						console.log("Status Reset.",status,converse.user.status.set(status));
+					}
+	    	}, 5000);*/
+				int_send_presence = setInterval(function() {
+					converse.user.status.sendPresence();
+	    	}, 5000);
 				/*int_set_status = setInterval(function() {
 					status = converse.user.status.get();
 					status_message = converse.user.status.message.get();
@@ -71,12 +96,15 @@ if (signedin) {
 	    });
 	    converse.initialize({
 	        bosh_service_url: 'https://conversejs.org/http-bind/', // Please use this connection manager only for testing purposes
-	        keepalive: true,
+	        keepalive: false,
 	        message_carbons: true,
+					//forward_messages: true,
 	        roster_groups: true,
 	        show_controlbox_by_default: true,
 	        xhr_user_search: false,
 	        jid: jid,
+					sid: sid,
+					rid: rid,
 	        prebind_url: '/xmpp_prebind',
 	        authentication: 'prebind', // authentification or prebind to let the server do it
 	        //i18n: locales.en, // Refer to ./locale/locales.js to see which locales are supported
