@@ -1,5 +1,5 @@
 # Time Map Story Line
-Live Version (with random test data): ![HerokuApp](http://time-map-story-line-2.herokuapp.com)
+Live Version (with random test data): ![HerokuApp](https://time-map-story-line-2.herokuapp.com/)
 
 ## A RPG Forum Platform
 
