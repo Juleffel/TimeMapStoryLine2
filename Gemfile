@@ -10,7 +10,7 @@ gem 'pg', '~> 0.18.1'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0.1'
 # Use bootstrap
-gem 'bootstrap-sass', '~> 3.3.3'
+gem 'bootstrap-sass', '~> 3.4.1'
 gem "node"
 gem "twitter-bootstrap-rails"
 gem 'jquery-ui-bootstrap-rails-asset'
